@@ -84,7 +84,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../../public/logo-fondo.png"); /* Cambia por la ruta real */
+  background-image: url("../../../public/logo-fondo.png"); /* Cambia por la ruta real */
   background-size: 350px auto;       /* hace que cubra toda el área */
   background-repeat: no-repeat; /* evita que se repita */
   background-position: center;  /* centrada */

@@ -1,0 +1,183 @@
+.ubicaciones-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  border: 4px solid #2d2d2d;
+  background-color: #f5f1e8;
+  font-family: Arial, sans-serif;
+}
+
+/* Header */
+.ubicaciones-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 2px solid #2d2d2d;
+  position: relative;
+  z-index: 10;
+}
+
+.ubicaciones-header h1 {
+  font-size: 1.5rem;
+  color: #2d2d2d;
+}
+
+.ubicaciones-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ubicaciones-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.ubicaciones-map-toggle-btn {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Main Content */
+.ubicaciones-main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.ubicaciones-chat-area {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.ubicaciones-full-width { width: 100%; }
+.ubicaciones-half-width { width: 50%; }
+
+.ubicaciones-message-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.ubicaciones-message-row.user {
+  flex-direction: row-reverse;
+}
+
+.ubicaciones-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.ubicaciones-message-box {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  max-width: 400px;
+}
+
+.ubicaciones-message-box.bot {
+  background-color: white;
+  border: 2px solid #2d2d2d;
+  color: #2d2d2d;
+}
+
+.ubicaciones-message-box.user {
+  background-color: #8b2e2e;
+  color: white;
+}
+
+.ubicaciones-map-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border: 2px solid #2d2d2d;
+  border-radius: 10px;
+}
+
+.ubicaciones-building-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border: 2px solid #2d2d2d;
+  border-radius: 10px;
+}
+
+.ubicaciones-actions-row {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ubicaciones-action-btn {
+  padding: 0.3rem 0.6rem;
+  border: 2px solid #2d2d2d;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  color: #2d2d2d;
+}
+
+.ubicaciones-action-btn:hover {
+  background-color: #f3f4f6;
+}
+
+/* Map Area */
+.ubicaciones-map-area {
+  width: 50%;
+  border-left: 2px solid #2d2d2d;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.ubicaciones-map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.ubicaciones-campus-map {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 2px solid #2d2d2d;
+  border-radius: 10px;
+}
+
+.ubicaciones-map-caption {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Input Area */
+.ubicaciones-input-area {
+  display: flex;
+  padding: 1rem;
+  border-top: 2px solid #2d2d2d;
+  gap: 0.5rem;
+}
+
+.ubicaciones-input-area input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 2px solid #2d2d2d;
+  border-radius: 5px;
+}
+
+.ubicaciones-input-area button {
+  padding: 0.5rem 1rem;
+  background-color: #2d2d2d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
