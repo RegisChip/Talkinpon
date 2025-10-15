@@ -1,0 +1,161 @@
+/* Bienvenida.css */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor principal */
+.bienvenida-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;       /* altura completa de la pantalla */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* background-color: #460000; */
+  background-color: #eae5d6;
+  border: 1px solid #750f0f;
+  box-sizing: border-box;
+}
+
+/* Header */
+.bienvenida-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: #f4f3eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.bienvenida-header h1 {
+  font-size: 2.875rem; /* text-3xl */
+  font-weight: 600;
+  color: #750f0f;
+}
+
+.header-logo {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  width: 5.5rem;
+  height: 5.5rem;
+  overflow: hidden;
+}
+
+.header-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Contenedor principal de botones */
+.bienvenida-buttons {
+  display: flex;
+  flex-wrap: wrap;       /* permite que bajen a otra línea si no caben */
+  justify-content: center;
+  align-items: stretch; 
+  width: 100vw;
+  height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-top: 2px solid #750f0f;
+
+  /* Fondo animado con imágenes pequeñas y separadas */
+  /* background-image: url('../../public/logo-fondo.png');
+  background-size: 40px 40px; 
+  background-repeat: repeat;   
+  background-position: 0 0;
+  animation: diagonalMove 80s linear infinite;  */
+}
+
+/* Animación diagonal */
+/* @keyframes diagonalMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 800px 800px; 
+  }
+} */
+
+/* Botones principales */
+.bienvenida-button {
+  flex: 1 1 auto;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(73, 24, 24, 0.366);
+  border-radius: 30px;
+  box-shadow: 0 0 8px rgba(70, 26, 26, 0.456);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+/* Imagen de fondo */
+.bienvenida-button img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+  z-index: 1; /* aseguramos que esté detrás */
+}
+
+/* Overlay al pasar el mouse */
+.bienvenida-button:hover img {
+  transform: scale(1.05);
+}
+
+.button-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0,0,0,0.3); /* semitransparente para mejorar lectura del texto */
+  transition: all 0.3s;
+  z-index: 2; /* encima de la imagen, debajo del texto */
+}
+
+.bienvenida-button:hover .button-overlay {
+  background-color: rgba(0,0,0,0.2);
+}
+
+.bienvenida-button:hover img {
+  transform: scale(1.05);
+}
+
+/* Texto del botón */
+.button-text {
+  position: relative;
+  z-index: 3; /* siempre al frente */
+  text-align: center;
+  font-size: clamp(1rem, 2vw, 2.5rem);
+  font-weight: 700;
+  color: #ffffff; /* texto blanco para que contraste */
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7); /* mejora legibilidad */
+  padding: 0 0.5rem;
+  pointer-events: none; /* permite hacer click en el botón sin bloquear el texto */
+}
+
+.bienvenida-button:hover .button-text {
+  transform: scale(1.05);
+}
+
+/* Línea divisoria */
+.divider {
+  width: 4px;
+  background-color: #750f0f;
+  margin: 0 20px; 
+  
+}
