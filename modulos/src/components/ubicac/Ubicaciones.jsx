@@ -11,14 +11,24 @@ export default function Ubicaciones() {
   const [animateMap, setAnimateMap] = useState(false);
   const chatEndRef = useRef(null);
 
+  // Scroll al final del chat
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Bloquear scroll cuando el mapa está abierto
+  useEffect(() => {
+    if (showMap) {
+      document.body.classList.add("map-open");
+    } else {
+      document.body.classList.remove("map-open");
+    }
+  }, [showMap]);
+
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
 
-    const userMessage = { type: "user-ub", content: inputValue};
+    const userMessage = { type: "user-ub", content: inputValue };
     const botResponse = generateBotResponse(inputValue);
 
     setMessages((prev) => [...prev, userMessage, ...botResponse]);
@@ -35,7 +45,8 @@ export default function Ubicaciones() {
         { type: "bot", content: "building_image", buildingImage: ubicacion.imagen },
         {
           type: "bot",
-          content: "Si ocupa saber otra ubicacion favor de escribirla en el chat, si quiere salir al menu principal, favro de presionar el botono “Salir”.",
+          content:
+            "Si ocupa saber otra ubicacion favor de escribirla en el chat, si quiere salir al menu principal, favor de presionar el botón “Salir”.",
           actions: [{ label: "Salir", action: "exit" }],
         },
       ];
@@ -59,7 +70,7 @@ export default function Ubicaciones() {
   const toggleMap = () => {
     if (showMap) {
       setAnimateMap(false);
-      setTimeout(() => setShowMap(false), 600);
+      setTimeout(() => setShowMap(false), 300);
     } else {
       setShowMap(true);
       setTimeout(() => setAnimateMap(true), 10);
@@ -94,14 +105,14 @@ export default function Ubicaciones() {
         </div>
       </header>
 
-      {/* Main */}
+      {/* Main chat */}
       <div className="main-content">
-        <div className={`chat-area-ub ${showMap ? "half-width" : "full-width"}`}>
+        <div className="chat-area-ub">
           {messages.map((message, idx) => (
             <div key={idx} className={`message-row-ub ${message.type}`}>
               <img
                 src={message.type === "bot" ? "/logo-app.png" : "/img-user.png"}
-                alt={message.type === "bot" ? "Bot" : "user-ub"}
+                alt={message.type === "bot" ? "Bot" : "Usuario"}
                 className="avatar-ub"
               />
               <div className="message-with-actions">
@@ -131,44 +142,6 @@ export default function Ubicaciones() {
           ))}
           <div ref={chatEndRef}></div>
         </div>
-
-        {/* Vista lateral del mapa */}
-        {showMap && (
-          <>
-            <div className={`map-area ${animateMap ? "map-open" : "map-close"}`}>
-              <div className="map-header">
-                <h3>Mapa del Campus</h3>
-                <button
-                  onClick={() => {
-                    setAnimateMap(false);
-                    setTimeout(() => setShowMap(false), 600);
-                  }}
-                  className="close-map-btn"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div className="map-container">
-                <img src="/mapa_tec.png" alt="Mapa Campus" className="campus-map" />
-
-                {ubicacionesData.map((u) => (
-                  <button
-                    key={u.id}
-                    className="map-button"
-                    style={{ top: u.posicionMapa.top, left: u.posicionMapa.left }}
-                    onClick={() => handleMapButtonClick(u.id)}
-                  >
-                    {u.id}
-                  </button>
-                ))}
-              </div>
-
-              <p className="map-caption">Mapa interactivo del campus universitario</p>
-            </div>
-            <div className="map-overlay"></div>
-          </>
-        )}
       </div>
 
       {/* Input Area */}
@@ -177,7 +150,7 @@ export default function Ubicaciones() {
           <input
             type="text"
             className="form-control"
-            placeholder="¿A donde te gustaria ir ...?"
+            placeholder="¿A dónde te gustaría ir...?"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
@@ -189,6 +162,43 @@ export default function Ubicaciones() {
           </button>
         </div>
       </div>
+
+      {/* Vista del mapa */}
+      {showMap && (
+        <>
+          <div className={`map-overlay`}></div>
+          <div className={`map-area ${animateMap ? "map-open" : "map-close"}`}>
+            <div className="map-header">
+              <h3>Mapa del Campus</h3>
+              <button
+                onClick={() => {
+                  setAnimateMap(false);
+                  setTimeout(() => setShowMap(false), 300);
+                }}
+                className="close-map-btn"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="map-container">
+              <img src="/mapa_tec.png" alt="Mapa Campus" className="campus-map" />
+              {ubicacionesData.map((u) => (
+                <button
+                  key={u.id}
+                  className="map-button"
+                  style={{ top: u.posicionMapa.top, left: u.posicionMapa.left }}
+                  onClick={() => handleMapButtonClick(u.id)}
+                >
+                  {u.id}
+                </button>
+              ))}
+            </div>
+
+            <p className="map-caption">Mapa interactivo del campus universitario</p>
+          </div>
+        </>
+      )}
     </div>
   );
 }
