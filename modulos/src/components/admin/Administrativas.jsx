@@ -12,20 +12,6 @@ export default function Administrativas() {
   const [inputValue, setInputValue] = useState("");
   const [showMoreOptions, setShowMoreOptions] = useState(false);
 
-//   const predefinedOptions = [
-//     { icon: "🎓", text: "Kardex" },
-//     { icon: "📄", text: "Constancia" },
-//     { icon: "🎓", text: "Titulacion" },
-//     { icon: "📚", text: "Creditos" },
-//     { icon: "➕", text: "Mas opciones..." },
-//   ];
-
-//   const additionalOptions = [
-//     { icon: "📋", text: "Historial Academico" },
-//     { icon: "💳", text: "Pagos y Finanzas" },
-//     { icon: "📅", text: "Horarios" },
-//   ];
-
   const predefinedOptions = [
     { img: "/item-chat.png", text: "Kardex" },
     { img: "/item-chat.png", text: "Constancia" },
@@ -206,7 +192,6 @@ Guarda tu comprobante y entrégalo en el departamento correspondiente.`;
                   <h3>Elige una opción:</h3>
                   {predefinedOptions.map((option, idx) => (
                     <button key={idx} onClick={() => handleOptionClick(option.text)}>
-
                     {/* <span className="icon">{option.icon}</span>
                     <span>{option.text}</span> */}
                       <img src={option.img} alt={option.text} className="option-img" />
@@ -257,10 +242,12 @@ Guarda tu comprobante y entrégalo en el departamento correspondiente.`;
                 <input
                 type="text"
                 className="form-control"
-                placeholder="Escribe tu mensaje..."
+                placeholder="¿Que te gustaria saber ...?"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
+                autoComplete="new-password"
+                name="no_autocomplete_field"
                 />
                 <button className="btn btn-dark" onClick={handleSendMessage}>
                 <i className="bi bi-send-fill"></i>

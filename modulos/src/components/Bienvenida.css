@@ -10,11 +10,10 @@ html, body, #root {
 .bienvenida-container {
   position: relative;
   width: 100%;
-  height: 100vh;       /* altura completa de la pantalla */
+  height: 100vh; 
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  /* background-color: #460000; */
   background-color: #eae5d6;
   border: 1px solid #750f0f;
   box-sizing: border-box;
@@ -27,22 +26,23 @@ html, body, #root {
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: #f4f3eb;
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  padding: 0.75rem;
 }
 
 .bienvenida-header h1 {
-  font-size: 2.875rem; /* text-3xl */
+  font-size: 2.875rem;
   font-weight: 600;
   color: #750f0f;
 }
 
 .header-logo {
   position: absolute;
-  right: 2rem;
+  right: 1rem;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -60,7 +60,7 @@ html, body, #root {
 /* Contenedor principal de botones */
 .bienvenida-buttons {
   display: flex;
-  flex-wrap: wrap;       /* permite que bajen a otra línea si no caben */
+  flex-wrap: wrap;     
   justify-content: center;
   align-items: stretch; 
   width: 100vw;
@@ -68,24 +68,7 @@ html, body, #root {
   padding: 1rem;
   box-sizing: border-box;
   border-top: 2px solid #750f0f;
-
-  /* Fondo animado con imágenes pequeñas y separadas */
-  /* background-image: url('../../public/logo-fondo.png');
-  background-size: 40px 40px; 
-  background-repeat: repeat;   
-  background-position: 0 0;
-  animation: diagonalMove 80s linear infinite;  */
 }
-
-/* Animación diagonal */
-/* @keyframes diagonalMove {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 800px 800px; 
-  }
-} */
 
 /* Botones principales */
 .bienvenida-button {
@@ -95,7 +78,7 @@ html, body, #root {
   justify-content: center;
   align-items: center;
   border: 1px solid rgba(73, 24, 24, 0.366);
-  border-radius: 30px;
+  border-radius: 8px;
   box-shadow: 0 0 8px rgba(70, 26, 26, 0.456);
   position: relative;
   overflow: hidden;
@@ -111,7 +94,7 @@ html, body, #root {
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s;
-  z-index: 1; /* aseguramos que esté detrás */
+  z-index: 1; 
 }
 
 /* Overlay al pasar el mouse */
@@ -122,9 +105,9 @@ html, body, #root {
 .button-overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0,0,0,0.3); /* semitransparente para mejorar lectura del texto */
+  background-color: rgba(0,0,0,0.3);
   transition: all 0.3s;
-  z-index: 2; /* encima de la imagen, debajo del texto */
+  z-index: 2; 
 }
 
 .bienvenida-button:hover .button-overlay {
@@ -138,14 +121,14 @@ html, body, #root {
 /* Texto del botón */
 .button-text {
   position: relative;
-  z-index: 3; /* siempre al frente */
+  z-index: 3; 
   text-align: center;
   font-size: clamp(1rem, 2vw, 2.5rem);
   font-weight: 700;
-  color: #ffffff; /* texto blanco para que contraste */
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.7); /* mejora legibilidad */
+  color: #ffffff;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
   padding: 0 0.5rem;
-  pointer-events: none; /* permite hacer click en el botón sin bloquear el texto */
+  pointer-events: none; 
 }
 
 .bienvenida-button:hover .button-text {
@@ -157,5 +140,4 @@ html, body, #root {
   width: 4px;
   background-color: #750f0f;
   margin: 0 20px; 
-  
 }

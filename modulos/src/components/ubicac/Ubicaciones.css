@@ -1,183 +1,372 @@
+/* Contenedor principal */
 .ubicaciones-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  border: 4px solid #2d2d2d;
-  background-color: #f5f1e8;
-  font-family: Arial, sans-serif;
+  width: 100%;
+  font-family: sans-serif;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+/* Fondo fijo detrás de todo */
+.ubicaciones-container::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ead198;
+  background-image: url("../../../public/logo-fondo.png");
+  background-size: 350px auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.15;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* Header */
 .ubicaciones-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  border-bottom: 2px solid #2d2d2d;
+  justify-content: space-between;
+  background-color: white;
+  border-bottom: 2px solid #750f0f;
+  padding: 0 1rem 0;
   position: relative;
-  z-index: 10;
+  z-index: 2;
 }
 
-.ubicaciones-header h1 {
-  font-size: 1.5rem;
-  color: #2d2d2d;
+/* Botón principal */
+.name-button-ub {
+  font-size: 2.7rem;
+  font-weight: 200;
+  color: #750f0f;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
-.ubicaciones-header-right {
+.name-button-ub:hover {
+  color: #ab6b6b;
+}
+
+/* Contenedor del título */
+.title-logo-ub {
   display: flex;
   align-items: center;
-  gap: 1rem;
-}
-
-.ubicaciones-logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-.ubicaciones-map-toggle-btn {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  z-index: 10;
-}
-
-/* Main Content */
-.ubicaciones-main-content {
-  display: flex;
+  justify-content: center;
   flex: 1;
+  position: relative;
+}
+
+.title-logo-ub h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #9d6969;
+  margin: 0;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-100%);
+}
+
+/* Logo */
+.heade-logo-ub {
+  width: 5.5rem;
+  height: 5.5rem;
   overflow: hidden;
+  margin-left: auto;
 }
 
-.ubicaciones-chat-area {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  padding: 1rem;
-}
-
-.ubicaciones-full-width { width: 100%; }
-.ubicaciones-half-width { width: 50%; }
-
-.ubicaciones-message-row {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-}
-
-.ubicaciones-message-row.user {
-  flex-direction: row-reverse;
-}
-
-.ubicaciones-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 0.5rem;
-}
-
-.ubicaciones-message-box {
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  max-width: 400px;
-}
-
-.ubicaciones-message-box.bot {
-  background-color: white;
-  border: 2px solid #2d2d2d;
-  color: #2d2d2d;
-}
-
-.ubicaciones-message-box.user {
-  background-color: #8b2e2e;
-  color: white;
-}
-
-.ubicaciones-map-image {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border: 2px solid #2d2d2d;
-  border-radius: 10px;
-}
-
-.ubicaciones-building-image {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border: 2px solid #2d2d2d;
-  border-radius: 10px;
-}
-
-.ubicaciones-actions-row {
-  margin-top: 0.5rem;
-  display: flex;
-  gap: 0.5rem;
-}
-
-.ubicaciones-action-btn {
-  padding: 0.3rem 0.6rem;
-  border: 2px solid #2d2d2d;
-  border-radius: 5px;
-  background-color: white;
-  cursor: pointer;
-  color: #2d2d2d;
-}
-
-.ubicaciones-action-btn:hover {
-  background-color: #f3f4f6;
-}
-
-/* Map Area */
-.ubicaciones-map-area {
-  width: 50%;
-  border-left: 2px solid #2d2d2d;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.ubicaciones-map-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.ubicaciones-campus-map {
+.heade-logo-ub img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border: 2px solid #2d2d2d;
-  border-radius: 10px;
 }
 
-.ubicaciones-map-caption {
-  text-align: center;
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: #555;
+/* Botón de mapa */
+.header-right {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-/* Input Area */
-.ubicaciones-input-area {
+.map-toggle-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #750f0f;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.2s;
+}
+
+.map-toggle-btn:hover {
+  color: #ab6b6b;
+  transform: scale(1.1);
+}
+
+/* Área principal */
+.main-content {
   display: flex;
-  padding: 1rem;
-  border-top: 2px solid #2d2d2d;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* Chat */
+.chat-area-ub {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 1.5rem;
+  gap: 1rem;
+  transition: width 0.6s ease-in-out;
+}
+
+/* Filas de mensaje */
+.message-row-ub {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.message-row-ub.user-ub {
+  flex-direction: row-reverse;
+}
+
+/* Avatar */
+.avatar-ub {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Burbujas de mensaje */
+.message-box-ub {
+  padding: 0.75rem 1rem 0;
+  border-radius: 0.5rem;
+  max-width: 400px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.message-box-ub.bot {
+  background-color: #ffffff;
+  border: 2px solid #750f0f;
+  color: #2d2d2d;
+}
+
+.message-box-ub.user-ub {
+  background-color: #750f0f;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 0.5rem;
 }
 
-.ubicaciones-input-area input {
-  flex: 1;
-  padding: 0.5rem;
-  border: 2px solid #2d2d2d;
-  border-radius: 5px;
+/* Botones dentro de los mensajes */
+.actions-row-ub {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
 }
 
-.ubicaciones-input-area button {
+.action-btn {
+  background-color: white;
+  border: 2px solid #750f0f;
+  border-radius: 0.5rem;
   padding: 0.5rem 1rem;
-  background-color: #2d2d2d;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 0.5rem;
+}
+
+.chat-area-ub.full-width,
+.chat-area-ub.half-width {
+  width: 100% !important;
+}
+
+.action-btn:hover {
+  background-color: #f3f4f6;
+  transform: scale(1.03);
+}
+
+/* Imagen del edificio */
+.message-box-ub img.building-image {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  margin: 0 0 0.75rem;
+  border-radius: 0.5rem;
+  border: 2px solid #750f0f;
+  object-fit: cover;
+}
+
+/* Área del mapa */
+.map-area {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 90vw;
+  max-width: 1000px;
+  max-height: 90vh;
+  background-color: white;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.4s ease;
+  pointer-events: auto;
+}
+
+.map-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 998;
+  display: none;
+}
+
+.map-area.map-open {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.map-area.map-close {
+  width: 0;
+  opacity: 0;
+}
+
+/* Header del mapa */
+.map-area .map-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid #750f0f;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.map-area .map-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.close-map-btn {
+  position: absolute;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Contenedor relativo del mapa */
+.map-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Imagen del mapa */
+.map-container img.campus-map {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: auto;
+  border-radius: 0.5rem;
+}
+
+/* Botones sobre el mapa */
+.map-button {
+  position: absolute;
+  background-color: #750f0f;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  transition: transform 0.2s;
+  pointer-events: auto;
+}
+
+.map-button:hover {
+  transform: scale(1.2);
+}
+
+/* Pie de mapa */
+.map-area .map-caption {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #2d2d2d;
+  margin: 0;
+  padding: 0;
+}
+
+/* Input del usuario */
+.input-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border-top: 2px solid #750f0f;
+}
+
+.input-area .input-group {
+  width: 90%;
+  max-width: 90%;
+  display: flex;
+  border: 2px solid #750f0f;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.input-area input.form-control {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.input-area .btn {
+  background-color: #750f0f;
+  border: none;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-area .btn:hover {
+  background-color: #ab6b6b;
+}
+
+.input-area .btn i {
+  color: white;
+  font-size: 1.2rem;
 }

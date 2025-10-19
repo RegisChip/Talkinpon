@@ -1,17 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { ubicacionesData } from "../data/ubicacionesData";
 import "./Ubicaciones.css";
 
 export default function Ubicaciones() {
-  const navigate = useNavigate();
   const [messages, setMessages] = useState([
-    { type: "bot", content: "Que edificio o salón te gustaría saber su ubicación..." },
+    { type: "bot", content: "¿Qué edificio o salón te gustaría saber su ubicación?" },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [showMap, setShowMap] = useState(false);
+  const [animateMap, setAnimateMap] = useState(false);
   const chatEndRef = useRef(null);
 
-  // Scroll automático
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -19,7 +18,7 @@ export default function Ubicaciones() {
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
 
-    const userMessage = { type: "user", content: inputValue };
+    const userMessage = { type: "user-ub", content: inputValue};
     const botResponse = generateBotResponse(inputValue);
 
     setMessages((prev) => [...prev, userMessage, ...botResponse]);
@@ -27,23 +26,23 @@ export default function Ubicaciones() {
   };
 
   const generateBotResponse = (userInput) => {
-    const input = userInput.toLowerCase();
+    const input = userInput.toUpperCase();
+    const ubicacion = ubicacionesData.find((u) => u.id === input);
 
-    if (input.includes("edificio a")) {
+    if (ubicacion) {
       return [
-        { type: "bot", content: "Sigue estas indicaciones para llegar al Edificio A, además te dejo una foto del edificio." },
-        { type: "bot", content: "map_only", mapImage: "/mapa_tec.png" },
-        { type: "bot", content: "building_image", buildingImage: "/Escuela_tec.jpg" },
+        { type: "bot", content: ubicacion.texto },
+        { type: "bot", content: "building_image", buildingImage: ubicacion.imagen },
         {
           type: "bot",
-          content: "Si quieres saber otra ubicación, escríbela en el chat. Para salir al menú principal, presiona 'Salir'.",
+          content: "Si ocupa saber otra ubicacion favor de escribirla en el chat, si quiere salir al menu principal, favro de presionar el botono “Salir”.",
           actions: [{ label: "Salir", action: "exit" }],
         },
       ];
     }
 
     return [
-      { type: "bot", content: "Lo siento, no tengo información sobre esa ubicación. Intenta con otro edificio o salón." },
+      { type: "bot", content: "Lo siento, no tengo información sobre esa ubicación. Intenta con otra." },
     ];
   };
 
@@ -57,75 +56,138 @@ export default function Ubicaciones() {
     if (e.key === "Enter") handleSendMessage();
   };
 
+  const toggleMap = () => {
+    if (showMap) {
+      setAnimateMap(false);
+      setTimeout(() => setShowMap(false), 600);
+    } else {
+      setShowMap(true);
+      setTimeout(() => setAnimateMap(true), 10);
+    }
+  };
+
+  const handleMapButtonClick = (id) => {
+    const botResponse = generateBotResponse(id);
+    const userMessage = { type: "user-ub", content: id };
+    setMessages((prev) => [...prev, userMessage, ...botResponse]);
+  };
+
   return (
     <div className="ubicaciones-container">
       {/* Header */}
       <header className="ubicaciones-header">
-        <button className="name-button" onClick={() => navigate("/")}>
+        <button className="name-button-ub" onClick={() => (window.location.href = "/")}>
           TalkinPon
         </button>
-        <div className="ubicaciones-header-right">
-          <h1>Administrativas</h1>
-          <button onClick={() => setShowMap(!showMap)} className="ubicaciones-map-toggle-btn">
-            {showMap ? "Ocultar Mapa" : "Mostrar Mapa"}
-          </button>
-          <img src="/logo-app.png" alt="Logo" className="ubicaciones-logo" />
+
+        <div className="title-logo-ub">
+          <h1>Ubicaciones</h1>
+          <div className="header-right">
+            <button onClick={toggleMap} className="map-toggle-btn" title="Mostrar mapa">
+              <i className="bi bi-map-fill"></i>
+            </button>
+          </div>
+        </div>
+
+        <div className="heade-logo-ub">
+          <img src="/logo-app.png" alt="Logo" />
         </div>
       </header>
 
       {/* Main */}
-      <div className="ubicaciones-main-content">
-        <div className={`ubicaciones-chat-area ${showMap ? "ubicaciones-half-width" : "ubicaciones-full-width"}`}>
+      <div className="main-content">
+        <div className={`chat-area-ub ${showMap ? "half-width" : "full-width"}`}>
           {messages.map((message, idx) => (
-            <div key={idx} className={`ubicaciones-message-row ${message.type}`}>
-              {message.type === "bot" && <img src="logo-app.png" alt="Bot" className="ubicaciones-avatar" />}
-              <div className={`ubicaciones-message-box ${message.type}`}>
-                {message.content === "map_only" ? (
-                  <img src={message.mapImage} alt="Mapa" className="ubicaciones-map-image" />
-                ) : message.content === "building_image" ? (
-                  <img src={message.buildingImage} alt="Edificio" className="ubicaciones-building-image" />
-                ) : (
-                  <p>{message.content}</p>
+            <div key={idx} className={`message-row-ub ${message.type}`}>
+              <img
+                src={message.type === "bot" ? "/logo-app.png" : "/img-user.png"}
+                alt={message.type === "bot" ? "Bot" : "user-ub"}
+                className="avatar-ub"
+              />
+              <div className="message-with-actions">
+                <div className={`message-box-ub ${message.type}`}>
+                  {message.content === "building_image" ? (
+                    <img src={message.buildingImage} alt="Edificio" className="building-image" />
+                  ) : (
+                    <p>{message.content}</p>
+                  )}
+                </div>
+
+                {message.actions && (
+                  <div className="actions-row-ub">
+                    {message.actions.map((action, i) => (
+                      <button
+                        key={i}
+                        onClick={() => handleActionClick(action.action)}
+                        className="action-btn"
+                      >
+                        {action.label}
+                      </button>
+                    ))}
+                  </div>
                 )}
               </div>
-              {message.type === "user" && <img src="/img-user.png" alt="User" className="ubicaciones-avatar" />}
-              {message.actions && (
-                <div className="ubicaciones-actions-row">
-                  {message.actions.map((action, i) => (
-                    <button key={i} onClick={() => handleActionClick(action.action)} className="ubicaciones-action-btn">
-                      {action.label}
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
           ))}
           <div ref={chatEndRef}></div>
         </div>
 
-        {/* Vista del mapa */}
+        {/* Vista lateral del mapa */}
         {showMap && (
-          <div className="ubicaciones-map-area">
-            <div className="ubicaciones-map-header">
-              <h3>Mapa del Campus</h3>
-              <button onClick={() => setShowMap(false)}>✕</button>
+          <>
+            <div className={`map-area ${animateMap ? "map-open" : "map-close"}`}>
+              <div className="map-header">
+                <h3>Mapa del Campus</h3>
+                <button
+                  onClick={() => {
+                    setAnimateMap(false);
+                    setTimeout(() => setShowMap(false), 600);
+                  }}
+                  className="close-map-btn"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="map-container">
+                <img src="/mapa_tec.png" alt="Mapa Campus" className="campus-map" />
+
+                {ubicacionesData.map((u) => (
+                  <button
+                    key={u.id}
+                    className="map-button"
+                    style={{ top: u.posicionMapa.top, left: u.posicionMapa.left }}
+                    onClick={() => handleMapButtonClick(u.id)}
+                  >
+                    {u.id}
+                  </button>
+                ))}
+              </div>
+
+              <p className="map-caption">Mapa interactivo del campus universitario</p>
             </div>
-            <img src="/mapa_tec.png" alt="Mapa Campus" className="ubicaciones-campus-map" />
-            <p className="ubicaciones-map-caption">Mapa interactivo del campus universitario</p>
-          </div>
+            <div className="map-overlay"></div>
+          </>
         )}
       </div>
 
-      {/* Input */}
-      <div className="ubicaciones-input-area">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="Pregunta lo que quieres..."
-        />
-        <button onClick={handleSendMessage}>Enviar</button>
+      {/* Input Area */}
+      <div className="input-area p-3 border-top">
+        <div className="input-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="¿A donde te gustaria ir ...?"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyPress={handleKeyPress}
+            autoComplete="new-password"
+            name="no_autocomplete_field"
+          />
+          <button className="btn btn-dark" onClick={handleSendMessage}>
+            <i className="bi bi-send-fill"></i>
+          </button>
+        </div>
       </div>
     </div>
   );
