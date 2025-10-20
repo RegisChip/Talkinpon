@@ -15,10 +15,10 @@ export default function Bienvenida() {
       </header>
 
       <div className="bienvenida-buttons">
-        <button className="bienvenida-button" onClick={() => navigate("/administrativas")}>
-          <img src="\Escuela_tec.jpg" alt="Administrativas" />
+        <button className="bienvenida-button" onClick={() => navigate("/procesos")}>
+          <img src="\Escuela_tec.jpg" alt="Procesos-Administrativos" />
           <div className="button-overlay" />
-          <div className="button-text">ADMINISTRATIVAS</div>
+          <div className="button-text">PROCESOS<br/>ADMINISTRATIVOS</div>
         </button>
 
         <div className="divider" />

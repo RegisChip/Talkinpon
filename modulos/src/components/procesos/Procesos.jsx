@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Administrativas.css";
+import "./Procesos.css";
 
 export default function Administrativas() {
   const navigate = useNavigate();

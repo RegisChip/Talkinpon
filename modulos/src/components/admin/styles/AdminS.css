@@ -1,0 +1,456 @@
+/* Contenedor principal */
+.superadmin-container {
+  min-height: 100vh;
+  background-color: #eae5d6;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.superadmin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  border-bottom: 2px solid #750f0f;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.superadmin-title {
+  font-size: clamp(26px, 4vw, 36px);
+  color: #750f0f;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* User Menu */
+.superadmin-user-menu-wrapper {
+  position: relative;
+}
+
+.superadmin-user-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.superadmin-user-btn i {
+  font-size: 40px;
+  color: #750f0f;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.superadmin-user-btn:hover i {
+  color: #350303;
+  transform: scale(1.2);
+}
+
+/* Dropdown de usuario estilo AdminProcesos */
+.superadmin-user-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  min-width: 160px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.superadmin-dropdown-item {
+  border: none;
+  background: none;
+  padding: 10px 14px;
+  text-align: left;
+  cursor: pointer;
+  color: #5b470c;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.superadmin-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.superadmin-dropdown-item:hover {
+  background-color: #f2e9d8;
+  transform: none;
+  border-radius: 0; /* items no redondeados */
+}
+
+/* Procesos Administrativos */
+.superadmin-module-card.superadmin-processes {
+  position: relative;
+  overflow: hidden;
+}
+
+.superadmin-module-card.superadmin-processes::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../../../public/Escuela_tec.jpg'); /* tu imagen de procesos */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.2; /* transparencia */
+  z-index: 0;
+}
+
+.superadmin-module-card.superadmin-processes > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ubicaciones */
+.superadmin-module-card.superadmin-locations {
+  position: relative;
+  overflow: hidden;
+}
+
+.superadmin-module-card.superadmin-locations::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../../../public/mapa_tec.png'); /* tu imagen de ubicaciones */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.2;
+  z-index: 0;
+}
+
+.superadmin-module-card.superadmin-locations > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* Main Section */
+.superadmin-main {
+  flex: 1;
+  padding: 40px 30px;
+}
+
+.superadmin-dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.superadmin-welcome-section {
+  background: #ffffff;
+  border: 2px solid #750f0f;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.superadmin-welcome-section h2 {
+  font-size: 24px;
+  color: #2d2d2d;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.superadmin-welcome-section p {
+  font-size: 16px;
+  color: #141212;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* Dashboard / Cards */
+.superadmin-modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.superadmin-module-card {
+  background: #ffffff;
+  border: 2px solid #750f0f;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.superadmin-module-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(117,15,15,0.2);
+  border-color: #d99c9c;
+}
+
+.superadmin-transparent {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(10px);
+}
+
+.superadmin-transparent:hover {
+  background: rgba(255,255,255,0.85);
+}
+
+/* Icono al lado de h3 */
+.superadmin-module-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  color: #750f0f;
+  font-weight: 700;
+  margin: 0;
+}
+
+.superadmin-card-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+.superadmin-module-card p {
+  font-size: 14px;
+  color: #0d0b0b;
+  font-weight: 600;
+  line-height: 1.6;
+  margin: 0;
+  flex-grow: 1;
+}
+
+/* Botones de los módulos */
+.superadmin-card-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 20px;
+  background: #750f0f;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  gap: 10px;
+}
+
+.superadmin-card-btn i {
+  font-size: 18px;
+}
+
+.superadmin-card-btn:hover {
+  background: #340606;
+  transform: translateX(2px);
+  box-shadow: 0 4px 12px rgba(117,15,15,0.3);
+}
+
+.superadmin-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espacio entre icono y texto */
+}
+
+.superadmin-card-header i {
+  font-size: 28px; /* tamaño del icono */
+  flex-shrink: 0;
+}
+
+.superadmin-card-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #750f0f;
+}
+
+/* Modal */
+.superadmin-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.superadmin-modal-content {
+  background: #ffffff;
+  border: 2px solid #750f0f;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.superadmin-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  border-bottom: 2px solid #750f0f;
+  background: #f9f5f0;
+}
+
+.superadmin-modal-header h2 {
+  font-size: 20px;
+  color: #750f0f;
+  margin: 0;
+  font-weight: 700;
+}
+
+.superadmin-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #750f0f;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.superadmin-modal-close:hover {
+  color: #cc0000;
+  transform: scale(1.2);
+}
+
+.superadmin-modal-body {
+  padding: 30px;
+}
+
+/* Forms */
+.superadmin-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.superadmin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.superadmin-form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d2d2d;
+}
+
+.superadmin-form-group input,
+.superadmin-form-group textarea {
+  padding: 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.superadmin-form-group input:focus,
+.superadmin-form-group textarea:focus {
+  outline: none;
+  border-color: #750f0f;
+  box-shadow: 0 0 0 3px rgba(117,15,15,0.1);
+}
+
+.superadmin-form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.superadmin-form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.superadmin-btn-cancel,
+.superadmin-btn-save {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.superadmin-btn-cancel {
+  background: #e9ecef;
+  color: #2d2d2d;
+}
+
+.superadmin-btn-cancel:hover {
+  background: #dee2e6;
+}
+
+.superadmin-btn-save {
+  background: #750f0f;
+  color: #ffffff;
+}
+
+.superadmin-btn-save:hover {
+  background: #a0522d;
+  box-shadow: 0 4px 12px rgba(117,15,15,0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .superadmin-title {
+    font-size: 22px;
+  }
+
+  .superadmin-main {
+    padding: 20px 15px;
+  }
+
+  .superadmin-modules-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .superadmin-welcome-section {
+    padding: 20px;
+  }
+
+  .superadmin-module-card {
+    padding: 20px;
+  }
+
+  .superadmin-modal-content {
+    width: 95%;
+  }
+}
