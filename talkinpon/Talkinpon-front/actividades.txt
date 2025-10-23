@@ -1,0 +1,10 @@
+1.- crear el proyecto en react ✅
+2.- configurar Tailwind en tailwind.config.js
+3.- importar estilos en src/index.css
+4.- probar correr con "npm run dev"
+
+5.- crear la estructura del chat (crear componente chatapp.jsx)
+6.- agregar estilos y animacion
+
+7.- conectar con el back y una api
+8.- pulido

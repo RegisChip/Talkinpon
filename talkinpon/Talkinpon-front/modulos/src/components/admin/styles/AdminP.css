@@ -1,0 +1,369 @@
+/* Contenedor principal */
+.adminprocesos-container {
+  min-height: 100vh;
+  background-color: #eae5d6;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.adminprocesos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 2px solid #750f0f;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px 30px;
+}
+
+.adminprocesos-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.adminprocesos-back-btn {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #750f0f;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #750f0f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .3s ease;
+}
+
+.adminprocesos-back-btn:hover {
+  background: #750f0f;
+  color: #fff;
+}
+
+.adminprocesos-title {
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: bold;
+  color: #750f0f;
+}
+
+/* User Menu */
+.adminprocesos-user-area {
+  position: relative;
+  cursor: pointer;
+}
+
+.adminprocesos-user-icon {
+  font-size: 40px;
+  color: #750f0f;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.adminprocesos-user-area:hover .adminprocesos-user-icon {
+  color: #350303;
+  transform: scale(1.2);
+}
+
+.adminprocesos-user-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  min-width: 160px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.user-menu-btn {
+  border: none;
+  background: none;
+  padding: 10px 14px;
+  text-align: left;
+  cursor: pointer;
+  color: #5b470c;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.user-menu-btn.logout {
+  color: #750f0f;
+}
+
+.user-menu-btn:hover {
+  background-color: #f2e9d8;
+  transform: none;
+  border-radius: 0;
+}
+
+/* Contenido principal */
+.adminprocesos-main {
+  flex: 1;
+  padding: 40px 30px;
+}
+
+.adminprocesos-section {
+  width: 100%;
+  max-width: 1200px;
+  background: #fff;
+  border-radius: 12px;
+  border: 2px solid #750f0f;
+  padding: 30px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+/* Título sección */
+.adminprocesos-section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2d2d2d;
+  margin-bottom: 20px;
+}
+
+/* Tabla */
+.adminprocesos-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.adminprocesos-table th,
+.adminprocesos-table td {
+  border: 1px solid #750f0f;
+  padding: 10px;
+  font-size: 15px;
+  text-align: left;
+  word-break: break-word;
+  color: #0d0b0b;
+}
+
+.adminprocesos-table th {
+  background: #f7f3ea;
+  font-weight: bold;
+}
+
+/* Ajuste de columnas */
+.adminprocesos-table th:nth-child(1),
+.adminprocesos-table td:nth-child(1) { width: 20%; }
+.adminprocesos-table th:nth-child(2),
+.adminprocesos-table td:nth-child(2) { width: 35%; }
+.adminprocesos-table th:nth-child(3),
+.adminprocesos-table td:nth-child(3) { width: 25%; }
+.adminprocesos-table th:nth-child(4),
+.adminprocesos-table td:nth-child(4) { width: 20%; }
+
+/* Botones */
+.adminprocesos-btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+  margin-right: 6px;
+  transition: all .3s ease;
+}
+
+.adminprocesos-edit {
+  background: #5b470c;
+}
+
+.adminprocesos-delete {
+  background: #750f0f;
+}
+
+.adminprocesos-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Botón agregar */
+.adminprocesos-add-container {
+  margin-top: 15px;
+}
+
+.adminprocesos-add-btn {
+  width: 100%;
+  background: #750f0f;
+  color: #fff;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.adminprocesos-add-btn:hover {
+  box-shadow: 0 4px 10px rgba(117,15,15,0.3);
+}
+
+/* Modal */
+.adminprocesos-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adminprocesos-modal-content {
+  background: #ffffff;
+  border: 2px solid #750f0f;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 30px;
+}
+
+/* Modal header */
+.adminprocesos-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.adminprocesos-modal-header h2 {
+  font-size: 20px;
+  color: #750f0f;
+  margin: 0;
+  font-weight: 700;
+}
+
+.adminprocesos-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #750f0f;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.adminprocesos-modal-close:hover {
+  color: #cc0000;
+  transform: scale(1.2);
+}
+
+/* Formulario estilo AdminS */
+.adminprocesos-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.adminprocesos-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.adminprocesos-form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d2d2d;
+}
+
+.adminprocesos-form-group input,
+.adminprocesos-form-group textarea {
+  padding: 12px;
+  border: 2px solid #750f0f;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #0d0b0b;
+  transition: all 0.2s ease;
+}
+
+.adminprocesos-form-group input::placeholder,
+.adminprocesos-form-group textarea::placeholder {
+  color: #5b470c;
+}
+
+.adminprocesos-form-group input:focus,
+.adminprocesos-form-group textarea:focus {
+  outline: none;
+  border-color: #750f0f;
+  box-shadow: 0 0 0 3px rgba(117,15,15,0.1);
+}
+
+.adminprocesos-form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.adminprocesos-form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.adminprocesos-btn-cancel,
+.adminprocesos-btn-save {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.adminprocesos-btn-cancel {
+  background: #e9ecef;
+  color: #2d2d2d;
+}
+
+.adminprocesos-btn-cancel:hover {
+  background: #dee2e6;
+}
+
+.adminprocesos-btn-save {
+  background: #750f0f;
+  color: #ffffff;
+}
+
+.adminprocesos-btn-save:hover {
+  background: #a0522d;
+  box-shadow: 0 4px 12px rgba(117,15,15,0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .adminprocesos-main {
+    padding: 20px 15px;
+  }
+
+  .adminprocesos-section {
+    padding: 20px;
+  }
+
+  .adminprocesos-form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .adminprocesos-btn {
+    width: 100%;
+  }
+}

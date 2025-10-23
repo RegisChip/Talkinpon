@@ -1,0 +1,278 @@
+/* Contenedor principal */
+.admin-container {
+  min-height: 100vh;
+  background-color: #eae5d6;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header TalkinPon */
+.userinfo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: white;
+  border-bottom: 2px solid #750f0f;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.userinfo-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espacio entre el botón y el título */
+}
+
+.back-btn {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #750f0f;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #750f0f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #750f0f;
+  color: white;
+  transform: translateX(-2px);
+}
+
+.userinfo-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #750f0f;
+  margin: 0;
+}
+
+.user-icon {
+  font-size: 28px;
+  color: #750f0f;
+}
+
+/* Main */
+.admin-main {
+  flex: 1;
+  padding: 20px 15px;
+  display: flex;
+}
+
+.users-section {
+  width: 100%;
+  max-width: 1200px;
+  background: #fff;
+  border: 2px solid #750f0f;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.section-header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Tabla adaptativa */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.users-table th{
+  background: #f7f3ea;
+  color: #4b3a05;
+  font-weight: bold;
+}
+
+.users-table th, .users-table td {
+  border: 1px solid #76580e;
+  padding: 10px;
+  text-align: left;
+  font-size: clamp(12px, 1.5vw, 16px);
+  word-break: break-word;
+}
+
+.users-table th:nth-child(1) { width: 20%; }
+.users-table th:nth-child(2) { width: 10%; }
+.users-table th:nth-child(3) { width: 15%; }
+.users-table th:nth-child(4) { width: 25%; }
+.users-table th:nth-child(5) { width: 10%; }
+
+.option-btn {
+  flex: 1;
+  padding: 6px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: clamp(12px, 1.2vw, 16px);
+  transition: all 0.3s ease;
+}
+
+.users-table td:last-child {
+  text-align: center; /* centra los botones horizontalmente */
+  padding: 4px;
+}
+
+.option-btn.edit {
+  background-color: #5b470c;
+  color: #fff;
+  height: 30px;
+  width: 30px;
+  margin-right: 5px;
+}
+
+.option-btn.delete {
+  background-color: #3f0606;
+  color: #fff;
+  height: 30px;
+  width: 30px;
+}
+
+.option-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+/* Botón agregar */
+.add-user-container { margin-top: 15px; }
+
+.add-user-btn {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  background: #750f0f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-user-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(117,15,15,0.3);
+}
+
+/* Modal */
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+/* Modal Content */
+.modal-content {
+  background: #fff !important;
+  border: 2px solid #750f0f !important;
+  border-radius: 12px !important;
+  padding: 25px !important;
+  width: 500px !important;
+  max-width: 95% !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important;
+  font-family: Arial, sans-serif !important;
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  font-size: 22px;
+  color: #750f0f;
+  margin: 0;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #750f0f;
+}
+
+/* Form inside modal */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.edit-form .form-group label {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #750f0f;
+}
+
+.edit-form .form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #750f0f !important;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+}
+
+.edit-form .form-group input:focus {
+  border-color: #420a0a !important;
+  outline: none;
+}
+
+/* Form actions buttons */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-cancel {
+  background: #ccc;
+  color: #333;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-save {
+  background: #750f0f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-save:hover {
+  transform: translateY(-2px);
+  background: #3f0606;
+  box-shadow: 0 4px 12px rgba(117,15,15,0.3);
+}
+

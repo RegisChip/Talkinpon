@@ -1,0 +1,32 @@
+Creaciion de un proyecto en react
+Estos comandos permite crear una estructura de un proyecto de manera temporal y no de manera local; solo miestras se tengasn las carpetas
+ <> npx create-react-app .    //indica que ya se tiene la carpeta y hay mismo en la carpeta elegida se crea el proyectp
+ o
+ <> npx create-react-app <nombre_poryecto>  //el nombre del protecyo debe ser sin espacios y en letras minusculas
+
+// comandos que se pueden ejecutar en react
+Inside that directory, you can run several commands:
+
+  npm start
+    Starts the development server.
+
+  npm run build
+    Bundles the app into static files for production.
+
+  npm test
+    Starts the test runner.
+
+  npm run eject
+    Removes this tool and copies build dependencies, configuration files
+    and scripts into the app directory. If you do this, you can’t go back!
+
+We suggest that you begin by typing:
+
+  cd modulo-principal
+  npm start
+
+Happy hacking!
+
+---------------------------------------------------
+para poder utilizar tailwind ocupo ejecuatr estos comandosnpm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p

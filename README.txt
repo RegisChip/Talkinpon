@@ -1,0 +1,1 @@
+Conexion entre el front y el back por medio del transito de infromacion por medio de JSONs
