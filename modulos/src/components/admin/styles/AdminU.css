@@ -1,418 +1,312 @@
 /* Contenedor principal */
-.admin-container {
+.adminU-container {
   min-height: 100vh;
-  background-color: #f5f7fa;
+  background-color: #eae5d6;
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
 }
 
-/* Header */
-.admin-header {
+/* Header TalkinPon */
+.adminU-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 30px;
-  border-bottom: 2px solid #0066cc;
-  background-color: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  position: relative;
+  justify-content: space-between; /* Ajusta el espacio entre los elementos */
+  align-items: center; /* Centra los elementos verticalmente */
+  padding: 15px 30px;
+  background: white;
+  border-bottom: 2px solid #750f0f;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.header-left {
+.adminU-header-left {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px; /* espacio entre el botón y el título */
 }
 
-.back-btn {
+.adminU-back-btn {
   width: 40px;
   height: 40px;
-  border: 2px solid #0066cc;
-  background: white;
-  border-radius: 6px;
+  border: none;
+  background-color: transparent;
+  font-size: 2.7rem;
   cursor: pointer;
-  font-size: 20px;
-  font-weight: bold;
-  color: #0066cc;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  color: #750f0f;
 }
 
-.back-btn:hover {
-  background: #0066cc;
-  color: white;
-  transform: translateX(-2px);
+.adminU-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #750f0f;
 }
 
-.header-title {
-  font-size: 18px;
-  color: #333333;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-
-.header-right {
-  position: relative;
-}
-
-.user-menu-wrapper {
-  position: relative;
-}
-
-.user-btn {
+.adminU-user-icon-container {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 16px;
-  background: #f0f4f8;
-  border: 2px solid #0066cc;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  color: #0066cc;
-  transition: all 0.3s ease;
-}
-
-.user-btn:hover {
-  background: #0066cc;
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,102,204,0.3);
 }
 
 .user-icon {
-  font-size: 18px;
+  font-size: 2.5rem;
+  color: #750f0f;
 }
 
-.user-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 8px;
-  background: white;
-  border: 2px solid #0066cc;
+.adminU-main {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Sección */
+.adminU-section {
+  background-color: #fefefed0;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-  z-index: 1000;
-  min-width: 200px;
-  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-item {
-  display: block;
-  width: 100%;
-  padding: 12px 16px;
-  background: none;
-  border: none;
-  text-align: left;
-  cursor: pointer;
-  font-size: 14px;
-  color: #333333;
-  transition: all 0.2s ease;
-  border-bottom: 1px solid #e9ecef;
+/* Título de la sección */
+.adminU-section-header {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 2px solid #640303; /* Agrega una línea divisoria */
+  padding-bottom: 10px;
+  color: #750f0f;
 }
 
-.dropdown-item:last-child {
-  border-bottom: none;
+/* Contenedores de las tablas */
+.adminU-table-container {
+  margin-bottom: 30px; /* Separación entre tablas */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-item:hover {
-  background: #f0f4f8;
-  color: #0066cc;
-  padding-left: 20px;
-}
-
-.dropdown-item.logout:hover {
-  background: #ffe6e6;
-  color: #cc0000;
-}
-
-/* Main Section */
-.admin-main {
-  flex: 1;
-  padding: 40px 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-/* Locations Section */
-.locations-section {
-  background: white;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #e9ecef;
-}
-
-.section-header h2 {
-  font-size: 22px;
-  color: #333333;
-  font-weight: 600;
-}
-
-.add-icon-btn {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.add-icon-btn:hover {
-  transform: scale(1.2);
-}
-
-/* Table */
-.locations-table {
+/* Tabla */
+.adminU-table-container table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 30px;
 }
 
-.locations-table thead {
-  background: #f0f4f8;
+.adminU-table-container thead {
+  background: #fae50338;
 }
 
-.locations-table th {
-  padding: 16px;
+.adminU-table-container th,
+.adminU-table-container td {
+  padding: 12px;
   text-align: left;
-  font-weight: 600;
-  color: #333333;
-  font-size: 14px;
-  border-bottom: 2px solid #0066cc;
+  border-bottom: 1px solid #ddd;
 }
 
-.locations-table td {
-  padding: 16px;
-  border-bottom: 1px solid #e9ecef;
-  color: #555555;
-  font-size: 14px;
+.adminU-table-container th {
+  font-weight: bold;
 }
 
-.locations-table tbody tr {
-  transition: background-color 0.2s ease;
+.adminU-table-container td {
+  font-size: 0.95rem;
 }
 
-.locations-table tbody tr:hover {
-  background-color: #f9fbfd;
-}
-
-.options-cell {
-  display: flex;
-  gap: 12px;
-}
-
-.option-btn {
-  background: none;
-  border: none;
-  font-size: 16px;
+.adminU-table-container button {
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: transform 0.2s ease;
-  padding: 4px 8px;
 }
 
-.option-btn:hover {
-  transform: scale(1.3);
-}
-
-.option-btn.delete:hover {
-  filter: brightness(1.2);
-}
-
-/* Add Location Button */
-.add-location-btn {
-  width: 100%;
-  padding: 14px 20px;
-  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0,102,204,0.3);
-}
-
-.add-location-btn:hover {
+.adminU-table-container button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,102,204,0.4);
 }
 
-.add-location-btn:active {
-  transform: translateY(0);
+/* Opciones de los botones de acción */
+.adminU-option-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.adminU-option-btn:hover {
+  transform: translateY(-2px);
+}
+
+.adminU-option-btn.edit {
+  color: #a59b0e;
+}
+
+.adminU-option-btn.delete {
+  color: #b90707;
+}
+
+/* Botón para agregar nuevo proceso */
+.adminU-add-user-btn {
+  background-color: #750f0f;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.adminU-add-user-btn:hover {
+  background-color: #a51e1e;
 }
 
 /* Modal */
-.modal-overlay {
+.adminU-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro con más transparencia */
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 2000;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.modal-content {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-  max-width: 500px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
+.adminU-modal-content {
+  background-color: white;
+  padding: 25px;
+  border-radius: 15px;
+  width: 450px;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra más suave y amplia */
+  transition: transform 0.3s ease-out; /* Transición suave */
+  transform: scale(0.95);
 }
 
-.modal-header {
+.adminU-modal-content.show {
+  transform: scale(1); /* Escala al 100% al ser visible */
+}
+
+.adminU-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  border-bottom: 2px solid #0066cc;
+  margin-bottom: 20px;
 }
 
-.modal-header h2 {
-  font-size: 20px;
-  color: #333333;
-  font-weight: 600;
-  margin: 0;
-}
-
-.modal-close {
-  background: none;
+.adminU-modal-close {
   border: none;
-  font-size: 24px;
+  background-color: transparent;
+  font-size: 1.8rem;
   cursor: pointer;
-  color: #999999;
+  color: #750f0f;
   transition: color 0.2s ease;
 }
 
-.modal-close:hover {
-  color: #333333;
+.adminU-modal-close:hover {
+  color: #a51e1e;
 }
 
-.modal-body {
-  padding: 20px;
-}
-
-.edit-form {
+/* Contenedor del formulario */
+.adminU-edit-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 15px; /* Espacio entre los campos */
 }
 
-.form-group {
+/* Estilos de cada grupo de formulario (label + input) */
+.adminU-form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 8px; /* Espacio entre el label y el input */
 }
 
-.form-group label {
+.adminU-form-group label {
+  font-size: 1rem;
   font-weight: 600;
-  color: #333333;
-  font-size: 14px;
+  color: #750f0f; /* Color del borde del input */
 }
 
-.form-group input,
-.form-group textarea {
-  padding: 10px 12px;
-  border: 2px solid #e9ecef;
-  border-radius: 6px;
-  font-size: 14px;
-  font-family: inherit;
-  transition: border-color 0.2s ease;
+/* Estilo de los inputs */
+.adminU-form-group input {
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 2px solid #ccc; /* Borde gris por defecto */
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%; /* Hacer los inputs del mismo tamaño */
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.adminU-form-group input:focus {
+  border-color: #750f0f; /* Borde rojo al enfocar */
   outline: none;
-  border-color: #0066cc;
+  box-shadow: 0 0 5px rgba(117, 15, 15, 0.5); /* Sombra sutil al enfocar */
 }
 
-.form-group textarea {
-  resize: vertical;
-  min-height: 100px;
+/* Título del formulario (h2) */
+.adminU-modal-header h2 {
+  font-size: 1.8rem;
+  color: #750f0f; /* Color que coincide con el borde de los inputs */
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
-.form-actions {
+/* Estilo para la sección de los botones (Guardar, Cancelar) */
+.adminU-form-actions {
   display: flex;
-  gap: 12px;
-  margin-top: 20px;
   justify-content: flex-end;
+  gap: 20px;
+  margin-top: 20px;
 }
 
-.btn-cancel,
-.btn-save {
-  padding: 10px 20px;
+/* Botón de cancelar */
+.adminU-btn-cancel {
+  background-color: #f5f5f5;
+  padding: 12px 25px;
   border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
-.btn-cancel {
-  background: #e9ecef;
-  color: #333333;
+.adminU-btn-cancel:hover {
+  background-color: #ddd;
 }
 
-.btn-cancel:hover {
-  background: #dee2e6;
-}
-
-.btn-save {
-  background: #0066cc;
+/* Botón de guardar */
+.adminU-btn-save {
+  background-color: #750f0f;
   color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
-.btn-save:hover {
-  background: #0052a3;
+.adminU-btn-save:hover {
+  background-color: #a51e1e;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .admin-header {
-    flex-direction: column;
-    gap: 15px;
-    padding: 15px;
+/* Animación de Fade In para el modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-
-  .header-left {
-    width: 100%;
+  to {
+    opacity: 1;
   }
+}
 
-  .locations-table {
-    font-size: 12px;
+/* Animación para el cierre */
+.adminU-modal-overlay.exit {
+  animation: fadeOut 0.3s ease-in-out;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
   }
-
-  .locations-table th,
-  .locations-table td {
-    padding: 10px;
-  }
-
-  .admin-main {
-    padding: 20px 15px;
-  }
-
-  .locations-section {
-    padding: 20px;
+  to {
+    opacity: 0;
   }
 }

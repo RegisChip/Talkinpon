@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ubicacionesData } from "../data/ubicacionesData";
+import { useNavigate } from "react-router-dom";
 import "./Ubicaciones.css";
 
 export default function Ubicaciones() {
   const [messages, setMessages] = useState([
     { type: "bot", content: "¿Qué edificio o salón te gustaría saber su ubicación?" },
   ]);
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
   const [showMap, setShowMap] = useState(false);
   const [animateMap, setAnimateMap] = useState(false);
@@ -46,8 +48,7 @@ export default function Ubicaciones() {
         {
           type: "bot",
           content:
-            "Si ocupa saber otra ubicacion favor de escribirla en el chat, si quiere salir al menu principal, favor de presionar el botón “Salir”.",
-          actions: [{ label: "Salir", action: "exit" }],
+            "Si ocupa saber otra ubicacion favor de escribirla en el chat o consultar el mapa.",
         },
       ];
     }
@@ -87,20 +88,21 @@ export default function Ubicaciones() {
     <div className="ubicaciones-container">
       {/* Header */}
       <header className="ubicaciones-header">
-        <button className="name-button-ub" onClick={() => (window.location.href = "/")}>
-          TalkinPon
-        </button>
-
-        <div className="title-logo-ub">
-          <h1>Ubicaciones</h1>
-          <div className="header-right">
-            <button onClick={toggleMap} className="map-toggle-btn" title="Mostrar mapa">
-              <i className="bi bi-map-fill"></i>
-            </button>
-          </div>
+        <div className="procesos-header-left">
+          <button className="ubicaciones-name-button" onClick={() => navigate("/")}>
+              <i className="bi bi-chevron-double-left"></i>
+          </button>
+          <h1>TalkinPon</h1>
         </div>
-
-        <div className="heade-logo-ub">
+        <div className="ubicaciones-title-logo">
+          <h2>Ubicaciones</h2>
+        </div>
+        <div className="ubicaciones-heade-logo">
+          <button onClick={toggleMap} className="ubicaciones-toggle-btn" title="Mostrar mapa">
+            <i className="bi bi-map-fill"></i>
+          </button>
+        </div>
+        <div className="ubicaciones-heade-logo">
           <img src="/logo-app.png" alt="Logo" />
         </div>
       </header>
@@ -145,19 +147,20 @@ export default function Ubicaciones() {
       </div>
 
       {/* Input Area */}
-      <div className="input-area p-3 border-top">
-        <div className="input-group">
+      <div className="ubicaciones-input-area border-top">
+        <div className="ubicaciones-input-group">
           <input
             type="text"
-            className="form-control"
-            placeholder="¿A dónde te gustaría ir...?"
+            className="ubicaciones-form-control"
+            placeholder="¿Qué te gustaría saber ...?"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
             autoComplete="new-password"
             name="no_autocomplete_field"
           />
-          <button className="btn btn-dark" onClick={handleSendMessage}>
+
+          <button className="ubicaciones-btn" onClick={handleSendMessage}>
             <i className="bi bi-send-fill"></i>
           </button>
         </div>

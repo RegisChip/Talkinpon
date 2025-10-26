@@ -1,123 +1,102 @@
-import React, { useState } from "react";
-import "./styles/AdminP.css";
+import { useState } from "react";
+import "./styles/AdminP.css"; // Cambio en el nombre del archivo CSS
+import { useNavigate } from "react-router-dom";
 
-const AdminProcesos = ({ onBack }) => {
-  const [procesos, setProcesos] = useState([
-    {
-      id: 1,
-      nombre: "Proceso de registro",
-      descripcion: "Registro de nuevos usuarios en la plataforma",
-      requisitos: "Formulario completo y validación de correo",
-    },
-    {
-      id: 2,
-      nombre: "Revisión de contenido",
-      descripcion: "Validación y aprobación de publicaciones",
-      requisitos: "Acceso de moderador",
-    },
-  ]);
+function AdminP({ processes, user, onBack }) {
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingProcess, setEditingProcess] = useState(null);
+  const [processesList, setProcessesList] = useState(processes || []);
+  const navigate = useNavigate();
 
-  const [showModal, setShowModal] = useState(false);
-  const [editingProceso, setEditingProceso] = useState(null);
-  const [showUserMenu, setShowUserMenu] = useState(false);
-
-  const handleEdit = (proceso) => {
-    setEditingProceso(proceso);
-    setShowModal(true);
+  const handleEditClick = (processData) => {
+    setEditingProcess({ ...processData });
+    setShowEditModal(true);
   };
 
-  const handleAdd = () => {
-    setEditingProceso({ id: null, nombre: "", descripcion: "", requisitos: "" });
-    setShowModal(true);
+  const handleCloseModal = () => {
+    setShowEditModal(false);
+    setEditingProcess(null);
   };
 
-  const handleSave = (e) => {
+  const handleSaveProcess = (e) => {
     e.preventDefault();
-    if (editingProceso.id) {
-      setProcesos(
-        procesos.map((p) =>
-          p.id === editingProceso.id ? editingProceso : p
-        )
-      );
-    } else {
-      setProcesos([
-        ...procesos,
-        { ...editingProceso, id: Date.now() },
-      ]);
-    }
-    setShowModal(false);
+    setProcessesList(
+      processesList.map((p) =>
+        p.id === editingProcess.id ? editingProcess : p
+      )
+    );
+    handleCloseModal();
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm("¿Eliminar este proceso?")) {
-      setProcesos(procesos.filter((p) => p.id !== id));
-    }
+  const handleDeleteProcess = (id) => {
+    setProcessesList(processesList.filter((p) => p.id !== id));
+  };
+
+  const handleAddProcess = () => {
+    const newProcess = {
+      id: processesList.length + 1,
+      name: "",
+      description: "",
+      requirements: "",
+      time: "",
+    };
+    setEditingProcess(newProcess);
+    setShowEditModal(true);
+  };
+
+  const handleBack = () => {
+    navigate(-1); // Regresa a la página anterior
   };
 
   return (
-    <div className="adminprocesos-container">
+    <div className="adminP-container">
       {/* Header */}
-      <header className="adminprocesos-header">
-        <div className="adminprocesos-header-left">
-          {onBack && (
-            <button className="adminprocesos-back-btn" onClick={onBack} title="Volver">
-              <i className="bi bi-arrow-left"></i>
-            </button>
-          )}
-          <h1 className="adminprocesos-title">TalkinPon</h1>
+      <header className="adminP-header">
+        <div className="adminP-header-left">
+          {/* Botón de regresar */}
+          <button className="adminP-back-btn" onClick={handleBack} title="Volver">
+            <i className="bi bi-chevron-double-left"></i> 
+            {/* debe de quitarse este boton cunuado se ingrese como administrador de procesos */}
+          </button>
+          <h1 className="adminP-title">TalkinPon</h1>
         </div>
 
-        <div
-          className="adminprocesos-user-area"
-          onClick={() => setShowUserMenu(!showUserMenu)}
-        >
-          <i className="bi bi-person-circle adminprocesos-user-icon"></i>
-          {showUserMenu && (
-            <div className="adminprocesos-user-menu">
-              <button className="user-menu-btn">
-                <i className="bi bi-info-circle"></i> Ver información
-              </button>
-              <button className="user-menu-btn logout">
-                <i className="bi bi-box-arrow-right"></i> Cerrar sesión
-              </button>
-            </div>
-          )}
+        {/* Icono de usuario */}
+        <div className="adminP-user-icon-container">
+          <i className="bi bi-person-circle user-icon"></i>
+          {/* agregr opciones de cerracr cesion cunado se entre con alcnete sea administrador ubicaciones */}
+          <h5>Super Administrador</h5> 
+          {/* ocupa camvbiar la froma en como se muetra el tiepo de usuario, debe cambia a administrador procesos cunado se inicie con la cuenta de proceso */}
         </div>
       </header>
 
-      {/* Contenido principal */}
-      <main className="adminprocesos-main">
-        <section className="adminprocesos-section">
-          <h2 className="adminprocesos-section-title">Gestión de Procesos</h2>
+      {/* Main */}
+      <main className="adminP-main">
+        <div className="adminP-section">
+          <h2 className="adminP-section-header">Gestión de </h2>
 
-          <table className="adminprocesos-table">
+          <table className="adminP-table">
             <thead>
               <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
+                <th>Nombre del procesos</th>
+                <th>Descripcion</th>
                 <th>Requisitos</th>
+                <th>Dependecia</th>
                 <th>Opciones</th>
               </tr>
             </thead>
             <tbody>
-              {procesos.map((proceso) => (
-                <tr key={proceso.id}>
-                  <td>{proceso.nombre}</td>
-                  <td>{proceso.descripcion}</td>
-                  <td>{proceso.requisitos}</td>
-                  <td style={{ textAlign: "center" }}>
-                    <button
-                      className="adminprocesos-btn adminprocesos-edit"
-                      onClick={() => handleEdit(proceso)}
-                      title="Editar"
-                    >
-                      <i className="bi bi-pencil-square"></i>
+                {processesList.map((p) => (
+                <tr key={p.id}>
+                  <td>{p.name}</td>
+                  <td>{p.description}</td>
+                  <td>{p.requirements}</td>
+                  <td>{p.time}</td>
+                  <td>
+                    <button className="adminP-option-btn edit" onClick={() => handleEditClick(p)} title="Editar">
+                      <i className="bi bi-pencil-fill"></i>
                     </button>
-                    <button
-                      className="adminprocesos-btn adminprocesos-delete"
-                      onClick={() => handleDelete(proceso.id)}
-                      title="Eliminar"
-                    >
+                    <button className="adminP-option-btn delete" onClick={() => handleDeleteProcess(p.id)} title="Eliminar">
                       <i className="bi bi-trash-fill"></i>
                     </button>
                   </td>
@@ -126,88 +105,73 @@ const AdminProcesos = ({ onBack }) => {
             </tbody>
           </table>
 
-          <div className="adminprocesos-add-container">
-            <button className="adminprocesos-add-btn" onClick={handleAdd}>
-              + Agregar Proceso
+
+          <div className="adminP-add-user-container">
+            <button className="adminP-add-user-btn" onClick={handleAddProcess}>
+              Agregar nuevo proceso
             </button>
           </div>
-        </section>
+        </div>
       </main>
 
       {/* Modal */}
-      {showModal && (
-        <div
-          className="adminprocesos-modal-overlay"
-          onClick={() => setShowModal(false)}
-        >
-          <div
-            className="adminprocesos-modal-content"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="adminprocesos-modal-header">
-              <h2>{editingProceso.id ? "Editar Proceso" : "Agregar Proceso"}</h2>
-              <button
-                className="adminprocesos-modal-close"
-                onClick={() => setShowModal(false)}
-              >
+      {showEditModal && editingProcess && (
+        <div className="adminP-modal-overlay" onClick={handleCloseModal}>
+          <div className="adminP-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="adminP-modal-header">
+              <h2>
+                {editingProcess.name ? "Editar Proceso" : "Agregar Proceso"}
+              </h2>
+              <button className="adminP-modal-close" onClick={handleCloseModal}>
                 ✕
               </button>
             </div>
-
-            <form onSubmit={handleSave} className="adminprocesos-form">
-              <div className="adminprocesos-form-group">
+            <form className="adminP-edit-form" onSubmit={handleSaveProcess}>
+              <div className="adminP-form-group">
                 <label>Nombre:</label>
                 <input
                   type="text"
-                  value={editingProceso.nombre}
-                  onChange={(e) =>
-                    setEditingProceso({
-                      ...editingProceso,
-                      nombre: e.target.value,
-                    })
-                  }
+                  value={editingProcess.name}
+                  onChange={(e) => setEditingProcess({ ...editingProcess, name: e.target.value })}
+                  placeholder="Nombre del proceso"
                   required
                 />
               </div>
-
-              <div className="adminprocesos-form-group">
+              <div className="adminP-form-group">
                 <label>Descripción:</label>
-                <textarea
-                  value={editingProceso.descripcion}
-                  onChange={(e) =>
-                    setEditingProceso({
-                      ...editingProceso,
-                      descripcion: e.target.value,
-                    })
-                  }
+                <input
+                  type="text"
+                  value={editingProcess.description}
+                  onChange={(e) => setEditingProcess({ ...editingProcess, description: e.target.value })}
+                  placeholder="Descripción del proceso"
                   required
                 />
               </div>
-
-              <div className="adminprocesos-form-group">
+              <div className="adminP-form-group">
                 <label>Requisitos:</label>
                 <input
                   type="text"
-                  value={editingProceso.requisitos}
-                  onChange={(e) =>
-                    setEditingProceso({
-                      ...editingProceso,
-                      requisitos: e.target.value,
-                    })
-                  }
+                  value={editingProcess.requirements}
+                  onChange={(e) => setEditingProcess({ ...editingProcess, requirements: e.target.value })}
+                  placeholder="Requisitos"
                   required
                 />
               </div>
-
-              <div className="adminprocesos-form-actions">
-                <button
-                  type="button"
-                  className="adminprocesos-btn-cancel"
-                  onClick={() => setShowModal(false)}
-                >
+              <div className="adminP-form-group">
+                <label>Tiempo estimado:</label>
+                <input
+                  type="text"
+                  value={editingProcess.time}
+                  onChange={(e) => setEditingProcess({ ...editingProcess, time: e.target.value })}
+                  placeholder="Tiempo estimado"
+                  required
+                />
+              </div>
+              <div className="adminP-form-actions">
+                <button type="button" className="adminP-btn-cancel" onClick={handleCloseModal}>
                   Cancelar
                 </button>
-                <button type="submit" className="adminprocesos-btn-save">
+                <button type="submit" className="adminP-btn-save">
                   Guardar
                 </button>
               </div>
@@ -217,6 +181,6 @@ const AdminProcesos = ({ onBack }) => {
       )}
     </div>
   );
-};
+}
 
-export default AdminProcesos;
+export default AdminP;

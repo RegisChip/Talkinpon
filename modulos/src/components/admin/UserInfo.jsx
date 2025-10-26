@@ -16,14 +16,17 @@ function UserInfo({ user, onBack, onLogout }) {
         <div className="userinfo-header-left">
           {onBack && (
             <button className="back-btn" onClick={onBack} title="Volver">
-              <i className="bi bi-arrow-left"></i>
+              <i className="bi bi-chevron-double-left"></i>
             </button>
           )}
           <h1 className="userinfo-title">TalkinPon</h1>
         </div>
 
-        {/* Icono solo visual */}
-        <i className="bi bi-person-circle user-icon"></i>
+        {/* Icono y texto alineados a la derecha */}
+        <div className="userinfo-header-right">
+          <i className="bi bi-person-circle user-icon"></i>
+          <h5>Super Administrador</h5>
+        </div>
       </header>
 
       <main className="userinfo-main">
@@ -33,7 +36,11 @@ function UserInfo({ user, onBack, onLogout }) {
           <div className="info-section">
             <label className="info-label">Usuario:</label>
             <p className="info-value">{user.name}</p>
-            <p className="info-subtitle">{user.role}</p>
+          </div>
+
+          <div className="info-section">
+            <label className="info-label">Rol:</label>
+            <p className="info-value">{user.role}</p>
           </div>
 
           <hr className="divider" />

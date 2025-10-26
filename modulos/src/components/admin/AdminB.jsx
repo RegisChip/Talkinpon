@@ -24,7 +24,7 @@ export default function AdminB() {
     } else if (lowerUsername.includes("proceso")) {
       navigate("/admin/adminP"); // dentro del módulo admin se mostrará AdminP
     } else if (lowerUsername.includes("ubicacion")) {
-      navigate("/admin/adminS"); // dentro del módulo admin se mostrará AdminU
+      navigate("/admin/adminU"); // dentro del módulo admin se mostrará AdminU
     } else {
       setError("Usuario no reconocido. Verifica tus credenciales.");
     }

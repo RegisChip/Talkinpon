@@ -24,25 +24,24 @@
   gap: 15px;
 }
 
+.userinfo-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .back-btn {
   width: 40px;
   height: 40px;
-  border: 2px solid #750f0f;
   background: transparent;
-  border-radius: 4px;
+  border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 45px;
   color: #750f0f;
   transition: all 0.3s ease;
-}
-
-.back-btn:hover {
-  background: #750f0f;
-  color: white;
-  transform: translateX(-2px);
 }
 
 .userinfo-title {
@@ -56,6 +55,13 @@
 .user-icon {
   font-size: 40px;
   color: #750f0f;
+}
+
+h5 {
+  color: #750f0f;
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0;
 }
 
 /* Main Section */
@@ -91,31 +97,23 @@
 }
 
 .info-section p{
-  color: #252222;
+  color: #777171;
 }
 
 .info-label {
   display: block;
   font-weight: 700;
-  color: #2d2d2d;
+  color: #750f0f;
   font-size: 16px;
   margin-bottom: 6px;
 }
 
 .info-value {
-  color: #666666;
-  font-size: 16px;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.info-subtitle {
   color: #888888;
   font-size: 14px;
   margin-top: 4px;
 }
+
 
 .divider {
   border: none;
@@ -149,7 +147,7 @@
 
 .btn-logout {
   background: #750f0f !important;
-  color: rgb(0, 0, 0) !important;
+  color: rgb(255, 255, 255) !important;
   border: none;
 }
 
@@ -171,6 +169,10 @@
 
   .userinfo-header-left {
     gap: 10px;
+  }
+
+  .userinfo-header-right {
+    justify-content: flex-start;
   }
 
   .userinfo-main {

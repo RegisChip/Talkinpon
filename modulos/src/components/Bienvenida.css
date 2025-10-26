@@ -29,13 +29,13 @@ html, body, #root {
   background-color: #ffffff;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: cente10pxr;
   position: relative;
-  padding: 0.75rem;
+  padding: 5px;
 }
 
 .bienvenida-header h1 {
-  font-size: 2.875rem;
+  font-size: 2.5rem;
   font-weight: 600;
   color: #750f0f;
 }
@@ -46,8 +46,8 @@ html, body, #root {
   top: 50%;
   transform: translateY(-50%);
   display: flex;
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 4.5rem;
+  height: 4.5rem;
   overflow: hidden;
 }
 
@@ -68,6 +68,7 @@ html, body, #root {
   padding: 1rem;
   box-sizing: border-box;
   border-top: 2px solid #750f0f;
+  gap: 10px;
 }
 
 /* Botones principales */
@@ -139,5 +140,6 @@ html, body, #root {
 .divider {
   width: 4px;
   background-color: #750f0f;
-  margin: 0 20px; 
+  margin: 0 20px;
+
 }

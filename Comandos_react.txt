@@ -22,8 +22,8 @@ Inside that directory, you can run several commands:
 
 We suggest that you begin by typing:
 
-  cd modulo-principal
-  npm start
+  npm start  cd modulo-principal
+
 
 Happy hacking!
 
