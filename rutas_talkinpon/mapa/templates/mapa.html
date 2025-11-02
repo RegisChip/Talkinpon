@@ -1,0 +1,334 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapa Interactivo</title>
+    <style>
+        body { font-family: Arial; background:#fafafa; text-align:center; }
+        #mapa { width:770px; height:680px; margin:auto; position:relative;
+                background-image:url('{% static "mapa-tec.png" %}'); background-size:770px 680px;
+                background-repeat:no-repeat; border:1px solid #333; box-shadow:0 0 10px rgba(0,0,0,0.3); }
+        .nodo { border-radius:50%; position:absolute;
+                transform:translate(-50%,-50%); cursor:pointer; transition:transform 0.2s; }
+        .nodo:hover { transform:translate(-50%,-50%) scale(1.3); }
+        .nodo.edificio { width:8px; height:8px; background:#007bff; }
+        .nodo.intermedio { width:6px; height:6px; background:#28a745; }
+        #relaciones { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:auto; }
+        .modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); }
+        .modal-content { background:#fff; margin:10% auto; padding:20px; width:300px; border-radius:8px; box-shadow:0 5px 15px rgba(0,0,0,0.3); }
+        .modal-header { font-weight:bold; text-align:center; margin-bottom:10px; }
+        .modal-footer { text-align:right; margin-top:15px; }
+        .modal-footer button { padding:5px 10px; margin-left:5px; border:none; border-radius:4px; cursor:pointer; }
+        .modal-footer #cancelBtn { background:#ccc; } .modal-footer #guardarBtn { background:#4CAF50; color:white; }
+        .modal label { display:block; margin:5px 0 2px; text-align:left; }
+        .modal input, .modal select { width:100%; padding:5px; margin-bottom:8px; box-sizing:border-box; }
+        #toast { visibility:hidden; min-width:250px; background:#4CAF50; color:white; text-align:center;
+                 border-radius:8px; padding:12px; position:fixed; z-index:2000; left:50%; bottom:30px;
+                 transform:translateX(-50%); opacity:0; transition:opacity 0.5s, bottom 0.5s; font-size:16px; }
+        #toast.show { visibility:visible; opacity:1; bottom:50px; }
+        .menu-opciones { position:absolute; background:white; border:1px solid #ccc; border-radius:5px;
+                         padding:6px 10px; box-shadow:0 2px 8px rgba(0,0,0,0.3); cursor:pointer; z-index:1500; font-size:14px; }
+    </style>
+</head>
+<body>
+<h1>Mapa Interactivo</h1>
+<div id="mapa"><svg id="relaciones" width="770" height="680"></svg></div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">Nueva Ubicación</div>
+        <div class="modal-body">
+            <label>X:</label><input type="text" id="coordX" readonly>
+            <label>Y:</label><input type="text" id="coordY" readonly>
+            <label>Tipo:</label>
+            <select id="tipoNodo"><option value="intermedio">Punto Intermedio</option><option value="edificio">Edificio</option></select>
+            <div id="camposEdificio" style="display:none;">
+                <label>Nombre:</label><input type="text" id="nombreEdificio">
+                <label>Uso:</label><input type="text" id="usoEdificio">
+                <label>Salones:</label><input type="number" id="numSalonesEdificio" min="0">
+                <label>Carreras:</label><input type="text" id="carrerasEdificio">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="cancelBtn">Cancelar</button>
+            <button id="guardarBtn">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const mapa = document.getElementById('mapa');
+const modal = document.getElementById('modal');
+const tipoSelect = document.getElementById('tipoNodo');
+const camposEdificio = document.getElementById('camposEdificio');
+const toast = document.getElementById('toast');
+const coordXInput = document.getElementById('coordX');
+const coordYInput = document.getElementById('coordY');
+const svg = document.getElementById('relaciones');
+
+let clickX=0, clickY=0, nodoSeleccionado=null, modoRelacion=false, lineaProvisional=null;
+
+// Mostrar campos de edificio
+tipoSelect.addEventListener('change',()=>{camposEdificio.style.display=tipoSelect.value==='edificio'?'block':'none';});
+
+// Toast
+function mostrarToast(msg){ toast.textContent=msg; toast.className="show"; setTimeout(()=>toast.className=toast.className.replace("show",""),3000); }
+
+// Crear nodo visual
+function crearNodo(x,y,nom,tipo,id=null){
+    const nodo=document.createElement('div');
+    nodo.classList.add('nodo',tipo);
+    nodo.style.left=`${x}px`; nodo.style.top=`${y}px`;
+    nodo.dataset.nom=nom; nodo.dataset.x=x; nodo.dataset.y=y; nodo.dataset.tipo=tipo;
+    if(id) nodo.dataset.id=id;
+    nodo.title=`${nom.toUpperCase()} (${tipo})`;
+    mapa.appendChild(nodo);
+
+    nodo.addEventListener('click', e=>{
+        e.stopPropagation();
+        if(modoRelacion) return;
+        mostrarMenuOpcionesNodo(nodo);
+    });
+    return nodo;
+}
+
+// Función para eliminar todas las relaciones entre dos nodos
+function eliminarRelacionEntreNodos(n1, n2){
+    const lineas = svg.querySelectorAll('line');
+    lineas.forEach(linea=>{
+        const lx1 = parseFloat(linea.getAttribute('x1')), ly1 = parseFloat(linea.getAttribute('y1'));
+        const lx2 = parseFloat(linea.getAttribute('x2')), ly2 = parseFloat(linea.getAttribute('y2'));
+        const x1 = parseFloat(n1.dataset.x), y1 = parseFloat(n1.dataset.y);
+        const x2 = parseFloat(n2.dataset.x), y2 = parseFloat(n2.dataset.y);
+
+        if( (lx1===x1 && ly1===y1 && lx2===x2 && ly2===y2) || (lx1===x2 && ly1===y2 && lx2===x1 && ly2===y1) ){
+            if(linea.dataset.id){
+                fetch("{% url 'guardar_ubicacion' %}",{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json','X-CSRFToken':'{{ csrf_token }}'},
+                    body:JSON.stringify({accion:'eliminar_relacion', id_relacion: linea.dataset.id})
+                });
+            }
+            linea.remove();
+        }
+    });
+}
+
+// Dibujar línea definitiva
+function dibujarLinea(n1, n2, id_relacion=null){
+    const x1 = parseFloat(n1.dataset.x), y1 = parseFloat(n1.dataset.y);
+    const x2 = parseFloat(n2.dataset.x), y2 = parseFloat(n2.dataset.y);
+    const linea = document.createElementNS("http://www.w3.org/2000/svg","line");
+    linea.setAttribute("x1", x1); 
+    linea.setAttribute("y1", y1);
+    linea.setAttribute("x2", x2); 
+    linea.setAttribute("y2", y2);
+    linea.setAttribute("stroke", "#8A2BE2"); 
+    linea.setAttribute("stroke-width", "2");
+    linea.style.cursor = "pointer";
+    if(id_relacion) linea.dataset.id = id_relacion;
+    svg.appendChild(linea);
+
+    // Listener para mostrar menú eliminar
+    linea.addEventListener('click', e=>{
+        e.stopPropagation();
+        const existente = document.querySelector('.menu-opciones'); if(existente) existente.remove();
+        const menu = document.createElement('div'); menu.classList.add('menu-opciones');
+        const midX = (x1 + x2)/2;
+        const midY = (y1 + y2)/2;
+        menu.style.left = `${midX}px`;
+        menu.style.top = `${midY}px`;
+        menu.innerHTML = `<div id="eliminarRelacionBtn">Eliminar relación(s)</div>`;
+        mapa.appendChild(menu);
+
+        document.getElementById('eliminarRelacionBtn').addEventListener('click', ()=>{
+            eliminarRelacionEntreNodos({dataset:{x:x1,y:y1}},{dataset:{x:x2,y:y2}});
+            menu.remove();
+            mostrarToast("Relación(es) eliminada(s)");
+        });
+
+        document.addEventListener('click', ev=>{ if(!menu.contains(ev.target)) menu.remove(); }, {once:true});
+    });
+    return linea;
+}
+
+// Cargar nodos y relaciones existentes
+const ubicaciones=JSON.parse('{{ ubicaciones|safe }}');
+ubicaciones.forEach(u=>crearNodo(u.pos_x,u.pos_y,u.nom_nodo,u.tipo,u.id_ubicacion));
+
+const relacionesDB=JSON.parse('{{ relaciones|safe }}');
+relacionesDB.forEach(r=>{
+    const n1=document.querySelector(`.nodo[data-id='${r.origen_id}']`);
+    const n2=document.querySelector(`.nodo[data-id='${r.destino_id}']`);
+    if(n1 && n2) dibujarLinea(n1,n2,r.id);
+});
+
+// Modal nuevo nodo
+mapa.addEventListener('click', e=>{
+    if(modoRelacion) return;
+    const rect=mapa.getBoundingClientRect();
+    clickX=e.clientX-rect.left; clickY=e.clientY-rect.top;
+    coordXInput.value=clickX.toFixed(2); coordYInput.value=clickY.toFixed(2);
+    tipoSelect.value='intermedio'; camposEdificio.style.display='none'; modal.style.display='block';
+});
+
+document.getElementById('cancelBtn').addEventListener('click',()=>modal.style.display='none');
+
+// Guardar nodo
+document.getElementById('guardarBtn').addEventListener('click', ()=>{
+    const tipo = tipoSelect.value;
+    const nombre = document.getElementById('nombreEdificio').value.trim();
+    const uso = document.getElementById('usoEdificio').value.trim();
+    const num_salones = parseInt(document.getElementById('numSalonesEdificio').value) || 0;
+    const carreras = document.getElementById('carrerasEdificio').value.trim();
+
+    if(tipo==='edificio' && !nombre){ alert('Ingrese un nombre'); return; }
+
+    fetch("{% url 'guardar_ubicacion' %}",{
+        method:'POST',
+        headers:{'Content-Type':'application/json','X-CSRFToken':'{{ csrf_token }}'},
+        body:JSON.stringify({
+            accion:'guardar', pos_x:clickX, pos_y:clickY, tipo:tipo,
+            nombre_edificio:nombre, uso:uso, num_salones:num_salones, carreras:carreras
+        })
+    }).then(res=>res.json()).then(data=>{
+        if(!data.error){
+            crearNodo(clickX, clickY, data.nom_nodo, data.tipo, data.id);
+            modal.style.display='none';
+            mostrarToast(`Nodo "${data.nom_nodo}" guardado`);
+            document.getElementById('nombreEdificio').value='';
+            document.getElementById('usoEdificio').value='';
+            document.getElementById('numSalonesEdificio').value='';
+            document.getElementById('carrerasEdificio').value='';
+            tipoSelect.value='intermedio';
+            camposEdificio.style.display='none';
+        } else alert("Error al guardar nodo");
+    });
+});
+
+// Menu nodo -> generar relación y eliminar nodo
+function mostrarMenuOpcionesNodo(nodo){
+    if(modoRelacion) return;
+    const existente = document.querySelector('.menu-opciones');
+    if(existente) existente.remove();
+    if(lineaProvisional){ lineaProvisional.remove(); lineaProvisional=null; }
+
+    const menu = document.createElement('div'); 
+    menu.classList.add('menu-opciones');
+    menu.style.left = `${parseFloat(nodo.dataset.x)+25}px`;
+    menu.style.top = `${parseFloat(nodo.dataset.y)}px`;
+    menu.innerHTML = `
+        <div id="crearRelacionBtn">Crear relación</div>
+        <div id="eliminarNodoBtn" style="margin-top:5px; color:red;">Eliminar nodo</div>
+    `;
+    mapa.appendChild(menu);
+
+    // Crear relación
+    document.getElementById('crearRelacionBtn').addEventListener('click', ()=>{
+        nodoSeleccionado = nodo;
+        modoRelacion = true;
+        menu.remove();
+        mostrarToast("Selecciona otro nodo para conectar");
+        document.addEventListener('mousemove', mostrarLineaProvisional);
+    });
+
+    // Eliminar nodo y todas sus relaciones
+    document.getElementById('eliminarNodoBtn').addEventListener('click', ()=>{
+        if(!confirm(`¿Deseas eliminar el nodo "${nodo.dataset.nom}" y todas sus relaciones?`)) return;
+
+        // 1️⃣ Llamada a backend para eliminar nodo + relaciones
+        fetch("{% url 'guardar_ubicacion' %}", {
+            method:'POST',
+            headers:{'Content-Type':'application/json','X-CSRFToken':'{{ csrf_token }}'},
+            body: JSON.stringify({accion:'eliminar_nodo', id_nodo: nodo.dataset.id})
+        }).then(res=>res.json()).then(data=>{
+if(data.ok){
+    // Recargar toda la página para reflejar cambios
+    location.reload();
+}
+        });
+    });
+
+    document.addEventListener('click', ev=>{
+        if(!menu.contains(ev.target)) menu.remove();
+    }, {once:true});
+}
+
+
+// Línea provisional
+function mostrarLineaProvisional(e){
+    if(!modoRelacion || !nodoSeleccionado) return;
+    const rect=mapa.getBoundingClientRect();
+    const x2=e.clientX-rect.left;
+    const y2=e.clientY-rect.top;
+    if(!lineaProvisional){
+        lineaProvisional = document.createElementNS("http://www.w3.org/2000/svg","line");
+        lineaProvisional.setAttribute("stroke","#888");
+        lineaProvisional.setAttribute("stroke-width","1");
+        lineaProvisional.setAttribute("stroke-dasharray","4 2");
+        svg.appendChild(lineaProvisional);
+    }
+    lineaProvisional.setAttribute("x1", nodoSeleccionado.dataset.x);
+    lineaProvisional.setAttribute("y1", nodoSeleccionado.dataset.y);
+    lineaProvisional.setAttribute("x2", x2);
+    lineaProvisional.setAttribute("y2", y2);
+}
+
+// Crear relación al presionar segundo nodo
+mapa.addEventListener('click', e=>{
+    if(!modoRelacion) return;
+    if(!e.target.classList.contains('nodo')) return;
+    const nodo2=e.target;
+    if(nodoSeleccionado.dataset.id===nodo2.dataset.id){ mostrarToast("No se puede conectar el mismo nodo"); return; }
+
+    const existente=document.querySelector('.menu-opciones'); if(existente) existente.remove();
+    const menu=document.createElement('div'); menu.classList.add('menu-opciones');
+    const midX=(parseFloat(nodoSeleccionado.dataset.x)+parseFloat(nodo2.dataset.x))/2;
+    const midY=(parseFloat(nodoSeleccionado.dataset.y)+parseFloat(nodo2.dataset.y))/2;
+    menu.style.left=`${midX}px`; menu.style.top=`${midY}px`;
+    menu.innerHTML=`<div id="aceptarRelacionBtn">Aceptar relación</div>`;
+    mapa.appendChild(menu);
+
+    document.getElementById('aceptarRelacionBtn').addEventListener('click', ()=>{
+        fetch("{% url 'guardar_ubicacion' %}",{
+            method:'POST',
+            headers:{'Content-Type':'application/json','X-CSRFToken':'{{ csrf_token }}'},
+            body:JSON.stringify({accion:'relacion', origen:nodoSeleccionado.dataset.id, destino:nodo2.dataset.id})
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(!data.error){
+                dibujarLinea(nodoSeleccionado, nodo2, data.id);
+                mostrarToast("Relación creada");
+                if(lineaProvisional){ lineaProvisional.remove(); lineaProvisional=null; }
+                modoRelacion=false; nodoSeleccionado=null; menu.remove();
+                document.removeEventListener('mousemove', mostrarLineaProvisional);
+                setTimeout(()=> location.reload(), 500);
+            } else alert("Error al crear relación");
+        });
+    });
+}, true);
+
+window.addEventListener('keydown', e=>{
+    if(e.key==="Escape" || e.key==="Esc"){
+        // Cerrar modal
+        if(modal.style.display==='block') modal.style.display='none';
+        // Cerrar menús flotantes
+        document.querySelectorAll('.menu-opciones').forEach(menu=>menu.remove());
+        // Ocultar toast
+        toast.className = toast.className.replace("show","");
+        // Línea provisional
+        if(lineaProvisional){ lineaProvisional.remove(); lineaProvisional=null; }
+        // Reset de modo relación
+        modoRelacion=false; nodoSeleccionado=null;
+    }
+});
+
+// Cerrar modal al clic fuera
+window.addEventListener('click', e=>{ if(e.target===modal) modal.style.display='none'; });
+</script>
+</body>
+</html>
