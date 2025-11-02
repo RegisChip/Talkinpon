@@ -6,8 +6,10 @@ import Ubicaciones from "./components/ubicac/Ubicaciones";
 import Procesos from "./components/procesos/Procesos";
 import AdminB from "./components/admin/AdminB";
 import AppAdmin from "./components/admin/AppAdmin";
+import Fusion from "./components/New/Nfusion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -21,7 +23,9 @@ root.render(
         {/* Login de administración */}
         <Route path="/adminB" element={<AdminB />} />
         {/* Módulo administrativo completo */}
-        <Route path="/admin/*" element={<AppAdmin />} />
+        <Route path="/adminB/*" element={<AppAdmin />} />
+
+        <Route path="/fusion" element={<Fusion />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
