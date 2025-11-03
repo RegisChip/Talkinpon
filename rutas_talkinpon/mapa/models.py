@@ -6,8 +6,8 @@ class Ubicacion(models.Model):
     """Representa un nodo en el mapa (edificio o punto intermedio)"""
     id_ubicacion = models.AutoField(primary_key=True)
     nom_nodo = models.CharField(max_length=45, unique=True, blank=True, null=True)
-    pos_x = models.FloatField(help_text="Coordenada X en píxeles")
-    pos_y = models.FloatField(help_text="Coordenada Y en píxeles")
+    pos_x = models.FloatField()
+    pos_y = models.FloatField()
     
     TIPO_NODO_CHOICES = [
         ('edificio', 'Edificio'),
@@ -19,18 +19,44 @@ class Ubicacion(models.Model):
     class Meta:
         db_table = 'ubicacion'
         ordering = ['nom_nodo']
-    
+
     def save(self, *args, **kwargs):
         if not self.nom_nodo or self.nom_nodo.strip() == "":
-            total = Ubicacion.objects.count()
             letras = list(string.ascii_lowercase)
-            if total < len(letras):
-                self.nom_nodo = letras[total]
-            else:
-                veces = total // len(letras)
-                resto = total % len(letras)
-                self.nom_nodo = letras[veces-1] + letras[resto]
-        self.nom_nodo = self.nom_nodo.lower()
+            existentes = list(
+                Ubicacion.objects.exclude(nom_nodo__isnull=True).values_list('nom_nodo', flat=True)
+            )
+            existentes = [n.lower() for n in existentes]
+
+            # Generar siguiente nombre único
+            def siguiente_nombre(existentes):
+                # Letras simples
+                for letra in letras:
+                    if letra not in existentes:
+                        return letra
+                # Combinaciones de dos letras
+                for l1 in letras:
+                    for l2 in letras:
+                        posible = l1 + l2
+                        if posible not in existentes:
+                            return posible
+                # Combinaciones con más letras si es necesario
+                i = 1
+                while True:
+                    posible = f"n{i}"
+                    if posible not in existentes:
+                        return posible
+                    i += 1
+
+            self.nom_nodo = siguiente_nombre(existentes)
+
+        # Asegurarse de que no sea None antes de lower()
+        if self.nom_nodo:
+            self.nom_nodo = self.nom_nodo.lower()
+        else:
+            # Esto nunca debería pasar, pero por seguridad
+            self.nom_nodo = "nodo"
+
         super().save(*args, **kwargs)
     
     def __str__(self):

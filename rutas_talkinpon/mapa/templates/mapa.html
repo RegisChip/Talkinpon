@@ -11,8 +11,8 @@
         .nodo { border-radius:50%; position:absolute;
                 transform:translate(-50%,-50%); cursor:pointer; transition:transform 0.2s; }
         .nodo:hover { transform:translate(-50%,-50%) scale(1.3); }
-        .nodo.edificio { width:8px; height:8px; background:#007bff; }
-        .nodo.intermedio { width:6px; height:6px; background:#28a745; }
+        .nodo.edificio { width:8px; height:8px; background:#00aaff; }
+        .nodo.intermedio { width:6px; height:6px; background:#70cd32; }
         #relaciones { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:auto; }
         .modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); }
         .modal-content { background:#fff; margin:10% auto; padding:20px; width:300px; border-radius:8px; box-shadow:0 5px 15px rgba(0,0,0,0.3); }
@@ -126,7 +126,7 @@ function dibujarLinea(n1, n2, id_relacion=null){
     linea.setAttribute("y1", y1);
     linea.setAttribute("x2", x2); 
     linea.setAttribute("y2", y2);
-    linea.setAttribute("stroke", "#8A2BE2"); 
+    linea.setAttribute("stroke", "#5b4c02"); 
     linea.setAttribute("stroke-width", "2");
     linea.style.cursor = "pointer";
     if(id_relacion) linea.dataset.id = id_relacion;
