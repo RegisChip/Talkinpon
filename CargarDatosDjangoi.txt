@@ -1,0 +1,22 @@
+......................EXPORTAR..................................
+
+# 1. Ubicaciones
+python manage.py dumpdata mapa.Ubicacion --indent 4 > ubicaciones.json
+
+# 2. Relaciones
+python manage.py dumpdata mapa.Relacion --indent 4 > relaciones.json
+
+# 3. Edificios (si tienes modelo separado)
+python manage.py dumpdata mapa.Edificio --indent 4 > edificios.json
+
+
+----------------------IMPORTAR-------------------------------
+
+# Primero las ubicaciones (los nodos deben existir antes de las relaciones)
+python manage.py loaddata ubicaciones.json
+
+# Luego los edificios (si aplica)
+python manage.py loaddata edificios.json
+
+# Finalmente las relaciones
+python manage.py loaddata relaciones.json

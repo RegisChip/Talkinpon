@@ -1,0 +1,466 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mapa Interactivo - Campus</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+    display:flex; flex-direction:column; align-items:center;
+    min-height:100vh; padding:20px;
+  }
+  .container{
+    background:white; border-radius:15px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.3);
+    padding:30px; max-width:1200px; width:100%;
+  }
+  h1{ text-align:center; color:#2c3e50; margin-bottom:25px; }
+
+  .panel-control{ display:flex; gap:15px; justify-content:center; margin-bottom:25px; flex-wrap:wrap; }
+  .modo-btn{
+    padding:15px 30px; border:3px solid #ddd; border-radius:10px; background:white;
+    cursor:pointer; font-size:16px; font-weight:600; transition:all .3s; display:flex; gap:10px; align-items:center;
+  }
+  .modo-btn:hover{ border-color:#667eea; transform:translateY(-2px); box-shadow:0 5px 15px rgba(102,126,234,.3); }
+  .modo-btn.active{ background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; border-color:#667eea; }
+
+  .btn-calcular{
+    padding:15px 35px; background:#27ae60; color:white; border:none; border-radius:10px;
+    font-size:16px; font-weight:600; cursor:pointer; transition:all .3s;
+  }
+  .btn-calcular:hover:not(:disabled){ background:#229954; transform:translateY(-2px); box-shadow:0 5px 15px rgba(39,174,96,.3); }
+  .btn-calcular:disabled{ background:#95a5a6; cursor:not-allowed; }
+
+  .btn-nueva{
+    padding:15px 35px; background:#3498db; color:white; border:none; border-radius:10px;
+    font-size:16px; font-weight:600; cursor:pointer; display:none;
+  }
+  .btn-nueva:hover{ background:#2e86c1; transform:translateY(-2px); }
+
+  .info-seleccion{
+    background:#f8f9fa; padding:20px; border-radius:10px; margin-bottom:25px;
+  }
+  .info-item{ display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:15px; }
+  .info-label{ font-weight:600; color:#2c3e50; min-width:180px; }
+  .info-value{ color:#7f8c8d; }
+  .info-value.seleccionado{ color:#27ae60; font-weight:600; }
+
+  .mapa-container{
+    position:relative; width:770px; height:680px; margin:0 auto;
+    border:4px solid #34495e; border-radius:10px; overflow:hidden;
+    background:#ecf0f1; box-shadow:0 10px 40px rgba(0,0,0,0.2);
+  }
+  .mapa-imagen{ width:100%; height:100%; object-fit:contain; pointer-events:none; user-select:none; }
+
+  .ubicacion-btn{
+    position:absolute; padding:3px 8px; background:rgba(255,255,255,.95);
+    border:3px solid #3498db; border-radius:8px;
+    font-size:8px; font-weight:600; color:#2c3e50; cursor:pointer;
+    transition:all .3s; transform:translate(-50%,-50%);
+    white-space:nowrap; box-shadow:0 3px 10px rgba(0,0,0,.2); z-index:10;
+  }
+  .ubicacion-btn:hover{ transform:translate(-50%,-50%) scale(1.1); box-shadow:0 5px 15px rgba(0,0,0,.3); z-index:20; }
+  .ubicacion-btn.origen-fijo{ background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%); color:white; border-color:#f5576c; }
+  .ubicacion-btn.seleccionado-origen{ background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; border-color:#667eea; }
+  .ubicacion-btn.seleccionado-destino{ background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%); color:white; border-color:#11998e; }
+
+  .notification{ 
+    position:fixed; top:20px; right:20px; padding:15px 25px; border-radius:8px; color:white; font-weight:600;
+    z-index:1000; animation:slideIn .3s; box-shadow:0 5px 20px rgba(0,0,0,.3); 
+  }
+  .notification.info{ background:#3498db } 
+  .notification.success{ background:#27ae60 } 
+  .notification.warning{ background:#f39c12 }
+  .notification.error{ background:#e74c3c }
+  
+  @keyframes slideIn{ from{ transform:translateX(400px); opacity:0 } to{ transform:translateX(0); opacity:1 } }
+
+  /* Debug panel */
+  .debug-panel{
+    background:#2c3e50; color:#ecf0f1; padding:15px; border-radius:8px; 
+    margin-top:20px; font-family:monospace; font-size:12px; max-height:200px; overflow-y:auto;
+  }
+  .debug-panel h4{ color:#3498db; margin-bottom:10px; }
+  .debug-line{ margin:3px 0; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>🗺️ Mapa Interactivo del Campus</h1>
+
+    <div class="panel-control">
+      <button id="btnModoUno" class="modo-btn active">📌 Ver Ubicación (1)</button>
+      <button id="btnModoDos" class="modo-btn">📍 Ruta (2 ubicaciones)</button>
+      <button id="btnCalcular" class="btn-calcular">🚀 Calcular Ruta</button>
+      <button id="btnNuevaRuta" class="btn-nueva">🔄 Buscar nueva ruta</button>
+    </div>
+
+    <div class="info-seleccion">
+      <div class="info-item" id="campoUbicacionActual">
+        <span class="info-label">📍 Tu ubicación actual:</span>
+        <span class="info-value seleccionado" id="infoOrigenFijo">Cargando...</span>
+      </div>
+      <div class="info-item" id="campoOrigen">
+        <span class="info-label">🔵 Origen:</span>
+        <span class="info-value" id="infoOrigen">No seleccionado</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">🟢 Destino:</span>
+        <span class="info-value" id="infoDestino">No seleccionado</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">📊 Modo actual:</span>
+        <span class="info-value seleccionado" id="infoModo">Una ubicación</span>
+      </div>
+    </div>
+
+    <div class="mapa-container" id="mapaContainer">
+      <img src="{% static 'mapa-tec.png' %}" alt="Mapa del campus" class="mapa-imagen">
+    </div>
+
+    <!-- Panel de debug -->
+    <div class="debug-panel" id="debugPanel">
+      <h4>🔍 Debug Console</h4>
+      <div id="debugLog"></div>
+    </div>
+  </div>
+
+<script>
+// Edificios desde Django
+const edificios = JSON.parse('{{ edificios|escapejs }}');
+
+let modo = 'uno';
+let origenFijoId = null;
+let seleccionOrigenId = null;
+let seleccionDestinoId = null;
+
+const campoUbicacionActual = document.getElementById('campoUbicacionActual');
+const campoOrigen = document.getElementById('campoOrigen');
+const infoOrigenFijo = document.getElementById('infoOrigenFijo');
+const infoOrigen = document.getElementById('infoOrigen');
+const infoDestino = document.getElementById('infoDestino');
+const infoModo = document.getElementById('infoModo');
+const btnModoDos = document.getElementById('btnModoDos');
+const btnModoUno = document.getElementById('btnModoUno');
+const btnCalcular = document.getElementById('btnCalcular');
+const btnNuevaRuta = document.getElementById('btnNuevaRuta');
+const cont = document.getElementById('mapaContainer');
+const debugLog = document.getElementById('debugLog');
+
+// Función de debug
+function log(msg, tipo='info'){
+  console.log(msg);
+  const line = document.createElement('div');
+  line.className = 'debug-line';
+  const timestamp = new Date().toLocaleTimeString();
+  const icon = tipo==='error' ? '❌' : tipo==='success' ? '✅' : tipo==='warning' ? '⚠️' : 'ℹ️';
+  line.innerHTML = `[${timestamp}] ${icon} ${msg}`;
+  debugLog.appendChild(line);
+  debugLog.scrollTop = debugLog.scrollHeight;
+}
+
+window.addEventListener('load', () => {
+  log(`Sistema iniciado. Edificios cargados: ${edificios.length}`);
+  inicializar();
+});
+
+function inicializar(){
+  if (Array.isArray(edificios) && edificios.length > 0){
+    // Buscar el edificio cuyo nombre sea exactamente "A"
+    const edificioA = edificios.find(e => e.nombre_edificio.trim().toUpperCase() === 'A');
+
+    if (edificioA) {
+      origenFijoId = Number(edificioA.id);
+      infoOrigenFijo.textContent = edificioA.nombre_edificio;
+      log(`Origen fijo establecido: ${edificioA.nombre_edificio} (ID: ${origenFijoId})`);
+    } else {
+      // Si no existe "A", usar el primero como fallback
+      origenFijoId = Number(edificios[0].id);
+      infoOrigenFijo.textContent = edificios[0].nombre_edificio;
+      log(`No se encontró edificio 'A', usando ${edificios[0].nombre_edificio} como origen (ID: ${origenFijoId})`, 'warning');
+    }
+  } else {
+    infoOrigenFijo.textContent = 'No hay edificios';
+    log('ERROR: No hay edificios disponibles', 'error');
+  }
+  configurarEventos();
+  cambiarModo('uno');
+}
+
+function configurarEventos(){
+  btnModoUno.addEventListener('click',()=>cambiarModo('uno'));
+  btnModoDos.addEventListener('click',()=>cambiarModo('dos'));
+  btnCalcular.addEventListener('click', calcularRuta);
+  btnNuevaRuta.addEventListener('click',buscarNuevaRuta);
+}
+
+function cambiarModo(nuevo){
+  modo = nuevo;
+  btnModoUno.classList.toggle('active', modo==='uno');
+  btnModoDos.classList.toggle('active', modo==='dos');
+  infoModo.textContent = (modo==='uno')?'Una ubicación':'Dos ubicaciones';
+  campoUbicacionActual.style.display = (modo==='uno')?'flex':'none';
+  campoOrigen.style.display = (modo==='dos')?'flex':'none';
+  seleccionOrigenId = null;
+  seleccionDestinoId = null;
+  infoOrigen.textContent = 'No seleccionado';
+  infoDestino.textContent = 'No seleccionado';
+  btnNuevaRuta.style.display = 'none';
+  btnCalcular.style.display = 'inline-block';
+  renderizarBotones();
+  log(`Modo cambiado a: ${modo==='uno'?'Ver Ubicación':'Calcular Ruta'}`);
+}
+
+function renderizarBotones(){
+  cont.querySelectorAll('.ubicacion-btn').forEach(b=>b.remove());
+  const canvasPrev = document.getElementById('rutaCanvas');
+  if (canvasPrev) canvasPrev.remove();
+
+  (Array.isArray(edificios) ? edificios : []).forEach(e=>{
+    const b=document.createElement('button');
+    b.className='ubicacion-btn';
+    b.textContent=e.nombre_edificio;
+    b.style.left=(Number(e.pos_x) || 0) + 'px';
+    b.style.top=(Number(e.pos_y) || 0) + 'px';
+    b.dataset.id = String(e.id);
+    b.onclick = () => manejarClick(Number(e.id));
+
+    if(modo==='uno' && Number(e.id)===origenFijoId) b.classList.add('origen-fijo');
+    if(Number(e.id)===seleccionOrigenId) b.classList.add('seleccionado-origen');
+    if(Number(e.id)===seleccionDestinoId) b.classList.add('seleccionado-destino');
+
+    cont.appendChild(b);
+  });
+}
+
+function manejarClick(id){
+  id = Number(id);
+  if (Number.isNaN(id)) return;
+
+  const ed = edificios.find(x=>Number(x.id)===id);
+  const nombreEd = ed ? ed.nombre_edificio : 'Desconocido';
+
+  if(modo==='uno'){
+    if(id===origenFijoId){
+      mostrarNotificacion('Este es el origen fijo','warning'); 
+      return;
+    }
+    seleccionDestinoId = id;
+    infoDestino.textContent = nombreEd;
+    seleccionOrigenId = null;
+    log(`Destino seleccionado: ${nombreEd} (ID: ${id})`);
+  } else {
+    if(!seleccionOrigenId){
+      seleccionOrigenId = id;
+      infoOrigen.textContent = nombreEd;
+      log(`Origen seleccionado: ${nombreEd} (ID: ${id})`);
+    } else if(!seleccionDestinoId){
+      if(id===seleccionOrigenId){ 
+        mostrarNotificacion('Elige otro edificio','warning'); 
+        return; 
+      }
+      seleccionDestinoId = id;
+      infoDestino.textContent = nombreEd;
+      log(`Destino seleccionado: ${nombreEd} (ID: ${id})`);
+    } else {
+      seleccionOrigenId = seleccionDestinoId;
+      seleccionDestinoId = id;
+      const eo = edificios.find(x=>Number(x.id)===seleccionOrigenId);
+      infoOrigen.textContent = eo ? eo.nombre_edificio : 'N/A';
+      infoDestino.textContent = nombreEd;
+      log(`Ruta actualizada: ${eo?.nombre_edificio} → ${nombreEd}`);
+    }
+  }
+  renderizarBotones();
+}
+
+async function calcularRuta(){
+  let origenId, destinoId;
+  
+  if (modo === 'uno') {
+    origenId = Number(origenFijoId);
+    destinoId = Number(seleccionDestinoId);
+    if (!destinoId) {
+      mostrarNotificacion('Selecciona destino', 'warning');
+      return;
+    }
+  } else {
+    origenId = Number(seleccionOrigenId);
+    destinoId = Number(seleccionDestinoId);
+    if (!origenId || !destinoId) {
+      mostrarNotificacion('Selecciona origen y destino', 'warning');
+      return;
+    }
+  }
+
+  if (Number.isNaN(origenId) || Number.isNaN(destinoId)) {
+    log('ERROR: IDs inválidos', 'error');
+    return mostrarNotificacion('IDs inválidos', 'warning');
+  }
+
+  const origenNombre = edificios.find(e=>Number(e.id)===origenId)?.nombre_edificio;
+  const destinoNombre = edificios.find(e=>Number(e.id)===destinoId)?.nombre_edificio;
+  
+  log(`🚀 Iniciando cálculo de ruta: ${origenNombre} (ID:${origenId}) → ${destinoNombre} (ID:${destinoId})`);
+
+  const url = `/ruta/dijkstra/?origen=${encodeURIComponent(origenId)}&destino=${encodeURIComponent(destinoId)}`;
+  log(`URL del request: ${url}`);
+
+  try {
+    log('Enviando petición al servidor...');
+    const res = await fetch(url);
+    log(`Respuesta recibida: Status ${res.status}`);
+    
+    if (!res.ok) {
+      let errTxt = `Error servidor (${res.status})`;
+      try { 
+        const j = await res.json(); 
+        if (j.error) errTxt = j.error; 
+      } catch(e){ }
+      log(`ERROR del servidor: ${errTxt}`, 'error');
+      return mostrarNotificacion(errTxt, 'error');
+    }
+    
+    const data = await res.json();
+    log(`Datos recibidos: ${JSON.stringify(data)}`);
+
+    if (!data || !data.success) {
+      log('ERROR: Respuesta no exitosa', 'error');
+      return mostrarNotificacion(data?.error || 'Error desconocido', 'error');
+    }
+
+    if (!data.camino || data.camino.length === 0) {
+      log('ERROR: El camino está vacío', 'error');
+      return mostrarNotificacion('No se encontró ruta', 'warning');
+    }
+
+    log(`✅ Camino encontrado: ${data.camino.length} nodos`, 'success');
+    log(`   Distancia total: ${data.distancia_total?.toFixed(2)} unidades`);
+    
+    // Dibujar ruta en ROJO
+    dibujarRuta(data.camino, data.distancia_total);
+
+    // Ocultar botones no seleccionados
+    document.querySelectorAll('.ubicacion-btn').forEach(btn=>{
+      const id = Number(btn.dataset.id);
+      if (id !== origenId && id !== destinoId) {
+        btn.style.display = 'none';
+      }
+    });
+
+    btnCalcular.style.display = 'none';
+    btnNuevaRuta.style.display = 'inline-block';
+    
+    const dist = (data.distancia_total || 0).toFixed(1);
+    mostrarNotificacion(`Ruta calculada: ${dist} unidades`, 'success');
+
+  } catch (err) {
+    log(`ERROR de red: ${err.message}`, 'error');
+    console.error('Error calcularRuta:', err);
+    mostrarNotificacion('Error al calcular ruta', 'error');
+  }
+}
+
+function dibujarRuta(camino, distancia){
+  log(`📍 Dibujando ruta con ${camino.length} puntos`);
+  
+  // Determinar coordenadas
+  let puntos = [];
+  if (camino.length > 0 && typeof camino[0] === 'object' && ('pos_x' in camino[0] || 'x' in camino[0])) {
+    puntos = camino.map(p => ({
+      x: Number(p.pos_x ?? p.x),
+      y: Number(p.pos_y ?? p.y),
+      nombre: p.nom_nodo || p.nombre || '?'
+    })).filter(p => !Number.isNaN(p.x) && !Number.isNaN(p.y));
+  } else {
+    puntos = camino.map(id=>{
+      const e = edificios.find(x=>Number(x.id)===Number(id));
+      return e ? { x: Number(e.pos_x), y: Number(e.pos_y), nombre: e.nombre_edificio } : null;
+    }).filter(Boolean);
+  }
+
+  log(`   Puntos válidos: ${puntos.length}`);
+  puntos.forEach((p, i) => log(`   ${i+1}. ${p.nombre} (${p.x}, ${p.y})`));
+
+  if (puntos.length < 2) {
+    log('ERROR: No hay suficientes puntos para dibujar', 'error');
+    return mostrarNotificacion('No hay suficientes puntos', 'warning');
+  }
+
+  // Limpiar canvas previo
+  const canvasPrev = document.getElementById('rutaCanvas');
+  if (canvasPrev) canvasPrev.remove();
+
+  // Crear canvas
+  const c = document.createElement('canvas');
+  c.id = 'rutaCanvas';
+  c.width = cont.clientWidth;
+  c.height = cont.clientHeight;
+  c.style.position = 'absolute';
+  c.style.left = '0';
+  c.style.top = '0';
+  c.style.pointerEvents = 'none';
+  c.style.zIndex = 5;
+  cont.appendChild(c);
+
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0, 0, c.width, c.height);
+  
+  // DIBUJAR EN ROJO
+  ctx.strokeStyle = '#FF0000';  // ROJO PURO
+  ctx.lineWidth = 5;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.shadowColor = 'rgba(255, 0, 0, 0.5)';
+  ctx.shadowBlur = 8;
+
+  log('🎨 Dibujando línea roja...');
+  ctx.beginPath();
+  ctx.moveTo(puntos[0].x, puntos[0].y);
+  for (let i = 1; i < puntos.length; i++){
+    ctx.lineTo(puntos[i].x, puntos[i].y);
+  }
+  ctx.stroke();
+
+  // Marcar nodos con círculos blancos
+  ctx.fillStyle = 'white';
+  ctx.strokeStyle = '#FF0000';
+  ctx.lineWidth = 3;
+  for (const p of puntos){
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  log(`✅ Ruta dibujada exitosamente en ROJO`, 'success');
+}
+
+function buscarNuevaRuta(){
+  log('🔄 Reiniciando para nueva búsqueda');
+  document.querySelectorAll('.ubicacion-btn').forEach(btn=>btn.style.display='block');
+  seleccionOrigenId=null;
+  seleccionDestinoId=null;
+  infoOrigen.textContent='No seleccionado';
+  infoDestino.textContent='No seleccionado';
+  const canvas=document.getElementById('rutaCanvas');
+  if(canvas) canvas.remove();
+  btnNuevaRuta.style.display='none';
+  btnCalcular.style.display='inline-block';
+  renderizarBotones();
+}
+
+function mostrarNotificacion(msg, tipo='info'){
+  const div=document.createElement('div');
+  div.className=`notification ${tipo}`;
+  div.textContent=msg;
+  document.body.appendChild(div);
+  setTimeout(()=>div.remove(),3500);
+}
+</script>
+</body>
+</html>
