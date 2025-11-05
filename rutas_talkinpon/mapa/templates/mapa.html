@@ -1,34 +1,234 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Mapa Interactivo</title>
-    <style>
-        body { font-family: Arial; background:#fafafa; text-align:center; }
-        #mapa { width:770px; height:680px; margin:auto; position:relative;
-                background-image:url('{% static "mapa-tec.png" %}'); background-size:770px 680px;
-                background-repeat:no-repeat; border:1px solid #333; box-shadow:0 0 10px rgba(0,0,0,0.3); }
-        .nodo { border-radius:50%; position:absolute;
-                transform:translate(-50%,-50%); cursor:pointer; transition:transform 0.2s; }
-        .nodo:hover { transform:translate(-50%,-50%) scale(1.3); }
-        .nodo.edificio { width:8px; height:8px; background:#00aaff; }
-        .nodo.intermedio { width:6px; height:6px; background:#70cd32; }
-        #relaciones { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:auto; }
-        .modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); }
-        .modal-content { background:#fff; margin:10% auto; padding:20px; width:300px; border-radius:8px; box-shadow:0 5px 15px rgba(0,0,0,0.3); }
-        .modal-header { font-weight:bold; text-align:center; margin-bottom:10px; }
-        .modal-footer { text-align:right; margin-top:15px; }
-        .modal-footer button { padding:5px 10px; margin-left:5px; border:none; border-radius:4px; cursor:pointer; }
-        .modal-footer #cancelBtn { background:#ccc; } .modal-footer #guardarBtn { background:#4CAF50; color:white; }
-        .modal label { display:block; margin:5px 0 2px; text-align:left; }
-        .modal input, .modal select { width:100%; padding:5px; margin-bottom:8px; box-sizing:border-box; }
-        #toast { visibility:hidden; min-width:250px; background:#4CAF50; color:white; text-align:center;
-                 border-radius:8px; padding:12px; position:fixed; z-index:2000; left:50%; bottom:30px;
-                 transform:translateX(-50%); opacity:0; transition:opacity 0.5s, bottom 0.5s; font-size:16px; }
-        #toast.show { visibility:visible; opacity:1; bottom:50px; }
-        .menu-opciones { position:absolute; background:white; border:1px solid #ccc; border-radius:5px;
-                         padding:6px 10px; box-shadow:0 2px 8px rgba(0,0,0,0.3); cursor:pointer; z-index:1500; font-size:14px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa Interactivo</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #e8f1f9, #cfdff0);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+        padding: 30px 0;
+    }
+
+    h1 {
+        color: #005f73;
+        margin-bottom: 20px;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+        letter-spacing: 0.5px;
+        font-size: 28px;
+    }
+
+    #mapa {
+        width: 770px;
+        height: 680px;
+        background-image: url('{% static "mapa-tec.png" %}');
+        background-size: 770px 680px;
+        background-repeat: no-repeat;
+        position: relative;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        border: 2px solid #0077b6;
+        overflow: hidden;
+    }
+
+    #relaciones {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: auto;
+    }
+
+    /* Nodos */
+    .nodo {
+        border-radius: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.3s;
+        border: 2px solid white;
+    }
+
+    .nodo:hover {
+        transform: translate(-50%, -50%) scale(1.3);
+        box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    .nodo.edificio {
+        width: 10px;
+        height: 10px;
+        background: #00aaff;
+    }
+
+    .nodo.intermedio {
+        width: 8px;
+        height: 8px;
+        background: #8ac926;
+    }
+
+    /* Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(3px);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        width: 320px;
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-header {
+        font-size: 18px;
+        font-weight: bold;
+        color: #005f73;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .modal label {
+        display: block;
+        text-align: left;
+        font-weight: 600;
+        color: #333;
+        margin-top: 8px;
+    }
+
+    .modal input, .modal select {
+        width: 100%;
+        padding: 7px;
+        margin-top: 4px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .modal-footer {
+        text-align: right;
+        margin-top: 15px;
+    }
+
+    .modal-footer button {
+        padding: 8px 14px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        transition: background 0.3s;
+    }
+
+    #cancelBtn {
+        background: #d0d0d0;
+        color: #333;
+    }
+
+    #cancelBtn:hover {
+        background: #b5b5b5;
+    }
+
+    #guardarBtn {
+        background: #0077b6;
+        color: #fff;
+    }
+
+    #guardarBtn:hover {
+        background: #005f8f;
+    }
+
+    /* Toast */
+    #toast {
+        visibility: hidden;
+        min-width: 250px;
+        background: #0077b6;
+        color: white;
+        text-align: center;
+        border-radius: 10px;
+        padding: 14px;
+        position: fixed;
+        z-index: 2000;
+        left: 50%;
+        bottom: 30px;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.5s, bottom 0.5s;
+        font-size: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    #toast.show {
+        visibility: visible;
+        opacity: 1;
+        bottom: 50px;
+    }
+
+    /* Menú opciones */
+    .menu-opciones {
+        position: absolute;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 8px 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        cursor: pointer;
+        z-index: 1500;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+
+    .menu-opciones:hover {
+        box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+    }
+
+    .menu-opciones div {
+        padding: 6px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .menu-opciones div:last-child {
+        border: none;
+    }
+
+    .menu-opciones div:hover {
+        color: #0077b6;
+        font-weight: 600;
+    }
+
+    /* Línea hover */
+    line {
+        transition: stroke 0.2s;
+    }
+
+    line:hover {
+        stroke: #0099cc;
+        stroke-width: 3;
+    }
+</style>
 </head>
 <body>
 <h1>Mapa Interactivo</h1>
@@ -245,10 +445,10 @@ function mostrarMenuOpcionesNodo(nodo){
             headers:{'Content-Type':'application/json','X-CSRFToken':'{{ csrf_token }}'},
             body: JSON.stringify({accion:'eliminar_nodo', id_nodo: nodo.dataset.id})
         }).then(res=>res.json()).then(data=>{
-if(data.ok){
-    // Recargar toda la página para reflejar cambios
-    location.reload();
-}
+            if(data.ok){
+                // Recargar toda la página para reflejar cambios
+                location.reload();
+            }
         });
     });
 
