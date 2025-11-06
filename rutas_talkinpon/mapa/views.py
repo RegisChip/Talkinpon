@@ -473,4 +473,3 @@ def calcular_direccion(dx, dy):
         return "hacia arriba"
     else:  # 292.5 <= angulo < 337.5
         return "diagonal arriba-derecha"
-

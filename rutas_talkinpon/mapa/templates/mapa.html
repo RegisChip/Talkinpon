@@ -37,7 +37,9 @@
         border-radius: 15px;
         box-shadow: 0 6px 20px rgba(0,0,0,0.25);
         border: 2px solid #0077b6;
-        overflow: hidden;
+        z-index: 1; /* 🔽 Mantiene el mapa en su lugar pero debajo del menú */
+    overflow: visible !important;
+
     }
 
     #relaciones {
@@ -188,36 +190,42 @@
     }
 
     /* Menú opciones */
-    .menu-opciones {
-        position: absolute;
-        background: white;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 8px 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        cursor: pointer;
-        z-index: 1500;
-        font-size: 14px;
-        transition: all 0.2s;
-    }
+.menu-opciones {
+    position: absolute !important;         /* 🔥 fija en la ventana, no dentro del mapa */
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 4px 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 2147483647 !important;     /* 🔥 valor máximo permitido por CSS */
+    font-size: 14px;
+    transition: all 0.2s;
+    overflow: visible;
+    white-space: nowrap;
+    pointer-events: auto;
+}
 
-    .menu-opciones:hover {
-        box-shadow: 0 6px 12px rgba(0,0,0,0.25);
-    }
+.menu-opciones:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+}
 
-    .menu-opciones div {
-        padding: 6px 0;
-        border-bottom: 1px solid #eee;
-    }
+.menu-opciones div {
+    padding: 6px 10px;
+    border-bottom: 1px solid #eee;
+    background: transparent;
+    z-index: inherit;
+}
 
-    .menu-opciones div:last-child {
-        border: none;
-    }
+.menu-opciones div:last-child {
+    border: none;
+}
 
-    .menu-opciones div:hover {
-        color: #0077b6;
-        font-weight: 600;
-    }
+.menu-opciones div:hover {
+    color: #0077b6;
+    font-weight: 600;
+}
+
 
     /* Línea hover */
     line {
@@ -228,6 +236,7 @@
         stroke: #0099cc;
         stroke-width: 3;
     }
+
 </style>
 </head>
 <body>

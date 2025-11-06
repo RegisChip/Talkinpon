@@ -1,5 +1,3 @@
-primera version del codigo
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
@@ -8,30 +6,28 @@ primera version del codigo
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Mapa Interactivo - Campus</title>
 <style>
+
+/* === TUS ESTILOS ORIGINALES === */
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
+  display: flex; flex-direction: column; align-items: center;
+  min-height: 100vh; padding: 20px;
 }
+
 .container {
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  padding: 30px;
-  max-width: 1200px;
-  width: 100%;
+  background: #fff; border-radius: 15px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 30px; max-width: 1200px; width: 100%;
 }
+
 h1 { text-align:center; color:#2c3e50; margin-bottom:25px; }
 .panel-control { display:flex; gap:15px; justify-content:center; margin-bottom:25px; flex-wrap:wrap; }
 .modo-btn{
   padding:12px 25px; border:2px solid #ddd; border-radius:10px; background:white;
   cursor:pointer; font-size:15px; font-weight:600; transition:all .3s; display:flex; gap:8px; align-items:center;
 }
+
 .modo-btn:hover{ border-color:#667eea; transform:translateY(-2px); box-shadow:0 5px 15px rgba(102,126,234,.3); }
 .modo-btn.active{ background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; border-color:#667eea; }
 
@@ -48,17 +44,15 @@ h1 { text-align:center; color:#2c3e50; margin-bottom:25px; }
 .info-value.seleccionado{ color:#27ae60; font-weight:600; }
 
 #mapa {
-  position: relative;
-  width: 770px;
-  height: 680px;
+  position: relative; width: 770px; height: 680px;
   background-image: url('{% static "mapa-tec.png" %}');
   background-size: 770px 680px;
   background-repeat: no-repeat;
   background-position: 0 0;
-  border: 3px solid #34495e;
-  border-radius: 8px;
+  border: 3px solid #34495e; 
+  border-radius: 8px; 
   box-shadow: 0 8px 35px rgba(0,0,0,0.25);
-  margin: 0 auto 20px;
+  margin: 0 auto 20px; 
   overflow: visible;
 }
 
@@ -100,6 +94,7 @@ h1 { text-align:center; color:#2c3e50; margin-bottom:25px; }
 .debug-panel{ background:#2c3e50; color:#ecf0f1; padding:15px; border-radius:8px; margin-top:20px; font-family:monospace; font-size:12px; max-height:200px; overflow-y:auto; }
 .debug-panel h4{ color:#3498db; margin-bottom:10px; }
 .debug-line{ margin:3px 0; }
+
 </style>
 </head>
 <body>
@@ -149,6 +144,7 @@ h1 { text-align:center; color:#2c3e50; margin-bottom:25px; }
 </div>
 
 <script>
+/* === TUS VARIABLES ORIGINALES === */
 const MAP_W = 770;
 const MAP_H = 680;
 const edificios = JSON.parse('{{ edificios|escapejs }}');
@@ -158,6 +154,7 @@ let origenFijoId = null;
 let seleccionOrigenId = null;
 let seleccionDestinoId = null;
 
+/* === TUS REFERENCIAS ORIGINALES === */
 const campoUbicacionActual = document.getElementById('campoUbicacionActual');
 const campoOrigen = document.getElementById('campoOrigen');
 const infoOrigenFijo = document.getElementById('infoOrigenFijo');
@@ -172,246 +169,162 @@ const cont = document.getElementById('mapa');
 const svg = document.getElementById('relaciones');
 const debugLog = document.getElementById('debugLog');
 
-function log(msg, tipo='info'){
+function log(msg,tipo='info'){
   console.log(msg);
-  const line = document.createElement('div');
-  line.className = 'debug-line';
-  const timestamp = new Date().toLocaleTimeString();
-  const icon = tipo==='error' ? '❌' : tipo==='success' ? '✅' : tipo==='warning' ? '⚠️' : 'ℹ️';
-  line.innerHTML = `[${timestamp}] ${icon} ${msg}`;
+  const line=document.createElement('div');
+  line.className='debug-line';
+  const t=new Date().toLocaleTimeString();
+  const icon=tipo==='error'?'❌':tipo==='success'?'✅':tipo==='warning'?'⚠️':'ℹ️';
+  line.innerHTML=`[${t}] ${icon} ${msg}`;
   debugLog.appendChild(line);
-  debugLog.scrollTop = debugLog.scrollHeight;
+  debugLog.scrollTop=debugLog.scrollHeight;
 }
 
-window.addEventListener('load', () => {
+/* === INICIALIZACIÓN === */
+window.addEventListener('load',()=>{
   log(`Sistema iniciado. Edificios cargados: ${edificios.length}`);
   inicializar();
 });
 
 function inicializar(){
-  if (Array.isArray(edificios) && edificios.length > 0){
-    const edificioA = edificios.find(e => e.nombre_edificio.trim().toUpperCase() === 'A');
-    if (edificioA) {
-      origenFijoId = Number(edificioA.id);
-      infoOrigenFijo.textContent = edificioA.nombre_edificio;
-      log(`Origen fijo establecido: ${edificioA.nombre_edificio} (ID: ${origenFijoId})`);
-    } else {
-      origenFijoId = Number(edificios[0].id);
-      infoOrigenFijo.textContent = edificios[0].nombre_edificio;
-      log(`No se encontró edificio 'A', usando ${edificios[0].nombre_edificio} como origen (ID: ${origenFijoId})`, 'warning');
-    }
-  } else {
-    infoOrigenFijo.textContent = 'No hay edificios';
-    log('ERROR: No hay edificios disponibles', 'error');
-  }
+  const edificioA=edificios.find(e=>e.nombre_edificio.trim().toUpperCase()==='A');
+  origenFijoId=edificioA?Number(edificioA.id):Number(edificios[0].id);
+  infoOrigenFijo.textContent=edificioA?edificioA.nombre_edificio:edificios[0].nombre_edificio;
   configurarEventos();
   cambiarModo('uno');
 }
 
+/* === EVENTOS === */
 function configurarEventos(){
   btnModoUno.addEventListener('click',()=>cambiarModo('uno'));
   btnModoDos.addEventListener('click',()=>cambiarModo('dos'));
-  btnCalcular.addEventListener('click', calcularRuta);
+  btnCalcular.addEventListener('click',calcularRuta);
   btnNuevaRuta.addEventListener('click',buscarNuevaRuta);
 }
 
+/* === MODOS === */
 function cambiarModo(nuevo){
-  modo = nuevo;
-  btnModoUno.classList.toggle('active', modo==='uno');
-  btnModoDos.classList.toggle('active', modo==='dos');
-  infoModo.textContent = (modo==='uno')?'Una ubicación':'Dos ubicaciones';
-  campoUbicacionActual.style.display = (modo==='uno')?'flex':'none';
-  campoOrigen.style.display = (modo==='dos')?'flex':'none';
-  seleccionOrigenId = null;
-  seleccionDestinoId = null;
-  infoOrigen.textContent = 'No seleccionado';
-  infoDestino.textContent = 'No seleccionado';
-  btnNuevaRuta.style.display = 'none';
-  btnCalcular.style.display = 'inline-block';
+  modo=nuevo;
+  btnModoUno.classList.toggle('active',modo==='uno');
+  btnModoDos.classList.toggle('active',modo==='dos');
+  infoModo.textContent=(modo==='uno')?'Una ubicación':'Dos ubicaciones';
+  campoUbicacionActual.style.display=(modo==='uno')?'flex':'none';
+  campoOrigen.style.display=(modo==='dos')?'flex':'none';
+  seleccionOrigenId=null;
+  seleccionDestinoId=null;
+  infoOrigen.textContent='No seleccionado';
+  infoDestino.textContent='No seleccionado';
+  btnNuevaRuta.style.display='none';
+  btnCalcular.style.display='inline-block';
   renderizarBotones();
-  log(`Modo cambiado a: ${modo==='uno'?'Ver Ubicación':'Calcular Ruta'}`);
 }
 
+/* === BOTONES DE EDIFICIOS === */
 function renderizarBotones(){
   cont.querySelectorAll('.ubicacion-btn').forEach(b=>b.remove());
-  const canvasPrev = document.getElementById('rutaCanvas');
-  if (canvasPrev) canvasPrev.remove();
+  const canvasPrev=document.getElementById('rutaCanvas');
+  if(canvasPrev) canvasPrev.remove();
 
-  (Array.isArray(edificios) ? edificios : []).forEach(e=>{
+  edificios.forEach(e=>{
     const b=document.createElement('button');
     b.className='ubicacion-btn';
     b.textContent=e.nombre_edificio;
-
-    const px = Number(e.pos_x) || 0;
-    const py = Number(e.pos_y) || 0;
-    const clampedX = Math.max(0, Math.min(MAP_W, px));
-    const clampedY = Math.max(0, Math.min(MAP_H, py));
-
-    b.style.left = clampedX + 'px';
-    b.style.top = clampedY + 'px';
-    b.dataset.id = String(e.id);
-    b.onclick = () => manejarClick(Number(e.id));
-
-    if(modo==='uno' && Number(e.id)===origenFijoId) b.classList.add('origen-fijo');
-    if(Number(e.id)===seleccionOrigenId) b.classList.add('seleccionado-origen');
-    if(Number(e.id)===seleccionDestinoId) b.classList.add('seleccionado-destino');
-
+    const px=Number(e.pos_x)||0, py=Number(e.pos_y)||0;
+    b.style.left=`${px}px`; b.style.top=`${py}px`;
+    b.dataset.id=String(e.id);
+    b.onclick=()=>manejarClick(Number(e.id));
+    if(modo==='uno'&&Number(e.id)===origenFijoId)b.classList.add('origen-fijo');
+    if(Number(e.id)===seleccionOrigenId)b.classList.add('seleccionado-origen');
+    if(Number(e.id)===seleccionDestinoId)b.classList.add('seleccionado-destino');
     cont.appendChild(b);
   });
 }
 
+/* === CLICK EN EDIFICIO === */
 function manejarClick(id){
-  id = Number(id);
-  if (Number.isNaN(id)) return;
-
-  const ed = edificios.find(x=>Number(x.id)===id);
-  const nombreEd = ed ? ed.nombre_edificio : 'Desconocido';
-
+  id=Number(id);
+  const ed=edificios.find(x=>Number(x.id)===id);
+  const nombre=ed?ed.nombre_edificio:'Desconocido';
   if(modo==='uno'){
-    if(id===origenFijoId){
-      mostrarNotificacion('Este es el origen fijo','warning'); 
-      return;
-    }
-    seleccionDestinoId = id;
-    infoDestino.textContent = nombreEd;
-    seleccionOrigenId = null;
-    log(`Destino seleccionado: ${nombreEd} (ID: ${id})`);
-  } else {
-    if(!seleccionOrigenId){
-      seleccionOrigenId = id;
-      infoOrigen.textContent = nombreEd;
-      log(`Origen seleccionado: ${nombreEd} (ID: ${id})`);
-    } else if(!seleccionDestinoId){
-      if(id===seleccionOrigenId){ 
-        mostrarNotificacion('Elige otro edificio','warning'); 
-        return; 
-      }
-      seleccionDestinoId = id;
-      infoDestino.textContent = nombreEd;
-      log(`Destino seleccionado: ${nombreEd} (ID: ${id})`);
-    } else {
-      seleccionOrigenId = seleccionDestinoId;
-      seleccionDestinoId = id;
-      const eo = edificios.find(x=>Number(x.id)===seleccionOrigenId);
-      infoOrigen.textContent = eo ? eo.nombre_edificio : 'N/A';
-      infoDestino.textContent = nombreEd;
-      log(`Ruta actualizada: ${eo?.nombre_edificio} → ${nombreEd}`);
+    if(id===origenFijoId){mostrarNotificacion('Este es el origen fijo','warning');return;}
+    seleccionDestinoId=id; infoDestino.textContent=nombre;
+  }else{
+    if(!seleccionOrigenId){seleccionOrigenId=id; infoOrigen.textContent=nombre;}
+    else if(!seleccionDestinoId){
+      if(id===seleccionOrigenId)return mostrarNotificacion('Elige otro edificio','warning');
+      seleccionDestinoId=id; infoDestino.textContent=nombre;
+    }else{
+      seleccionOrigenId=seleccionDestinoId; seleccionDestinoId=id;
+      const eo=edificios.find(x=>Number(x.id)===seleccionOrigenId);
+      infoOrigen.textContent=eo?eo.nombre_edificio:'N/A'; infoDestino.textContent=nombre;
     }
   }
   renderizarBotones();
 }
 
-/* === NUEVO: detectar edificios cercanos a la ruta === */
-function obtenerEdificiosCercanos(camino, distanciaMax=30){
-  const cercanos = [];
-  for(let i=0;i<camino.length-1;i++){
-    const p1=camino[i], p2=camino[i+1];
-    edificios.forEach(e=>{
-      if(camino.some(c=>c.nombre===e.nombre_edificio)) return;
-      const x0=Number(e.pos_x), y0=Number(e.pos_y);
-      const dx=p2.x-p1.x, dy=p2.y-p1.y;
-      const t=((x0-p1.x)*dx + (y0-p1.y)*dy)/(dx*dx+dy*dy);
-      const tClamped=Math.max(0,Math.min(1,t));
-      const xProj=p1.x+tClamped*dx, yProj=p1.y+tClamped*dy;
-      const dist=Math.sqrt((x0-xProj)**2 + (y0-yProj)**2);
-      if(dist<=distanciaMax) cercanos.push(e);
-    });
-  }
-  const ids={};
-  return cercanos.filter(e=>ids[e.id]?0:(ids[e.id]=1));
-}
-
+/* === CALCULAR RUTA === */
 async function calcularRuta(){
-  let origenId, destinoId;
-  
-  if (modo === 'uno') {
-    origenId = Number(origenFijoId);
-    destinoId = Number(seleccionDestinoId);
-    if (!destinoId) {
-      mostrarNotificacion('Selecciona destino', 'warning');
-      return;
-    }
-  } else {
-    origenId = Number(seleccionOrigenId);
-    destinoId = Number(seleccionDestinoId);
-    if (!origenId || !destinoId) {
-      mostrarNotificacion('Selecciona origen y destino', 'warning');
-      return;
-    }
-  }
-
-  if (Number.isNaN(origenId) || Number.isNaN(destinoId)) {
-    log('ERROR: IDs inválidos', 'error');
-    return mostrarNotificacion('IDs inválidos', 'warning');
-  }
-
-  const origenNombre = edificios.find(e=>Number(e.id)===origenId)?.nombre_edificio;
-  const destinoNombre = edificios.find(e=>Number(e.id)===destinoId)?.nombre_edificio;
-  
-  log(`🚀 Iniciando cálculo de ruta: ${origenNombre} (ID:${origenId}) → ${destinoNombre} (ID:${destinoId})`);
-
-  const url = `/ruta/dijkstra/?origen=${encodeURIComponent(origenId)}&destino=${encodeURIComponent(destinoId)}`;
-  log(`URL del request: ${url}`);
-
-  try {
-    log('Enviando petición al servidor...');
-    const res = await fetch(url);
-    log(`Respuesta recibida: Status ${res.status}`);
-    
-    if (!res.ok) {
-      let errTxt = `Error servidor (${res.status})`;
-      try { 
-        const tmp = await res.json(); 
-        errTxt += ` - ${JSON.stringify(tmp)}`; 
-      } catch(e){}
-      throw new Error(errTxt);
-    }
-
-    const data = await res.json();
-    log('✅ Datos recibidos: ' + JSON.stringify(data));
-
-    dibujarRuta(data.camino);
-
-    const rutaJSON = generarJSONRuta(data.camino);
-    document.getElementById('jsonRuta').textContent = JSON.stringify(rutaJSON, null, 2);
-    log('✅ JSON generado y mostrado en pantalla', 'success');
-
+  let origenId,destinoId;
+  if(modo==='uno'){origenId=origenFijoId; destinoId=seleccionDestinoId;}
+  else{origenId=seleccionOrigenId; destinoId=seleccionDestinoId;}
+  if(!destinoId||!origenId)return mostrarNotificacion('Selecciona origen y destino','warning');
+  const url=`/ruta/dijkstra/?origen=${origenId}&destino=${destinoId}`;
+  try{
+    const res=await fetch(url);
+    if(!res.ok)throw new Error('Error servidor');
+    const data=await res.json();
+    dibujarRuta(data.camino,origenId,destinoId);
+    const rutaJSON=generarJSONRuta(data.camino);
+    document.getElementById('jsonRuta').textContent=JSON.stringify(rutaJSON,null,2);
     btnCalcular.style.display='none';
     btnNuevaRuta.style.display='inline-block';
-
-  } catch(e){
-    log(`ERROR: ${e.message}`,'error');
-    mostrarNotificacion('Error al calcular ruta', 'error');
-  }
+  }catch(e){mostrarNotificacion('Error al calcular ruta','error');}
 }
 
-/* === DIBUJAR RUTA === */
-function dibujarRuta(camino){
-  let canvas = document.getElementById('rutaCanvas');
-  if(canvas) canvas.remove();
-  canvas = document.createElement('canvas');
+/* === DIBUJAR RUTA Y MOSTRAR SOLO ORIGEN/DESTINO === */
+function dibujarRuta(camino,origenId,destinoId){
+  let canvas=document.getElementById('rutaCanvas');
+  if(canvas)canvas.remove();
+  canvas=document.createElement('canvas');
   canvas.id='rutaCanvas';
-  canvas.width=MAP_W;
-  canvas.height=MAP_H;
+  canvas.width=MAP_W; canvas.height=MAP_H;
   canvas.style.position='absolute';
-  canvas.style.top='0';
-  canvas.style.left='0';
+  canvas.style.top='0'; canvas.style.left='0';
   canvas.style.zIndex='1';
   cont.appendChild(canvas);
-
-  const ctx = canvas.getContext('2d');
-  ctx.lineWidth=4;
-  ctx.strokeStyle='rgba(231,76,60,0.9)';
+  const ctx=canvas.getContext('2d');
+  ctx.lineWidth=4; ctx.strokeStyle='rgba(231,76,60,0.9)';
   ctx.beginPath();
-  camino.forEach((n,i)=>{
-    const x=Number(n.pos_x), y=Number(n.pos_y);
-    if(i===0) ctx.moveTo(x,y);
-    else ctx.lineTo(x,y);
-  });
+  camino.forEach((n,i)=>{const x=Number(n.pos_x),y=Number(n.pos_y);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
   ctx.stroke();
+
+  // 🔹 Ocultar todos los edificios excepto origen y destino
+  document.querySelectorAll('.ubicacion-btn').forEach(btn=>{
+    const id=Number(btn.dataset.id);
+    if(id===Number(origenId)||id===Number(destinoId))btn.style.display='inline-block';
+    else btn.style.display='none';
+  });
 }
 
-/* === GENERAR JSON RUTA === */
+/* === RESTAURAR BOTONES === */
+function buscarNuevaRuta(){
+  seleccionOrigenId=null;
+  seleccionDestinoId=null;
+  infoOrigen.textContent='No seleccionado';
+  infoDestino.textContent='No seleccionado';
+  btnCalcular.style.display='inline-block';
+  btnNuevaRuta.style.display='none';
+  document.getElementById('jsonRuta').textContent='';
+  const canvasPrev=document.getElementById('rutaCanvas');
+  if(canvasPrev)canvasPrev.remove();
+
+  // 🔹 Restaurar todos los botones ocultos
+  document.querySelectorAll('.ubicacion-btn').forEach(btn=>{
+    btn.style.display='inline-block';
+  });
+}
+
+/* === JSON RUTA (sin cambios de estructura) === */
 function generarJSONRuta(camino){
   const puntos_asociados = [];
   const tipos = [];
@@ -444,10 +357,7 @@ function generarJSONRuta(camino){
       const dist = Math.sqrt((e.pos_x - nodo.pos_x)**2 + (e.pos_y - nodo.pos_y)**2);
       if(dist <= 30){ // distancia máxima para considerar "cercano"
         cercanosNodo.push({
-          id: e.id,
           nombre: e.nombre_edificio,
-          pos_x: e.pos_x,
-          pos_y: e.pos_y,
           tipo: e.tipo || 'edificio'
         });
         edificiosAgregados.add(e.nombre_edificio);
@@ -464,28 +374,15 @@ function generarJSONRuta(camino){
   return { puntos_asociados, tipos, direccion, edificios_cercanos };
 }
 
-/* === NUEVA BÚSQUEDA === */
-function buscarNuevaRuta(){
-  seleccionOrigenId = null;
-  seleccionDestinoId = null;
-  infoOrigen.textContent='No seleccionado';
-  infoDestino.textContent='No seleccionado';
-  btnCalcular.style.display='inline-block';
-  btnNuevaRuta.style.display='none';
-  renderizarBotones();
-  document.getElementById('jsonRuta').textContent='';
-  const canvasPrev=document.getElementById('rutaCanvas');
-  if(canvasPrev) canvasPrev.remove();
-}
-
 /* === NOTIFICACIONES === */
-function mostrarNotificacion(msg,tipo='info'){
-  const n=document.createElement('div');
-  n.className=`notification ${tipo}`;
-  n.textContent=msg;
+function mostrarNotificacion(mensaje, tipo = 'info') {
+  const n = document.createElement('div');
+  n.className = `notification ${tipo}`;
+  n.textContent = mensaje;
   document.body.appendChild(n);
-  setTimeout(()=>{ n.remove(); },3000);
+  setTimeout(() => n.remove(), 3000);
 }
 </script>
 </body>
 </html>
+
