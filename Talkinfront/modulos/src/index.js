@@ -20,14 +20,17 @@ root.render(
       <Routes>
         {/* Sitio público */}
         <Route path="/" element={<Bienvenida />} />
+        
         <Route path="/procesos" element={<Procesos />} />
         <Route path="/ubicaciones" element={<Ubicaciones />} />
+
         {/* Login de administración */}
         <Route path="/adminB" element={<AdminB />} />
         {/* Módulo administrativo completo */}
         <Route path="/adminB/*" element={<AppAdmin />} />
 
         <Route path="/fusion" element={<Fusion />} />
+        
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

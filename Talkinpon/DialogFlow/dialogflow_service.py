@@ -56,6 +56,9 @@ def detect_intent_texts(session_id, user_query):
     else:
         augmented_query = user_query
 
+    # Print para ver que se esta enviando
+    print("Enviando a Dialogflow:", augmented_query)
+
     try:
         # Crear el cliente de sesión
         session_client = dialogflow.SessionsClient()
@@ -78,6 +81,10 @@ def detect_intent_texts(session_id, user_query):
         
         # Extraer los parámetros (las "palabras clave" o entidades)
         parameters = dict(response.query_result.parameters)
+
+        # Print para ver que regresa Dialog
+        print("Respuesta de Dialogflow:", fulfillment_text)
+        print("Parámetros detectados:", parameters)
         
         # Agregar tipo de consulta si se detectó
         if consulta:

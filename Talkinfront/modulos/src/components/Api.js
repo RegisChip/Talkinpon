@@ -23,3 +23,19 @@ export async function sendUsuarioMensaje(mensaje, session_id = null) {
         return { error: true, reply: "Hubo un problema al contactar el servidor" };
     }
 }
+
+export async function borrarContexto(session_id) {
+    try {
+        const response = await fetch(`${BASE_URL}/api/borrar-contexto/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ session_id }),
+        });
+
+        return await response.json();
+
+    } catch (error) {
+        console.error("Error en borrarContexto:", error);
+        return { error: true };
+    }
+}

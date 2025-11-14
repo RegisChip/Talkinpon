@@ -6,7 +6,7 @@ import { ubicacionesData } from "../data/ubicacionesData";
 import "./Fusion.css";
 
 // llamada a la Api
-import { sendUsuarioMensaje } from "../Api";
+import { sendUsuarioMensaje, borrarContexto } from "../Api";
 
 export default function Fusion() {
 
@@ -217,11 +217,22 @@ export default function Fusion() {
     setMessages((prev) => [...prev, userMessage, ...botResponses]);
   };
 
+  const salirDelChat = async () => {
+    const session_id = localStorage.getItem("session_id");
+
+    if (session_id) {
+        await borrarContexto(session_id);
+        localStorage.removeItem("session_id");
+    }
+
+    navigate("/"); // o donde regreses
+  };
+
   return (
     <div className="fusionApp-container">
       <header className="fusionApp-header">
         <div className="fusionApp-header-left">
-          <button className="fusionApp-back-btn" onClick={() => navigate("/")}>
+          <button className="fusionApp-back-btn" onClick={salirDelChat}>
             <i className="bi bi-chevron-double-left"></i>
           </button>
           <h1 className="fusionApp-title-main">TalkinPon</h1>

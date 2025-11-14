@@ -88,9 +88,9 @@ WSGI_APPLICATION = 'talkinpon.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'TalkinponDB', #Tu base de datos
+        'NAME': 'TalkinponDB', # Base de datos
         'USER': 'postgres',
-        'PASSWORD': '3118Ch$', #Tu contraseña
+        'PASSWORD': '3118Ch$', # Contraseña
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -149,8 +149,8 @@ DIALOGFLOW_PROJECT_ID = 'chatbot-kenw' # -> trate de integralo
 DIALOGFLOW_PROJECT_ID = 'chatbot-kenw'
 
 # Ruta al archivo JSON de credenciales de Google Cloud
-#DIALOGFLOW_KEY_PATH = os.path.join(BASE_DIR, 'chatbot-kenw-8c5c5e7e664c.json')
-DIALOGFLOW_KEY_PATH = os.path.join(BASE_DIR, 'x')
+DIALOGFLOW_KEY_PATH = os.path.join(BASE_DIR, 'chatbot-kenw-8c5c5e7e664c.json')
+#DIALOGFLOW_KEY_PATH = os.path.join(BASE_DIR, 'x')
 
 # Establecer la variable de entorno que la librería de Google Cloud leerá
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = DIALOGFLOW_KEY_PATH

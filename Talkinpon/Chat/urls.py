@@ -10,5 +10,6 @@ from . import views
 
 urlpatterns = [
     path("", views.chat_ollama, name="chat_ollama"),
-    path("chat/", views.chat_front, name="chat_api")
+    path("chat/", views.chat_front, name="chat_api"),
+    path("borrar-contexto/", views.borrar_contexto, name="borrar_contexto"),
 ]

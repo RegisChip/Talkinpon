@@ -75,6 +75,45 @@ def chat_front(request):
         "reply": "Solo se aceptan peticiones POST."
     }, status=405)
 
+@csrf_exempt
+def borrar_contexto(request):
+    """
+    Borra TODOS los registros Contexto asociados a un session_id.
+    """
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            session_id = data.get("session_id", None)
+
+            if not session_id:
+                return JsonResponse({"error": "session_id requerido"}, status=400)
+
+            Contexto.objects.filter(session_id=session_id).delete()
+
+            return JsonResponse({
+                "status": "ok",
+                "msg": "Contexto eliminado correctamente"
+            })
+
+        except Exception as e:
+            return JsonResponse({
+                "error": str(e)
+            }, status=500)
+
+    return JsonResponse({"error": "Método no permitido"}, status=405)
+
+
+
+
+
+
+
+
+
+
+
+
+
 '''
 @csrf_exempt
 def chat_ubicaciones(request):

@@ -1,4 +1,4 @@
-# Talkinpon\Talkinpon\Chat\models.py
+# Talkinpon\Chat\models.py
 
 from django.db import models
 from django.utils import timezone
@@ -44,7 +44,7 @@ class Contexto(models.Model):
     def __str__(self):
         return f"{self.role} - {self.session_id} - {self.fecha.strftime('%H:%M:%S')}"
     
-    @classmethod
+    '''@classmethod
     def limpiar_contextos_antiguos(cls, minutos=5):
         """
         Elimina contextos más antiguos de X minutos
@@ -54,4 +54,4 @@ class Contexto(models.Model):
         contextos_antiguos = cls.objects.filter(fecha__lt=tiempo_limite)
         cantidad = contextos_antiguos.count()
         contextos_antiguos.delete()
-        return cantidad
+        return cantidad'''
