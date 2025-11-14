@@ -1,0 +1,396 @@
+/* ================= Contenedor principal ================= */
+.ubicaciones-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  font-family: sans-serif;
+  position: relative;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+/* Fondo fijo */
+.ubicaciones-container::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0eba1;
+  background-image: url("../../../public/logo-fondo.png");
+  background-size: 350px auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.25;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ================= Header ================= */
+.ubicaciones-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border-bottom: 2px solid #750f0f;
+  padding: 0 10px;
+  position: relative;
+  z-index: 10;
+}
+
+.procesos-header-left {
+  display: flex;
+  align-items: center;
+
+}
+
+.ubicaciones-name-button {
+  font-size: 2.7rem;
+  font-weight: 200;
+  color: #750f0f;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.ubicaciones-title-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  position: relative;
+}
+
+.ubicaciones-title-logo h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #9d6969;
+  margin: 0;
+  text-align: center;
+}
+
+.ubicaciones-heade-logo {
+  width: 4.5rem;
+  height: 4.5rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ubicaciones-heade-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ubicaciones-toggle-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #750f0f;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.ubicaciones-toggle-btn:hover {
+  color: #7f0a0a;
+  transform: scale(1.1);
+}
+
+/* Alineación para el contenedor de los dos elementos de la derecha */
+.ubicaciones-header .ubicaciones-heade-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Alineación final para las imágenes y el botón */
+.ubicaciones-header > div:last-child {
+  display: flex;
+  align-items: center;
+}
+
+
+/* ================= Área principal ================= */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 0;
+}
+
+/* Chat */
+.chat-area-ub {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.message-row-ub {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.message-row-ub.user-ub {
+  flex-direction: row-reverse;
+}
+
+.avatar-ub {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.message-box-ub {
+  padding: 0.75rem 1rem 0;
+  border-radius: 0.5rem;
+  max-width: 400px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.message-box-ub.bot {
+  background-color: #ffffff;
+  border: 2px solid #750f0f;
+  color: #2d2d2d;
+}
+
+.message-box-ub.user-ub {
+  background-color: #750f0f;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.actions-row-ub {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.action-btn {
+  background-color: white;
+  border: 2px solid #750f0f;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-btn:hover {
+  background-color: #f3f4f6;
+  transform: scale(1.03);
+}
+
+.message-box-ub img.building-image {
+  width: 100%;
+  display: block;
+  margin: 0 0 0.75rem;
+  border-radius: 0.5rem;
+  border: 2px solid #750f0f;
+  object-fit: cover;
+}
+
+/* ================= Input ================= */
+.ubicaciones-input-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border-top: 2px solid #750f0f;
+  position: relative;
+  z-index: 10;
+}
+
+.ubicaciones-input-group {
+  width: 90%;
+  max-width: 90%;
+  display: flex;
+  border: 2px solid #750f0f;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.ubicaciones-form-control {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.ubicaciones-btn {
+  background-color: #750f0f;
+  border: none;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ubicaciones-btn:hover {
+  background-color: #ab6b6b;
+}
+
+.ubicaciones-btn i {
+  color: white;
+  font-size: 1.2rem;
+}
+
+/* ================= Mapa ================= */
+.map-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2000;
+}
+
+.map-area {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95vw;
+  max-width: 1200px;
+  max-height: 95vh;
+  background-color: white;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 2001;
+  opacity: 0;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.map-area.map-open {
+  opacity: 1;
+}
+
+.map-container {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+}
+
+.map-container img.campus-map {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.map-button {
+  position: absolute;
+  background-color: #750f0f;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  transition: transform 0.2s;
+  z-index: 2100;
+}
+
+.map-button:hover {
+  transform: scale(1.2);
+}
+
+.map-area .map-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid #750f0f;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.map-area .map-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.close-map-btn {
+  position: absolute;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: 900px;
+  cursor: pointer;
+  z-index: 2101;
+  color: #750f0f;
+}
+
+.map-area .map-caption {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #2d2d2d;
+  margin: 0;
+  padding: 0.25rem;
+}
+
+/* Bloquear scroll cuando mapa activo */
+body.map-open {
+  overflow: hidden;
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 768px) {
+  .map-area {
+    width: 98vw;
+    max-height: 90vh;
+  }
+
+  .map-container img.campus-map {
+    max-height: 85%;
+  }
+
+  .map-button {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.9rem;
+  }
+
+  .ubicaciones-title-logo h2 {
+    font-size: 1.2rem;
+  }
+
+  .ubicaciones-name-button {
+    font-size: 2rem;
+  }
+
+  .ubicaciones-input-group {
+    width: 95%;
+  }
+}

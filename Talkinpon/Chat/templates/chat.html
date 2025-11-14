@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat IA</title>
+</head>
+<body>
+    <h1>Chat con IA</h1>
+
+    <div id="chat-box">
+        {% for msg in historial %}
+            <p><strong>{{ msg.role }}:</strong> {{ msg.contenido }}</p>
+        {% endfor %}
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="user_input" placeholder="Escribe tu mensaje" style="width:300px;">
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>

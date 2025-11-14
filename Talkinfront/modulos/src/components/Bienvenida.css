@@ -1,0 +1,149 @@
+/* Bienvenida.css */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor principal */
+.bienvenida-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; 
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #eae5d6;
+  border: 1px solid #750f0f;
+  box-sizing: border-box;
+}
+
+/* Header */
+.bienvenida-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: cente10pxr;
+  position: relative;
+  padding: 5px;
+}
+
+.bienvenida-header h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #750f0f;
+}
+
+.header-logo {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  width: 4.5rem;
+  height: 4.5rem;
+  overflow: hidden;
+}
+
+.header-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Contenedor principal de botones */
+.bienvenida-buttons {
+  display: flex;
+  flex-wrap: wrap;     
+  justify-content: center;
+  align-items: stretch; 
+  width: 100vw;
+  height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-top: 2px solid #750f0f;
+  gap: 10px;
+}
+
+/* Botones principales */
+.bienvenida-button {
+  flex: 1 1 auto;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(73, 24, 24, 0.366);
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(70, 26, 26, 0.456);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+/* Imagen de fondo */
+.bienvenida-button img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 3s ease-in-out; /* fade lento y suave */
+  z-index: 1;
+}
+
+.bienvenida-button img.visible {
+  opacity: 1;
+  z-index: 2;
+}
+
+.bienvenida-button img.hidden {
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Overlay al pasar el mouse */
+.bienvenida-button:hover img {
+  transform: scale(1.05);
+}
+
+.button-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0,0,0,0.3);
+  transition: all 0.3s;
+  z-index: 2; 
+}
+
+.bienvenida-button:hover .button-overlay {
+  background-color: rgba(0,0,0,0.2);
+}
+
+.bienvenida-button:hover img {
+  transform: scale(1.05);
+}
+
+/* Texto del botón */
+.button-text {
+  position: relative;
+  z-index: 3; 
+  text-align: center;
+  font-size: clamp(1rem, 2vw, 2.5rem);
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+  padding: 0 0.5rem;
+  pointer-events: none; 
+}
+
+.bienvenida-button:hover .button-text {
+  transform: scale(1.05);
+}
+
