@@ -1,0 +1,2994 @@
+[
+    {
+        "model": "mapa.ubicacion",
+        "pk": 376,
+        "fields": {
+            "nom_nodo": "hq",
+            "pos_x": 486.0,
+            "pos_y": 515.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T21:06:53.494441-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 2,
+        "fields": {
+            "nom_nodo": "b",
+            "pos_x": 339.2000045776367,
+            "pos_y": 166.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T18:47:32.079511-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 3,
+        "fields": {
+            "nom_nodo": "c",
+            "pos_x": 401.2000045776367,
+            "pos_y": 164.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T18:47:43.584089-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 8,
+        "fields": {
+            "nom_nodo": "f",
+            "pos_x": 374.2000045776367,
+            "pos_y": 136.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T18:49:02.439400-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 11,
+        "fields": {
+            "nom_nodo": "h",
+            "pos_x": 293.2000045776367,
+            "pos_y": 206.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:50:45.174872-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 13,
+        "fields": {
+            "nom_nodo": "j",
+            "pos_x": 339.0,
+            "pos_y": 175.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:50:56.431699-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 14,
+        "fields": {
+            "nom_nodo": "k",
+            "pos_x": 402.0,
+            "pos_y": 175.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:51:02.220337-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 15,
+        "fields": {
+            "nom_nodo": "l",
+            "pos_x": 373.0,
+            "pos_y": 207.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:51:11.910045-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 16,
+        "fields": {
+            "nom_nodo": "m",
+            "pos_x": 371.0,
+            "pos_y": 175.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:51:19.747600-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 18,
+        "fields": {
+            "nom_nodo": "o",
+            "pos_x": 426.0,
+            "pos_y": 175.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:51:40.224996-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 20,
+        "fields": {
+            "nom_nodo": "p",
+            "pos_x": 426.2000045776367,
+            "pos_y": 203.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:51:58.334127-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 22,
+        "fields": {
+            "nom_nodo": "r",
+            "pos_x": 338.2000045776367,
+            "pos_y": 238.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:52:27.186392-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 24,
+        "fields": {
+            "nom_nodo": "s",
+            "pos_x": 338.2000045776367,
+            "pos_y": 276.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:52:48.169539-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 25,
+        "fields": {
+            "nom_nodo": "i",
+            "pos_x": 338.2000045776367,
+            "pos_y": 207.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:54:42.904802-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 27,
+        "fields": {
+            "nom_nodo": "t",
+            "pos_x": 426.2000045776367,
+            "pos_y": 236.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:55:44.138365-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 28,
+        "fields": {
+            "nom_nodo": "u",
+            "pos_x": 398.2000045776367,
+            "pos_y": 237.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:55:49.464688-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 29,
+        "fields": {
+            "nom_nodo": "v",
+            "pos_x": 398.2000045776367,
+            "pos_y": 276.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:55:59.099432-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 30,
+        "fields": {
+            "nom_nodo": "w",
+            "pos_x": 328.2000045776367,
+            "pos_y": 277.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:56:37.071757-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 31,
+        "fields": {
+            "nom_nodo": "x",
+            "pos_x": 256.2000045776367,
+            "pos_y": 276.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:56:43.771352-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 32,
+        "fields": {
+            "nom_nodo": "y",
+            "pos_x": 256.2000045776367,
+            "pos_y": 207.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:56:47.762206-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 33,
+        "fields": {
+            "nom_nodo": "z",
+            "pos_x": 320.2000045776367,
+            "pos_y": 206.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:57:11.794226-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 34,
+        "fields": {
+            "nom_nodo": "aa",
+            "pos_x": 320.2000045776367,
+            "pos_y": 174.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:57:21.770288-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 35,
+        "fields": {
+            "nom_nodo": "ab",
+            "pos_x": 319.2000045776367,
+            "pos_y": 150.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:57:27.162910-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 36,
+        "fields": {
+            "nom_nodo": "ac",
+            "pos_x": 351.2000045776367,
+            "pos_y": 149.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T18:57:35.265169-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 37,
+        "fields": {
+            "nom_nodo": "ad",
+            "pos_x": 205.0,
+            "pos_y": 505.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T18:59:19.547666-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 38,
+        "fields": {
+            "nom_nodo": "ae",
+            "pos_x": 484.2000045776367,
+            "pos_y": 93.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:00:10.638688-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 41,
+        "fields": {
+            "nom_nodo": "ah",
+            "pos_x": 345.40000009536743,
+            "pos_y": 543.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:01:30.219335-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 42,
+        "fields": {
+            "nom_nodo": "ai",
+            "pos_x": 546.2000045776367,
+            "pos_y": 635.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:02:10.767763-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 44,
+        "fields": {
+            "nom_nodo": "ak",
+            "pos_x": 270.2000045776367,
+            "pos_y": 307.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:27:05.175365-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 45,
+        "fields": {
+            "nom_nodo": "al",
+            "pos_x": 256.2000045776367,
+            "pos_y": 307.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:27:11.883058-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 46,
+        "fields": {
+            "nom_nodo": "am",
+            "pos_x": 326.2000045776367,
+            "pos_y": 306.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:27:24.129089-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 47,
+        "fields": {
+            "nom_nodo": "an",
+            "pos_x": 269.2000045776367,
+            "pos_y": 294.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:27:41.328069-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 48,
+        "fields": {
+            "nom_nodo": "ao",
+            "pos_x": 355.2000045776367,
+            "pos_y": 300.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:27:54.850549-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 49,
+        "fields": {
+            "nom_nodo": "ap",
+            "pos_x": 329.2000045776367,
+            "pos_y": 346.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:28:08.751825-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 50,
+        "fields": {
+            "nom_nodo": "aq",
+            "pos_x": 360.2000045776367,
+            "pos_y": 347.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:28:13.786565-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 51,
+        "fields": {
+            "nom_nodo": "ar",
+            "pos_x": 398.2000045776367,
+            "pos_y": 346.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:28:19.425864-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 52,
+        "fields": {
+            "nom_nodo": "as",
+            "pos_x": 399.2000045776367,
+            "pos_y": 311.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:28:23.188776-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 54,
+        "fields": {
+            "nom_nodo": "au",
+            "pos_x": 399.2000045776367,
+            "pos_y": 364.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:28:54.523716-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 56,
+        "fields": {
+            "nom_nodo": "aw",
+            "pos_x": 349.2000045776367,
+            "pos_y": 335.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:29:33.479541-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 57,
+        "fields": {
+            "nom_nodo": "ax",
+            "pos_x": 329.2000045776367,
+            "pos_y": 360.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:31:07.913521-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 59,
+        "fields": {
+            "nom_nodo": "az",
+            "pos_x": 228.20000457763672,
+            "pos_y": 307.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:31:16.382988-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 63,
+        "fields": {
+            "nom_nodo": "ba",
+            "pos_x": 302.2000045776367,
+            "pos_y": 371.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:48:55.120904-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 65,
+        "fields": {
+            "nom_nodo": "bc",
+            "pos_x": 267.2000045776367,
+            "pos_y": 389.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:49:37.913334-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 66,
+        "fields": {
+            "nom_nodo": "bb",
+            "pos_x": 245.20000457763672,
+            "pos_y": 374.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:49:51.822461-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 67,
+        "fields": {
+            "nom_nodo": "ay",
+            "pos_x": 228.20000457763672,
+            "pos_y": 359.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:50:12.827247-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 68,
+        "fields": {
+            "nom_nodo": "bd",
+            "pos_x": 245.20000457763672,
+            "pos_y": 360.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:50:51.325424-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 69,
+        "fields": {
+            "nom_nodo": "be",
+            "pos_x": 301.2000045776367,
+            "pos_y": 359.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:51:04.824911-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 71,
+        "fields": {
+            "nom_nodo": "bg",
+            "pos_x": 279.2000045776367,
+            "pos_y": 359.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:51:37.122388-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 72,
+        "fields": {
+            "nom_nodo": "bh",
+            "pos_x": 255.20000457763672,
+            "pos_y": 359.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:51:48.414631-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 73,
+        "fields": {
+            "nom_nodo": "bi",
+            "pos_x": 278.2000045776367,
+            "pos_y": 383.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:51:53.618793-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 74,
+        "fields": {
+            "nom_nodo": "bj",
+            "pos_x": 303.2000045776367,
+            "pos_y": 387.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:51:58.104827-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 75,
+        "fields": {
+            "nom_nodo": "bk",
+            "pos_x": 285.2000045776367,
+            "pos_y": 388.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:52:03.376138-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 76,
+        "fields": {
+            "nom_nodo": "bl",
+            "pos_x": 329.2000045776367,
+            "pos_y": 387.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:52:07.696623-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 77,
+        "fields": {
+            "nom_nodo": "bm",
+            "pos_x": 254.20000457763672,
+            "pos_y": 400.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:52:14.361697-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 78,
+        "fields": {
+            "nom_nodo": "bn",
+            "pos_x": 284.2000045776367,
+            "pos_y": 399.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:52:20.310367-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 80,
+        "fields": {
+            "nom_nodo": "bp",
+            "pos_x": 329.0,
+            "pos_y": 398.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:52:35.629082-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 81,
+        "fields": {
+            "nom_nodo": "bq",
+            "pos_x": 361.0,
+            "pos_y": 398.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:52:41.763081-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 83,
+        "fields": {
+            "nom_nodo": "bs",
+            "pos_x": 413.0,
+            "pos_y": 398.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:53:26.412171-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 84,
+        "fields": {
+            "nom_nodo": "bt",
+            "pos_x": 188.0,
+            "pos_y": 326.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:53:42.555192-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 87,
+        "fields": {
+            "nom_nodo": "bw",
+            "pos_x": 228.0,
+            "pos_y": 370.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:54:14.085227-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 91,
+        "fields": {
+            "nom_nodo": "ca",
+            "pos_x": 450.0,
+            "pos_y": 336.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:56:26.259575-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 95,
+        "fields": {
+            "nom_nodo": "ce",
+            "pos_x": 490.0,
+            "pos_y": 369.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:57:04.371533-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 96,
+        "fields": {
+            "nom_nodo": "cf",
+            "pos_x": 464.0,
+            "pos_y": 369.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:57:08.028094-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 97,
+        "fields": {
+            "nom_nodo": "cg",
+            "pos_x": 463.0,
+            "pos_y": 377.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:57:10.853480-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 98,
+        "fields": {
+            "nom_nodo": "ch",
+            "pos_x": 463.0,
+            "pos_y": 386.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:57:14.043091-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 99,
+        "fields": {
+            "nom_nodo": "ci",
+            "pos_x": 479.0,
+            "pos_y": 387.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:57:16.549382-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 101,
+        "fields": {
+            "nom_nodo": "ck",
+            "pos_x": 499.0,
+            "pos_y": 257.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:57:31.239950-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 102,
+        "fields": {
+            "nom_nodo": "cl",
+            "pos_x": 470.0,
+            "pos_y": 258.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:57:39.643422-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 103,
+        "fields": {
+            "nom_nodo": "cm",
+            "pos_x": 442.0,
+            "pos_y": 259.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:57:43.967334-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 104,
+        "fields": {
+            "nom_nodo": "cn",
+            "pos_x": 439.0,
+            "pos_y": 235.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:57:49.532818-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 105,
+        "fields": {
+            "nom_nodo": "co",
+            "pos_x": 450.0,
+            "pos_y": 245.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:58:00.501915-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 107,
+        "fields": {
+            "nom_nodo": "cq",
+            "pos_x": 487.0,
+            "pos_y": 284.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:58:31.569913-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 108,
+        "fields": {
+            "nom_nodo": "cr",
+            "pos_x": 502.0,
+            "pos_y": 153.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T19:58:41.785515-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 109,
+        "fields": {
+            "nom_nodo": "cs",
+            "pos_x": 488.0,
+            "pos_y": 178.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:58:51.780305-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 110,
+        "fields": {
+            "nom_nodo": "ct",
+            "pos_x": 472.0,
+            "pos_y": 178.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:58:54.663341-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 111,
+        "fields": {
+            "nom_nodo": "cu",
+            "pos_x": 473.0,
+            "pos_y": 233.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T19:58:59.537822-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 113,
+        "fields": {
+            "nom_nodo": "cv",
+            "pos_x": 338.2000045776367,
+            "pos_y": 262.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:00:57.215374-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 114,
+        "fields": {
+            "nom_nodo": "cw",
+            "pos_x": 489.2000045776367,
+            "pos_y": 152.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:01:31.512234-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 115,
+        "fields": {
+            "nom_nodo": "cx",
+            "pos_x": 429.2000045776367,
+            "pos_y": 320.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:03:56.855061-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 116,
+        "fields": {
+            "nom_nodo": "cy",
+            "pos_x": 428.2000045776367,
+            "pos_y": 309.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:04:01.595069-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 118,
+        "fields": {
+            "nom_nodo": "cz",
+            "pos_x": 494.2000045776367,
+            "pos_y": 334.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:04:37.580374-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 119,
+        "fields": {
+            "nom_nodo": "cb",
+            "pos_x": 444.2000045776367,
+            "pos_y": 310.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:05:24.175050-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 120,
+        "fields": {
+            "nom_nodo": "cd",
+            "pos_x": 469.2000045776367,
+            "pos_y": 310.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:05:34.567649-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 121,
+        "fields": {
+            "nom_nodo": "da",
+            "pos_x": 490.2000045776367,
+            "pos_y": 377.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:06:32.129975-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 123,
+        "fields": {
+            "nom_nodo": "db",
+            "pos_x": 450.2000045776367,
+            "pos_y": 397.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:07:06.509886-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 124,
+        "fields": {
+            "nom_nodo": "bf",
+            "pos_x": 256.2000045776367,
+            "pos_y": 383.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:08:18.203482-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 125,
+        "fields": {
+            "nom_nodo": "dc",
+            "pos_x": 227.20000457763672,
+            "pos_y": 399.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:08:44.121818-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 127,
+        "fields": {
+            "nom_nodo": "de",
+            "pos_x": 591.2000045776367,
+            "pos_y": 261.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:10:17.251573-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 132,
+        "fields": {
+            "nom_nodo": "bo",
+            "pos_x": 304.2000045776367,
+            "pos_y": 403.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:13:07.447892-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 134,
+        "fields": {
+            "nom_nodo": "df",
+            "pos_x": 426.2000045776367,
+            "pos_y": 125.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:14:10.366657-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 135,
+        "fields": {
+            "nom_nodo": "dg",
+            "pos_x": 352.2000045776367,
+            "pos_y": 125.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:14:13.144556-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 136,
+        "fields": {
+            "nom_nodo": "dh",
+            "pos_x": 198.0,
+            "pos_y": 389.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:14:55.832741-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 137,
+        "fields": {
+            "nom_nodo": "di",
+            "pos_x": 142.0,
+            "pos_y": 390.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:15:02.412104-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 140,
+        "fields": {
+            "nom_nodo": "dk",
+            "pos_x": 161.20000457763672,
+            "pos_y": 411.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:15:40.303606-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 141,
+        "fields": {
+            "nom_nodo": "dl",
+            "pos_x": 179.20000457763672,
+            "pos_y": 410.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:15:47.259779-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 143,
+        "fields": {
+            "nom_nodo": "dn",
+            "pos_x": 169.60000228881836,
+            "pos_y": 416.9249954223633,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:16:25.400890-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 144,
+        "fields": {
+            "nom_nodo": "do",
+            "pos_x": 160.60000228881836,
+            "pos_y": 390.9249954223633,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:16:38.072095-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 145,
+        "fields": {
+            "nom_nodo": "dp",
+            "pos_x": 228.20000457763672,
+            "pos_y": 431.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:17:25.988528-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 147,
+        "fields": {
+            "nom_nodo": "dr",
+            "pos_x": 329.2000045776367,
+            "pos_y": 413.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:17:43.621989-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 150,
+        "fields": {
+            "nom_nodo": "dt",
+            "pos_x": 360.2000045776367,
+            "pos_y": 427.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:18:00.487214-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 151,
+        "fields": {
+            "nom_nodo": "du",
+            "pos_x": 329.2000045776367,
+            "pos_y": 467.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:18:18.051400-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 152,
+        "fields": {
+            "nom_nodo": "dv",
+            "pos_x": 286.2000045776367,
+            "pos_y": 463.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:18:23.581481-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 153,
+        "fields": {
+            "nom_nodo": "dw",
+            "pos_x": 243.20000457763672,
+            "pos_y": 434.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:18:29.536902-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 154,
+        "fields": {
+            "nom_nodo": "dx",
+            "pos_x": 327.2000045776367,
+            "pos_y": 499.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:18:41.941441-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 155,
+        "fields": {
+            "nom_nodo": "dy",
+            "pos_x": 242.20000457763672,
+            "pos_y": 495.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:18:47.011078-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 157,
+        "fields": {
+            "nom_nodo": "ea",
+            "pos_x": 375.2000045776367,
+            "pos_y": 417.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:19:36.642579-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 158,
+        "fields": {
+            "nom_nodo": "eb",
+            "pos_x": 348.2000045776367,
+            "pos_y": 473.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:20:27.995219-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 160,
+        "fields": {
+            "nom_nodo": "ed",
+            "pos_x": 363.2000045776367,
+            "pos_y": 434.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:21:13.399179-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 161,
+        "fields": {
+            "nom_nodo": "ee",
+            "pos_x": 406.2000045776367,
+            "pos_y": 434.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:21:28.655728-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 162,
+        "fields": {
+            "nom_nodo": "ef",
+            "pos_x": 387.2000045776367,
+            "pos_y": 408.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:21:36.063137-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 163,
+        "fields": {
+            "nom_nodo": "eg",
+            "pos_x": 403.2000045776367,
+            "pos_y": 418.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:21:42.556699-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 165,
+        "fields": {
+            "nom_nodo": "ei",
+            "pos_x": 386.2000045776367,
+            "pos_y": 399.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:22:20.690136-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 166,
+        "fields": {
+            "nom_nodo": "ej",
+            "pos_x": 405.2000045776367,
+            "pos_y": 474.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:22:34.949182-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 167,
+        "fields": {
+            "nom_nodo": "ec",
+            "pos_x": 364.2000045776367,
+            "pos_y": 474.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:22:40.462688-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 168,
+        "fields": {
+            "nom_nodo": "ek",
+            "pos_x": 364.2000045776367,
+            "pos_y": 450.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:22:44.203071-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 169,
+        "fields": {
+            "nom_nodo": "el",
+            "pos_x": 413.2000045776367,
+            "pos_y": 418.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:23:27.751974-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 170,
+        "fields": {
+            "nom_nodo": "em",
+            "pos_x": 432.2000045776367,
+            "pos_y": 411.7249984741211,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:23:35.056901-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 171,
+        "fields": {
+            "nom_nodo": "en",
+            "pos_x": 433.2000045776367,
+            "pos_y": 419.7249984741211,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:23:39.692485-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 173,
+        "fields": {
+            "nom_nodo": "ep",
+            "pos_x": 423.2000045776367,
+            "pos_y": 435.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:23:53.081486-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 174,
+        "fields": {
+            "nom_nodo": "eo",
+            "pos_x": 434.2000045776367,
+            "pos_y": 435.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:23:58.588795-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 176,
+        "fields": {
+            "nom_nodo": "er",
+            "pos_x": 381.2000045776367,
+            "pos_y": 474.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:24:26.302490-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 178,
+        "fields": {
+            "nom_nodo": "et",
+            "pos_x": 478.2000045776367,
+            "pos_y": 435.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:25:33.020766-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 181,
+        "fields": {
+            "nom_nodo": "ew",
+            "pos_x": 588.2000045776367,
+            "pos_y": 474.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:25:47.311012-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 184,
+        "fields": {
+            "nom_nodo": "ez",
+            "pos_x": 502.2000045776367,
+            "pos_y": 431.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:26:05.651419-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 185,
+        "fields": {
+            "nom_nodo": "fa",
+            "pos_x": 540.2000045776367,
+            "pos_y": 426.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:26:12.938884-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 186,
+        "fields": {
+            "nom_nodo": "fb",
+            "pos_x": 587.2000045776367,
+            "pos_y": 435.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:26:19.505716-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 187,
+        "fields": {
+            "nom_nodo": "eu",
+            "pos_x": 572.2000045776367,
+            "pos_y": 475.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:27:15.170962-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 188,
+        "fields": {
+            "nom_nodo": "ev",
+            "pos_x": 520.2000045776367,
+            "pos_y": 475.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:27:19.828115-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 190,
+        "fields": {
+            "nom_nodo": "ex",
+            "pos_x": 479.2000045776367,
+            "pos_y": 474.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:27:30.980034-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 191,
+        "fields": {
+            "nom_nodo": "ey",
+            "pos_x": 539.2000045776367,
+            "pos_y": 475.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:27:51.944011-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 192,
+        "fields": {
+            "nom_nodo": "fc",
+            "pos_x": 417.2000045776367,
+            "pos_y": 474.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:28:35.672736-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 194,
+        "fields": {
+            "nom_nodo": "fd",
+            "pos_x": 573.2000045776367,
+            "pos_y": 563.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:29:22.046137-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 195,
+        "fields": {
+            "nom_nodo": "fe",
+            "pos_x": 547.2000045776367,
+            "pos_y": 563.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:29:25.980596-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 196,
+        "fields": {
+            "nom_nodo": "ff",
+            "pos_x": 525.2000045776367,
+            "pos_y": 516.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:29:39.235857-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 197,
+        "fields": {
+            "nom_nodo": "fg",
+            "pos_x": 514.0,
+            "pos_y": 591.5250015258789,
+            "tipo": "edificio",
+            "created_at": "2025-11-02T20:29:50.930757-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 198,
+        "fields": {
+            "nom_nodo": "fh",
+            "pos_x": 514.0,
+            "pos_y": 575.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:30:02.128589-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 199,
+        "fields": {
+            "nom_nodo": "fi",
+            "pos_x": 324.0,
+            "pos_y": 513.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:31:09.962034-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 200,
+        "fields": {
+            "nom_nodo": "fj",
+            "pos_x": 169.0,
+            "pos_y": 430.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:33:03.931866-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 201,
+        "fields": {
+            "nom_nodo": "fk",
+            "pos_x": 121.79999923706055,
+            "pos_y": 431.5250015258789,
+            "tipo": "intermedio",
+            "created_at": "2025-11-02T20:33:33.268291-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 202,
+        "fields": {
+            "nom_nodo": "d",
+            "pos_x": 373.0,
+            "pos_y": 192.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:37:51.265082-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 206,
+        "fields": {
+            "nom_nodo": "e",
+            "pos_x": 373.0,
+            "pos_y": 230.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:39:42.677985-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 207,
+        "fields": {
+            "nom_nodo": "q",
+            "pos_x": 374.0,
+            "pos_y": 239.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:39:48.516009-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 209,
+        "fields": {
+            "nom_nodo": "at",
+            "pos_x": 379.0,
+            "pos_y": 192.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:40:21.436225-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 210,
+        "fields": {
+            "nom_nodo": "fl",
+            "pos_x": 366.0,
+            "pos_y": 229.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:40:33.339454-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 211,
+        "fields": {
+            "nom_nodo": "fm",
+            "pos_x": 422.0,
+            "pos_y": 262.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:40:46.718797-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 214,
+        "fields": {
+            "nom_nodo": "ag",
+            "pos_x": 209.0,
+            "pos_y": 272.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:41:31.508602-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 215,
+        "fields": {
+            "nom_nodo": "bx",
+            "pos_x": 171.0,
+            "pos_y": 338.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:42:03.555266-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 216,
+        "fields": {
+            "nom_nodo": "bu",
+            "pos_x": 227.0,
+            "pos_y": 338.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:42:12.180822-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 217,
+        "fields": {
+            "nom_nodo": "fp",
+            "pos_x": 187.0,
+            "pos_y": 337.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:42:17.235634-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 219,
+        "fields": {
+            "nom_nodo": "fr",
+            "pos_x": 171.0,
+            "pos_y": 367.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:42:55.629021-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 221,
+        "fields": {
+            "nom_nodo": "dj",
+            "pos_x": 159.0,
+            "pos_y": 367.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:43:12.869222-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 222,
+        "fields": {
+            "nom_nodo": "by",
+            "pos_x": 181.0,
+            "pos_y": 367.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:43:22.364670-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 223,
+        "fields": {
+            "nom_nodo": "bz",
+            "pos_x": 196.0,
+            "pos_y": 368.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:43:45.919607-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 225,
+        "fields": {
+            "nom_nodo": "fs",
+            "pos_x": 122.0,
+            "pos_y": 367.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:44:22.905023-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 228,
+        "fields": {
+            "nom_nodo": "bv",
+            "pos_x": 228.0,
+            "pos_y": 387.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:45:52.262972-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 231,
+        "fields": {
+            "nom_nodo": "fu",
+            "pos_x": 212.0,
+            "pos_y": 464.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:46:44.034019-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 233,
+        "fields": {
+            "nom_nodo": "fw",
+            "pos_x": 213.0,
+            "pos_y": 450.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:46:54.377976-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 234,
+        "fields": {
+            "nom_nodo": "fq",
+            "pos_x": 212.0,
+            "pos_y": 431.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:47:00.976261-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 235,
+        "fields": {
+            "nom_nodo": "fx",
+            "pos_x": 179.0,
+            "pos_y": 452.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:47:03.610573-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 237,
+        "fields": {
+            "nom_nodo": "fy",
+            "pos_x": 180.0,
+            "pos_y": 442.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:47:16.427714-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 238,
+        "fields": {
+            "nom_nodo": "fz",
+            "pos_x": 114.0,
+            "pos_y": 451.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:47:23.594142-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 239,
+        "fields": {
+            "nom_nodo": "ga",
+            "pos_x": 230.0,
+            "pos_y": 449.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:47:49.456295-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 241,
+        "fields": {
+            "nom_nodo": "gc",
+            "pos_x": 212.0,
+            "pos_y": 479.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:48:03.800838-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 242,
+        "fields": {
+            "nom_nodo": "gb",
+            "pos_x": 230.0,
+            "pos_y": 479.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:48:15.223775-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 243,
+        "fields": {
+            "nom_nodo": "fv",
+            "pos_x": 382.0,
+            "pos_y": 490.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:48:39.579446-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 244,
+        "fields": {
+            "nom_nodo": "gd",
+            "pos_x": 382.0,
+            "pos_y": 516.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:48:42.317449-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 245,
+        "fields": {
+            "nom_nodo": "ge",
+            "pos_x": 392.0,
+            "pos_y": 491.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:48:49.238776-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 246,
+        "fields": {
+            "nom_nodo": "gf",
+            "pos_x": 394.0,
+            "pos_y": 516.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:48:58.919724-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 247,
+        "fields": {
+            "nom_nodo": "gg",
+            "pos_x": 438.0,
+            "pos_y": 504.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:49:20.017254-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 248,
+        "fields": {
+            "nom_nodo": "gh",
+            "pos_x": 438.0,
+            "pos_y": 520.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:49:27.858451-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 250,
+        "fields": {
+            "nom_nodo": "gj",
+            "pos_x": 382.0,
+            "pos_y": 525.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:49:32.824943-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 251,
+        "fields": {
+            "nom_nodo": "gi",
+            "pos_x": 418.0,
+            "pos_y": 525.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:49:42.316700-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 252,
+        "fields": {
+            "nom_nodo": "eq",
+            "pos_x": 423.0,
+            "pos_y": 453.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:50:29.146987-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 253,
+        "fields": {
+            "nom_nodo": "es",
+            "pos_x": 406.0,
+            "pos_y": 453.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:50:31.428585-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 254,
+        "fields": {
+            "nom_nodo": "gk",
+            "pos_x": 423.0,
+            "pos_y": 459.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:50:36.705313-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 256,
+        "fields": {
+            "nom_nodo": "ds",
+            "pos_x": 344.0,
+            "pos_y": 419.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:51:21.089601-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 257,
+        "fields": {
+            "nom_nodo": "gl",
+            "pos_x": 344.0,
+            "pos_y": 412.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:51:24.303238-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 258,
+        "fields": {
+            "nom_nodo": "gm",
+            "pos_x": 360.0,
+            "pos_y": 412.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:51:37.083293-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 262,
+        "fields": {
+            "nom_nodo": "dq",
+            "pos_x": 336.0,
+            "pos_y": 430.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:52:45.663788-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 263,
+        "fields": {
+            "nom_nodo": "dz",
+            "pos_x": 336.0,
+            "pos_y": 436.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:52:49.049406-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 264,
+        "fields": {
+            "nom_nodo": "gn",
+            "pos_x": 329.0,
+            "pos_y": 430.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:52:59.568647-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 265,
+        "fields": {
+            "nom_nodo": "go",
+            "pos_x": 369.0,
+            "pos_y": 407.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:53:21.713646-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 266,
+        "fields": {
+            "nom_nodo": "eh",
+            "pos_x": 382.0,
+            "pos_y": 448.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:53:54.600143-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 267,
+        "fields": {
+            "nom_nodo": "gp",
+            "pos_x": 389.0,
+            "pos_y": 448.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:54:00.389951-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 268,
+        "fields": {
+            "nom_nodo": "n",
+            "pos_x": 373.0,
+            "pos_y": 149.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:55:10.631462-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 378,
+        "fields": {
+            "nom_nodo": "fn",
+            "pos_x": 197.4000015258789,
+            "pos_y": 272.5999984741211,
+            "tipo": "edificio",
+            "created_at": "2025-11-06T10:41:34.814169-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 270,
+        "fields": {
+            "nom_nodo": "gq",
+            "pos_x": 456.0,
+            "pos_y": 127.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:55:46.634826-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 271,
+        "fields": {
+            "nom_nodo": "gr",
+            "pos_x": 455.0,
+            "pos_y": 134.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:55:55.186625-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 272,
+        "fields": {
+            "nom_nodo": "af",
+            "pos_x": 484.0,
+            "pos_y": 100.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:56:44.733733-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 274,
+        "fields": {
+            "nom_nodo": "gs",
+            "pos_x": 472.0,
+            "pos_y": 214.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:57:07.957614-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 276,
+        "fields": {
+            "nom_nodo": "gt",
+            "pos_x": 501.0,
+            "pos_y": 213.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:57:17.113927-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 278,
+        "fields": {
+            "nom_nodo": "gu",
+            "pos_x": 532.0,
+            "pos_y": 213.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:57:37.176948-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 280,
+        "fields": {
+            "nom_nodo": "dd",
+            "pos_x": 518.0,
+            "pos_y": 256.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:57:51.285004-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 281,
+        "fields": {
+            "nom_nodo": "cj",
+            "pos_x": 501.0,
+            "pos_y": 311.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:57:58.969621-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 282,
+        "fields": {
+            "nom_nodo": "gw",
+            "pos_x": 518.0,
+            "pos_y": 312.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:58:00.933712-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 283,
+        "fields": {
+            "nom_nodo": "gx",
+            "pos_x": 532.0,
+            "pos_y": 256.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:58:03.549246-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 284,
+        "fields": {
+            "nom_nodo": "gy",
+            "pos_x": 533.0,
+            "pos_y": 312.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:58:05.204239-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 285,
+        "fields": {
+            "nom_nodo": "gz",
+            "pos_x": 512.0,
+            "pos_y": 265.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:58:17.860706-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 286,
+        "fields": {
+            "nom_nodo": "gv",
+            "pos_x": 486.0,
+            "pos_y": 239.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T19:58:52.454560-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 287,
+        "fields": {
+            "nom_nodo": "ha",
+            "pos_x": 485.0,
+            "pos_y": 233.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:58:55.409853-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 288,
+        "fields": {
+            "nom_nodo": "hb",
+            "pos_x": 500.0,
+            "pos_y": 233.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T19:59:08.117193-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 289,
+        "fields": {
+            "nom_nodo": "cp",
+            "pos_x": 518.0,
+            "pos_y": 212.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:00:04.364331-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 290,
+        "fields": {
+            "nom_nodo": "g",
+            "pos_x": 358.0,
+            "pos_y": 263.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:01:44.058961-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 291,
+        "fields": {
+            "nom_nodo": "hc",
+            "pos_x": 358.0,
+            "pos_y": 277.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:01:56.672645-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 292,
+        "fields": {
+            "nom_nodo": "hd",
+            "pos_x": 310.0,
+            "pos_y": 294.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:02:20.026407-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 293,
+        "fields": {
+            "nom_nodo": "he",
+            "pos_x": 299.0,
+            "pos_y": 307.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:02:36.274105-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 294,
+        "fields": {
+            "nom_nodo": "hf",
+            "pos_x": 328.0,
+            "pos_y": 335.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:03:14.154146-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 296,
+        "fields": {
+            "nom_nodo": "av",
+            "pos_x": 410.0,
+            "pos_y": 331.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:04:02.561406-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 297,
+        "fields": {
+            "nom_nodo": "hg",
+            "pos_x": 411.0,
+            "pos_y": 340.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:04:19.629653-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 298,
+        "fields": {
+            "nom_nodo": "cc",
+            "pos_x": 470.0,
+            "pos_y": 335.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:04:31.822084-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 299,
+        "fields": {
+            "nom_nodo": "hh",
+            "pos_x": 470.0,
+            "pos_y": 341.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:04:57.687983-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 301,
+        "fields": {
+            "nom_nodo": "hi",
+            "pos_x": 414.0,
+            "pos_y": 374.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:05:19.727052-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 302,
+        "fields": {
+            "nom_nodo": "br",
+            "pos_x": 448.0,
+            "pos_y": 377.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:05:26.479654-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 303,
+        "fields": {
+            "nom_nodo": "hj",
+            "pos_x": 429.0,
+            "pos_y": 374.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:05:32.439076-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 304,
+        "fields": {
+            "nom_nodo": "hk",
+            "pos_x": 429.0,
+            "pos_y": 380.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:05:40.572484-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 305,
+        "fields": {
+            "nom_nodo": "hl",
+            "pos_x": 121.0,
+            "pos_y": 237.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:07:21.008918-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 307,
+        "fields": {
+            "nom_nodo": "hm",
+            "pos_x": 50.0,
+            "pos_y": 332.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:08:45.837423-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 308,
+        "fields": {
+            "nom_nodo": "hn",
+            "pos_x": 70.0,
+            "pos_y": 453.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:09:27.559969-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 309,
+        "fields": {
+            "nom_nodo": "ho",
+            "pos_x": 342.0,
+            "pos_y": 83.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:09:42.593391-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 310,
+        "fields": {
+            "nom_nodo": "hp",
+            "pos_x": 162.0,
+            "pos_y": 292.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:09:45.299046-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 312,
+        "fields": {
+            "nom_nodo": "hr",
+            "pos_x": 100.0,
+            "pos_y": 239.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:10:21.514475-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 313,
+        "fields": {
+            "nom_nodo": "hs",
+            "pos_x": 100.0,
+            "pos_y": 206.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:10:30.558236-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 314,
+        "fields": {
+            "nom_nodo": "ht",
+            "pos_x": 67.0,
+            "pos_y": 206.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:10:35.415963-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 315,
+        "fields": {
+            "nom_nodo": "hu",
+            "pos_x": 142.0,
+            "pos_y": 201.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:10:39.461530-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 316,
+        "fields": {
+            "nom_nodo": "hv",
+            "pos_x": 142.0,
+            "pos_y": 191.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:10:42.853848-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 317,
+        "fields": {
+            "nom_nodo": "hw",
+            "pos_x": 67.0,
+            "pos_y": 192.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:10:46.738186-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 318,
+        "fields": {
+            "nom_nodo": "hx",
+            "pos_x": 79.0,
+            "pos_y": 168.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:10:52.159718-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 319,
+        "fields": {
+            "nom_nodo": "hy",
+            "pos_x": 110.0,
+            "pos_y": 145.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:10:58.588319-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 320,
+        "fields": {
+            "nom_nodo": "hz",
+            "pos_x": 109.0,
+            "pos_y": 167.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:11:01.481603-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 321,
+        "fields": {
+            "nom_nodo": "ia",
+            "pos_x": 142.0,
+            "pos_y": 168.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:11:05.186149-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 322,
+        "fields": {
+            "nom_nodo": "ib",
+            "pos_x": 142.0,
+            "pos_y": 126.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:11:12.571664-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 323,
+        "fields": {
+            "nom_nodo": "ic",
+            "pos_x": 109.0,
+            "pos_y": 121.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:11:16.288121-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 324,
+        "fields": {
+            "nom_nodo": "id",
+            "pos_x": 68.0,
+            "pos_y": 122.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:11:29.211331-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 325,
+        "fields": {
+            "nom_nodo": "ie",
+            "pos_x": 68.0,
+            "pos_y": 134.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:11:32.228072-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 326,
+        "fields": {
+            "nom_nodo": "if",
+            "pos_x": 67.0,
+            "pos_y": 106.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:11:43.075990-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 327,
+        "fields": {
+            "nom_nodo": "ig",
+            "pos_x": 47.0,
+            "pos_y": 106.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:11:45.922509-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 329,
+        "fields": {
+            "nom_nodo": "ih",
+            "pos_x": 108.0,
+            "pos_y": 191.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:12:09.796653-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 330,
+        "fields": {
+            "nom_nodo": "ii",
+            "pos_x": 96.0,
+            "pos_y": 198.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:12:19.010721-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 332,
+        "fields": {
+            "nom_nodo": "ik",
+            "pos_x": 108.0,
+            "pos_y": 177.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:12:38.593541-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 333,
+        "fields": {
+            "nom_nodo": "il",
+            "pos_x": 88.0,
+            "pos_y": 143.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:12:46.595695-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 335,
+        "fields": {
+            "nom_nodo": "in",
+            "pos_x": 174.0,
+            "pos_y": 125.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:13:02.595070-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 336,
+        "fields": {
+            "nom_nodo": "io",
+            "pos_x": 158.0,
+            "pos_y": 171.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:13:10.200986-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 337,
+        "fields": {
+            "nom_nodo": "ip",
+            "pos_x": 88.0,
+            "pos_y": 113.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:13:17.111995-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 338,
+        "fields": {
+            "nom_nodo": "iq",
+            "pos_x": 42.0,
+            "pos_y": 80.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:13:24.565223-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 339,
+        "fields": {
+            "nom_nodo": "ir",
+            "pos_x": 89.0,
+            "pos_y": 122.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:13:31.361270-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 340,
+        "fields": {
+            "nom_nodo": "is",
+            "pos_x": 67.0,
+            "pos_y": 167.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:13:49.438648-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 341,
+        "fields": {
+            "nom_nodo": "it",
+            "pos_x": 110.0,
+            "pos_y": 79.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:14:51.555194-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 342,
+        "fields": {
+            "nom_nodo": "iu",
+            "pos_x": 142.0,
+            "pos_y": 95.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:15:02.363489-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 343,
+        "fields": {
+            "nom_nodo": "iv",
+            "pos_x": 67.0,
+            "pos_y": 83.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:15:06.330018-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 345,
+        "fields": {
+            "nom_nodo": "ix",
+            "pos_x": 198.0,
+            "pos_y": 88.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:15:16.158518-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 346,
+        "fields": {
+            "nom_nodo": "iy",
+            "pos_x": 222.0,
+            "pos_y": 99.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:15:18.610959-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 347,
+        "fields": {
+            "nom_nodo": "iw",
+            "pos_x": 109.0,
+            "pos_y": 85.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:15:47.645055-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 348,
+        "fields": {
+            "nom_nodo": "iz",
+            "pos_x": 110.0,
+            "pos_y": 134.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:16:06.213865-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 349,
+        "fields": {
+            "nom_nodo": "ja",
+            "pos_x": 122.0,
+            "pos_y": 121.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:16:24.497580-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 350,
+        "fields": {
+            "nom_nodo": "jb",
+            "pos_x": 123.0,
+            "pos_y": 145.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:16:27.720874-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 351,
+        "fields": {
+            "nom_nodo": "im",
+            "pos_x": 130.0,
+            "pos_y": 134.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:16:42.163960-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 352,
+        "fields": {
+            "nom_nodo": "jc",
+            "pos_x": 123.0,
+            "pos_y": 110.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:16:50.303726-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 354,
+        "fields": {
+            "nom_nodo": "jd",
+            "pos_x": 141.0,
+            "pos_y": 111.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:17:02.604342-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 355,
+        "fields": {
+            "nom_nodo": "je",
+            "pos_x": 80.0,
+            "pos_y": 156.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:17:29.980902-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 356,
+        "fields": {
+            "nom_nodo": "jf",
+            "pos_x": 68.0,
+            "pos_y": 157.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:17:39.662424-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 358,
+        "fields": {
+            "nom_nodo": "jg",
+            "pos_x": 560.0,
+            "pos_y": 643.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:19:43.008010-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 359,
+        "fields": {
+            "nom_nodo": "jh",
+            "pos_x": 592.0,
+            "pos_y": 637.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:19:52.092519-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 361,
+        "fields": {
+            "nom_nodo": "ji",
+            "pos_x": 619.0,
+            "pos_y": 609.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:20:06.466766-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 362,
+        "fields": {
+            "nom_nodo": "jj",
+            "pos_x": 665.0,
+            "pos_y": 575.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:20:11.558772-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 363,
+        "fields": {
+            "nom_nodo": "jk",
+            "pos_x": 701.0,
+            "pos_y": 638.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:20:23.885993-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 365,
+        "fields": {
+            "nom_nodo": "jm",
+            "pos_x": 634.0,
+            "pos_y": 652.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:20:47.327870-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 366,
+        "fields": {
+            "nom_nodo": "jl",
+            "pos_x": 654.0,
+            "pos_y": 608.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:21:12.855965-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 367,
+        "fields": {
+            "nom_nodo": "jn",
+            "pos_x": 625.0,
+            "pos_y": 595.125,
+            "tipo": "intermedio",
+            "created_at": "2025-11-04T20:21:15.399475-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 369,
+        "fields": {
+            "nom_nodo": "aj",
+            "pos_x": 116.0,
+            "pos_y": 366.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:22:25.042485-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 371,
+        "fields": {
+            "nom_nodo": "ft",
+            "pos_x": 116.0,
+            "pos_y": 205.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:37:17.967024-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 374,
+        "fields": {
+            "nom_nodo": "a",
+            "pos_x": 293.0,
+            "pos_y": 224.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:38:18.016225-06:00"
+        }
+    },
+    {
+        "model": "mapa.ubicacion",
+        "pk": 375,
+        "fields": {
+            "nom_nodo": "dm",
+            "pos_x": 70.0,
+            "pos_y": 238.125,
+            "tipo": "edificio",
+            "created_at": "2025-11-04T20:38:45.160593-06:00"
+        }
+    }
+]

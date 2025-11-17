@@ -20,5 +20,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('Chat.urls')), # Asi, Django sabra que url vandar a React
-    path('', include('Chat.urls')) # solo prueba de que el modelos responde
+    path('', include('Chat.urls')), # solo prueba de que el modelos responde
+    path('', include('Ubicaciones.urls')),  # Esto incluye /api/edificios/ y /ruta/dijkstra/
 ]
