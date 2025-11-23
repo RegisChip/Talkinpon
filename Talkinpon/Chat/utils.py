@@ -233,6 +233,63 @@ def necesita_llamar_dialog(session_id, mensaje):
     
     return False, "Misma conversación en curso"
 
+def extraer_nombre_proceso(mensaje):
+    """
+    Extrae el nombre del proceso del mensaje del usuario
+    Retorna el nombre normalizado del proceso o None
+    """
+    mensaje_lower = mensaje.lower()
+    
+    # Mapeo de los procesos (aun falta poner de ciertos procesos)
+    procesos_mapeo = {
+        'servicio social': 'servicio social',
+        'servicio': 'servicio social',
+        'titulacion': 'titulación',
+        'titulo': 'titulación',
+        'titularme': 'titulación',
+        'kardex': 'kardex',
+        'constancia': 'constancia',
+        'creditos': 'créditos',
+        'credito': 'créditos'
+    }
+    
+    # Buscar cual proceso menciona
+    for keyword, proceso_oficial in procesos_mapeo.items():
+        if keyword in mensaje_lower:
+            return proceso_oficial
+    
+    return None
+
+def construir_pregunta_dialog(mensaje_original, tipo_consulta):
+    """
+    Construye una pregunta estandarizada para enviar a Dialog
+    en lugar del mensaje original del usuario
+    """
+    if tipo_consulta == "Procesos":
+        # Extraer nombre del proceso
+        nombre_proceso = extraer_nombre_proceso(mensaje_original)
+        
+        if nombre_proceso:
+
+            # Pregunta estandarizada
+            pregunta_dialog = f"me explicas el procedimiento para mi {nombre_proceso}"
+            # Esta pregunta es la que reconoce Dialog, si no esta textualmente de esta manera puede no regresar nada
+
+            print(f"Pregunta original: '{mensaje_original}'")
+            print(f"Pregunta a Dialog: '{pregunta_dialog}'\n")
+            return pregunta_dialog
+        else:
+            # Si no se pudo extraer, usar pregunta genérica
+            print(f"No se pudo extraer nombre del proceso de: '{mensaje_original}'")
+            return "cuales son los procesos disponibles"
+    
+    elif tipo_consulta == "Ubicaciones":
+        # Para ubicaciones, mantener mensaje original por ahora
+        return mensaje_original
+    
+    else:
+        return mensaje_original
+
 def procesar_mensaje(mensaje, session_id=None):
     print(f"\n{'='*60}")
     print(f"PROCESANDO MENSAJE: {mensaje}")
@@ -272,7 +329,14 @@ def procesar_mensaje(mensaje, session_id=None):
     try:
         if debe_llamar_dialog:
             print("Llamando a DialogFlow...")
-            dialogflow_result = detect_intent_texts(session_id_str, mensaje)
+
+            # Clasifica primero para saber qué tipo de pregunta construir
+            tipo_clasificado = clasificar_mensaje_localmente(mensaje)
+            # Construye la pregunta estandarizada
+            pregunta_para_dialog = construir_pregunta_dialog(mensaje, tipo_clasificado)
+
+            # Envia la pregunta estandarizada a Dialog
+            dialogflow_result = detect_intent_texts(session_id_str, pregunta_para_dialog)
             
             if isinstance(dialogflow_result, str):
                 print(f"Error en DialogFlow: {dialogflow_result}")
