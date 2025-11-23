@@ -1,4 +1,4 @@
-# Talkinpon\Talkinpon\DialogFlow\dialogflow_service.py
+# Talkinpon/DialogFlow/dialogflow_service.py
 
 from google.cloud import dialogflow
 from django.conf import settings

@@ -1,17 +1,15 @@
-// Talkinpon\Talkinfront\modulos\src\components\New\Nfusion.jsx
+// Talkinfront/modulos/src/components/New/Nfusion.jsx
 
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { ubicacionesData } from "../data/ubicacionesData";
 import "./Fusion.css";
-
 // llamada a la Api
 import { sendUsuarioMensaje, borrarContexto } from "../Api";
 
 export default function Fusion() {
 
   const [isLoading, setLoading] = useState(false);
-
   const navigate = useNavigate();
   const chatEndRef = useRef(null);
   const textareaRef = useRef(null);
@@ -38,6 +36,60 @@ export default function Fusion() {
   const [animateMap, setAnimateMap] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
 
+  // --- FUNCIONES PARA EL REGISTRO DE LA CONVERSACION ---
+
+  // GENERAR SESSION_ID AL MONTAR EL COMPONENTE
+  useEffect(() => {
+    // Verificar si ya existe un session_id
+    let sessionId = localStorage.getItem("session_id");
+    
+    if (!sessionId) {
+      // Generar nuevo UUID
+      sessionId = crypto.randomUUID();
+      localStorage.setItem("session_id", sessionId);
+      console.log("Nueva sesión creada:", sessionId);
+    } else {
+      console.log("Sesión recuperada:", sessionId);
+    }
+  }, []); // Solo se ejecuta una vez al montar
+
+  // LIMPIAR CONTEXTO AL DESMONTAR EL COMPONENTE
+  useEffect(() => {
+    // Función de limpieza que se ejecuta al salir
+    return () => {
+      const sessionId = localStorage.getItem("session_id");
+      if (sessionId) {
+        console.log("Limpiando contexto al salir...");
+        borrarContexto(sessionId);
+        localStorage.removeItem("session_id");
+      }
+    };
+  }, []);
+
+  // DETECTAR CIERRE DE PESTAÑA/NAVEGADOR
+  useEffect(() => {
+    const handleBeforeUnload = async (e) => {
+      const sessionId = localStorage.getItem("session_id");
+      if (sessionId) {
+        // Navigator.sendBeacon es mejor para beforeunload
+        const data = new Blob(
+          [JSON.stringify({ session_id: sessionId })],
+          { type: 'application/json' }
+        );
+        navigator.sendBeacon('http://localhost:8000/api/borrar-contexto/', data);
+        localStorage.removeItem("session_id");
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  // -----------------------------------------------------
+
   // Autoajustar textarea
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -58,10 +110,11 @@ export default function Fusion() {
     else document.body.classList.remove("fusionApp-map-open");
   }, [showMap]);
 
-  // Funciones
+  // ---------------------------------
+  // --- FUNCIONES -------------------
+
   const handleOptionClick = (option) => {
     const userMessage = { type: "user", content: option, timestamp: new Date() };
-
     if (option === "Mas opciones...") {
       setShowMoreOptions(true);
       setMessages((prev) => [
@@ -72,124 +125,78 @@ export default function Fusion() {
       ]);
       return;
     }
-
-    const botInfo = {
-      type: "bot",
-      content: `Para el proceso de ${option.toLowerCase()} se tiene que hacer lo siguiente:
-
-1.- Ingresa al SIM con tu número de control y contraseña.
-2.- Dirígete al módulo correspondiente.
-3.- Ahí te aparecerá una tabla con las opciones relacionadas, selecciona la que necesites.
-4.- Por último, sigue las instrucciones mostradas.`,
-      timestamp: new Date(),
-    };
-
-    const botActions = {
-      type: "bot",
-      content: 'Si quiere cambiar de proceso, presione el botón de opciones en el área de texto.',
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, userMessage, botInfo, botActions]);
+    // Enviar opción al backend
+    handleSendMessage(option);
   };
 
-  /*const simulateBotResponse = (userInput) => {
-    const input = userInput.toLowerCase();
-    const botResponse = { type: "bot", content: "", timestamp: new Date() };
-    const extraResponses = [];
+  const handleSendMessage = async (messageToSend = null) => {
+    const mensaje = messageToSend || inputValue;
 
-    if (input.includes("evaluacion") || input.includes("profesor")) {
-      botResponse.content = `Para el proceso de evaluación de docentes se tiene que hacer lo siguiente:
-
-1.- Ingresa al SIM con tu número de control y contraseña.
-2.- Dirígete al módulo de evaluaciones y encuestas.
-3.- Ahí te aparecerá una tabla con todas las evaluaciones posibles, selecciona la que necesites.
-4.- Por último, contesta todas las preguntas.`;
-      setMessages((prev) => [
-        ...prev,
-        botResponse,
-        { type: "bot", content: 'Si quiere cambiar de proceso, presione el botón de opciones en el área de texto.', timestamp: new Date() },
-      ]);
-      return;
-    } else if (input.includes("kardex")) botResponse.content = `El Kardex es un documento que muestra tu historial académico completo.`;
-    else if (input.includes("constancia")) botResponse.content = `La constancia de estudios se solicita en el departamento de servicios escolares.`;
-    else if (input.includes("titulacion")) botResponse.content = `El proceso de titulación implica completar todos los créditos y cumplir los requisitos académicos.`;
-    else if (input.includes("credito")) botResponse.content = `Los créditos complementarios se registran al participar en actividades culturales o académicas.`;
-    else if (input.includes("historial")) botResponse.content = `El historial académico se descarga desde el portal del SIM.`;
-    else if (input.includes("pago")) botResponse.content = `Los pagos se realizan en caja o mediante transferencia.`;
-    else if (input.includes("horario")) botResponse.content = `Tu horario actual se encuentra en el portal del SIM, sección “Mi horario”.`;
-    else {
-      const ubicacion = ubicacionesData.find((u) => u.id === inputValue.toUpperCase());
-      if (ubicacion) {
-        botResponse.content = ubicacion.texto;
-        extraResponses.push({ type: "bot", content: "building_image", buildingImage: ubicacion.imagen, timestamp: new Date() });
-        extraResponses.push({ type: "bot", content: "Si desea otra ubicación, escríbala o use el mapa.", timestamp: new Date() });
-      } else {
-        botResponse.content = `Has escrito: "${userInput}". Por favor proporciona más detalles o selecciona una opción.`;
-      }
-    }
-
-    setMessages((prev) => [...prev, botResponse, ...extraResponses]);
-  };*/
-
-  const handleSendMessage = async () => {
-    /*
-    if (!inputValue.trim()) return;
-    const userMessage = { type: "user", content: inputValue, timestamp: new Date() };
+    if (!mensaje.trim() || isLoading) return;
+    
+    const userMessage = { type: "user", content: mensaje, timestamp: new Date() };
     setMessages((prev) => [...prev, userMessage]);
-    const input = inputValue;
-    setInputValue("");
-    setTimeout(() => simulateBotResponse(input), 500);
-    */
-
-    if(!inputValue.trim() || isLoading) return; // No enviar si está cargando
-
-    const userMessage = {type: "user", content: inputValue, timestamp: new Date()};
-    setMessages((prev) => [...prev, userMessage]);
-
-    const mensajeParaEnviar = inputValue; // Guarda el input 
-    setInputValue(""); // limpia el text area
-    setLoading(true); // Activar indicador de carga
-
-     // Agregar mensaje temporal de "escribiendo..."
+    
+    if (!messageToSend) setInputValue("");
+    
+    setLoading(true);
+    
+    // Agregar indicador de "escribiendo..."
     const tempId = Date.now();
     setMessages((prev) => [
       ...prev,
       { type: "bot", content: "typing", timestamp: new Date(), id: tempId }
     ]);
-
+    
     try {
+      // Obtener session_id de localStorage
+      const sessionId = localStorage.getItem("session_id");
+      
+      // Llamada a Django
+      const data = await sendUsuarioMensaje(mensaje, sessionId);
 
-      // Llamada a Django para obtener respuesta del modelo
-      const data = await sendUsuarioMensaje(mensajeParaEnviar);
-
-      // Remover mensaje temporal
+      // Ver qué llegó del backend
+        console.log("- RESPUESTA DEL BACKEND:", data);
+        console.log("   - Tipo de data:", typeof data);
+        console.log("   - Keys:", Object.keys(data));
+        console.log("   - data.reply:", data.reply);
+        console.log("   - data.error:", data.error);
+      
+      // Remover indicador
       setMessages((prev) => prev.filter(msg => msg.id !== tempId));
       
       if (!data.error) {
+        // Guardar session_id si es nuevo
+        if (data.session_id && data.session_id !== sessionId) {
+          localStorage.setItem("session_id", data.session_id);
+          console.log("Session ID guardado:", data.session_id);
+        }
+
+        // Verificar antes de agregar mensaje
+        console.log("Agregando mensaje del bot:", data.reply);
+        
         setMessages((prev) => [
           ...prev,
-          {type: "bot",
-          content: data.reply, timestamp: new Date()}
+          { type: "bot", content: data.reply, timestamp: new Date() }
         ]);
       } else {
         setMessages((prev) => [
           ...prev,
-          {type: "bot", content: "Hubo un problema procesando tu consulta. Por favor intenta de nuevo.", timestamp: new Date() }
+          { type: "bot", content: "Hubo un problema procesando tu consulta.", timestamp: new Date() }
         ]);
       }
     } catch (err) {
-      // Remover mensaje temporal
       setMessages((prev) => prev.filter(msg => msg.id !== tempId));
-      
       setMessages((prev) => [
         ...prev,
-        {type: "bot", content: "No se pudo conectar con el servidor. Verifica tu conexión.", timestamp: new Date()}
+        { type: "bot", content: "No se pudo conectar con el servidor.", timestamp: new Date() }
       ]);
     } finally {
-      setLoading(false); // Desactivar indicador
+      setLoading(false);
     }
   };
+
+  // ---------------------------------
 
   const handleProcessChange = () => {
     setShowMoreOptions(true);
@@ -247,6 +254,7 @@ export default function Fusion() {
           <img src="/logo-app.png" alt="Logo" className="fusionApp-logo" />
         </div>
       </header>
+      
       <div className="fusionApp-chat-area">
         {messages.map((message, idx) => (
           <div key={idx} className={`fusionApp-chat-message ${message.type}`}>
@@ -258,14 +266,12 @@ export default function Fusion() {
             </div>
             <div className="fusionApp-message-content">
               {message.content === "typing" ? (
-                // 1. Indicador de "escribiendo..."
                 <div className="fusionApp-typing-indicator">
                   <span></span>
                   <span></span>
                   <span></span>
                 </div>
               ) : message.content === "options" || message.content === "moreOptions" ? (
-                // 2. Opciones predefinidas
                 <div className="fusionApp-options-box">
                   <h3>{message.content === "options" ? "Elige una opción:" : "Más opciones:"}</h3>
                   {(message.content === "options" ? predefinedOptions : additionalOptions).map((option, i) => (
@@ -285,6 +291,7 @@ export default function Fusion() {
         ))}
         <div ref={chatEndRef}></div>
       </div>
+      
       <div className="fusionApp-input-area">
         <div className="fusionApp-input-group">
           <textarea
@@ -300,16 +307,21 @@ export default function Fusion() {
             }}
             rows={1}
             className="fusionApp-textarea"
+            disabled={isLoading}
           />
           <button className="fusionApp-process-btn" onClick={handleProcessChange}>
             <i className="bi bi-menu-up"></i>
           </button>
         </div>
-        <button className="fusionApp-send-btn" onClick={handleSendMessage}>
+        <button 
+          className="fusionApp-send-btn" 
+          onClick={() => handleSendMessage()}
+          disabled={isLoading}
+        >
           <i className="bi bi-send-fill"></i>
         </button>
       </div>
-
+      
       {showMap && (
         <>
           <div className="fusionApp-map-overlay"></div>

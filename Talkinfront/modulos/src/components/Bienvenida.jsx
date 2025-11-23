@@ -1,4 +1,4 @@
-// Talkinpon\Talkinfront\modulos\src\components\Bienvenida.jsx
+// Talkinfront/modulos/src/components/Bienvenida.jsx
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";

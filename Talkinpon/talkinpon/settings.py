@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'talkinpon.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'TalkinponDB', # Base de datos
+        'NAME': 'Talkinpon_BD', # Base de datos
         'USER': 'postgres',
         'PASSWORD': '3118Ch$', # Contraseña
         'HOST': 'localhost',

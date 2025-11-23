@@ -1,289 +1,381 @@
 # Talkinpon/Chat/utils.py
 
-# Lógica principal: DialogFlow → Base de Datos → IA → Respuesta
+'''
+Utils.py es el archivo que define como es que se crea la respuesta para el usuario
+Aqui se explica cada paso por el que se procesa la consulta del usuario
+y como es que se genera la respuesta en base al Modelo IA y DialogFlow
+'''
 
 from .ollama_servidor import respuesta as ollama_respuesta
 from .models import Contexto, Consulta
 from .database_queries import (
-    buscar_proceso, 
-    buscar_paso_especifico, 
+    buscar_proceso_completo,
     buscar_edificio, 
     buscar_salon,
     listar_todos_procesos,
     listar_todos_edificios,
-    construir_identificador_paso
 )
 from DialogFlow.dialogflow_service import detect_intent_texts
 from django.utils import timezone
 import uuid
 import json
 
+conversaciones_activas = {}
 
+def obtener_estado_conversacion(session_id):
+    if session_id not in conversaciones_activas:
+        conversaciones_activas[session_id] = {
+            "proceso_actual": None,
+            "info_proceso": None,
+            "tipo_consulta": None,
+            "ultima_actualizacion": timezone.now()
+        }
+    return conversaciones_activas[session_id]
 
-def construir_prompt_para_ia(user_query, datos_bd, tipo_consulta):
-    """
-    Construye el prompt que se enviará a la IA con los datos de la BD
-    """
-    if not datos_bd:
-        return [{
-            "role": "user",
-            "content": f"El usuario pregunta: '{user_query}'. No se encontró información en la base de datos. Discúlpate amablemente y sugiere verificar la consulta."
-        }]
+def actualizar_estado_conversacion(session_id, **kwargs):
+    estado = obtener_estado_conversacion(session_id)
+    estado.update(kwargs)
+    estado["ultima_actualizacion"] = timezone.now()
+
+def limpiar_estado_conversacion(session_id):
+    if session_id in conversaciones_activas:
+        del conversaciones_activas[session_id]
+
+def obtener_contexto_reciente(session_id, max_msgs=3):
+    contextos = Contexto.objects.filter(session_id=session_id).order_by("-fecha")[:max_msgs]
+    contextos = list(contextos)[::-1]
     
-    # Convertir datos a JSON legible
-    datos_json = json.dumps(datos_bd, indent=2, ensure_ascii=False)
+    messages = []
+    for ctx in contextos:
+        role = "user" if ctx.role == "USER" else "assistant"
+        messages.append({"role": role, "content": ctx.contenido})
+    
+    return messages
 
-    prompt = ""
+def es_despedida(mensaje):
+    """Detecta si el usuario está terminando la conversación"""
+    despedidas = [
+        'gracias', 'thanks', 'ok gracias', 'muchas gracias',
+        'perfecto gracias', 'ya está', 'listo', 'ok listo',
+        'eso es todo', 'nada más', 'ya'
+    ]
+    msg_lower = mensaje.lower().strip()
+    
+    # Si el mensaje es corto y contiene despedida
+    if len(msg_lower.split()) <= 4:
+        if any(desp in msg_lower for desp in despedidas):
+            return True
+    
+    return False
+
+def construir_prompt_sistema():
+    return {
+        "role": "system",
+        "content": """Eres un estudiante de último semestre del Tec de Morelia que ya hizo todos los trámites.
+
+        Ayudas a compañeros de forma NATURAL, como platicar en la cafetería.
+
+        REGLAS ESTRICTAS:
+        1. NUNCA repitas o menciones la pregunta del usuario
+        2. Ve DIRECTO a responder
+        3. Habla casual: "mira", "we", "eso sí", "básicamente"
+        4. NO uses lenguaje formal o corporativo
+        5. NO menciones "base de datos", "información", etc.
+
+        EJEMPLOS:
+
+        MAL: "La pregunta del usuario es... El paso 1 es..."
+        BIEN: "El primer paso es recibir solicitudes. Tarda 2 semanas..."
+
+        MAL: "Según la información disponible, después del paso..."
+        BIEN: "Después de eso viene el paso 3, donde..."
+
+        Responde como compa que genuinamente ayuda."""
+    }
+
+def construir_prompt_con_info_proceso(user_query, info_proceso):
+    info_json = json.dumps(info_proceso, indent=2, ensure_ascii=False)
+    
+    return {
+        "role": "user",
+        "content": f"""PROCESO:
+
+        {info_json}
+
+        PREGUNTA: "{user_query}"
+
+        REGLAS:
+        - NO repitas la pregunta
+        - Responde DIRECTO y CONCISO
+        - Si menciona número de paso, busca ESE paso y explícalo (actividad, tiempo, responsable)
+        - Si pregunta "qué sigue", identifica paso anterior en la conversación y explica el siguiente
+        - Si pregunta algo general, da resumen breve
+        - Si pregunta sobre requisitos de estudiante, busca en requisitos_generales
+        - Tono casual pero preciso
+
+        RESPONDE:"""
+    }
+
+def construir_prompt_inicial(user_query, datos_bd, tipo_consulta):
+    if not datos_bd:
+        return {
+            "role": "user",
+            "content": f'PREGUNTA: "{user_query}"\n\nNo hay info. Discúlpate casual y sugiere reformular.'
+        }
+    
+    datos_json = json.dumps(datos_bd, indent=2, ensure_ascii=False)
     
     if tipo_consulta == "Procesos":
-        if 'pasos' in datos_bd:  # Es un proceso completo
-            prompt = f"""Eres un asistente universitario del Instituto Tecnológico de Morelia.
-            
-            Tu trabajo es explicar procesos administrativos de manera clara, amigable y profesional.
-            
-            El usuario preguntó: "{user_query}"
-            
-            Aquí está la información oficial del proceso desde la base de datos:
-            
+        if 'pasos' in datos_bd:
+            prompt = f"""PROCESO:
+
             {datos_json}
-            
-            INSTRUCCIONES:
-            1. Explica el proceso de forma natural y ordenada
-            2. Menciona primero los requisitos generales si los hay
-            3. Luego explica los pasos de manera secuencial y clara
-            4. Para cada paso importante menciona: número, actividad, tiempo estimado y responsable
-            5. Si hay requisitos específicos en algún paso, méncionalos
-            6. NO digas que obtuviste esta información de un JSON o base de datos
-            7. Habla como si conocieras perfectamente el proceso
-            8. Sé conciso pero completo
-            
-            Responde ahora:"""
-        
-        elif 'numero' in datos_bd:  # Es un paso específico
-            prompt = f"""Eres un asistente universitario del Instituto Tecnológico de Morelia.
-                        
-            El usuario preguntó sobre un paso específico: "{user_query}"
-            
-            Aquí está la información del paso:
-            
+
+            PREGUNTA: "{user_query}"
+
+            REGLAS:
+            - NO repitas la pregunta
+            - Responde DIRECTO
+            - Si pregunta paso específico, búscalo y explícalo
+            - Tono casual de compañero
+
+            RESPONDE:"""
+        else:
+            prompt = f"""PREGUNTA: "{user_query}"
+
+            PROCESOS:
             {datos_json}
-            
-            Explica este paso de forma clara: qué se hace, quién es responsable, cuánto tiempo toma y qué requisitos tiene.
-            NO menciones que obtuviste la información de una base de datos.
-            
-            Responde:"""
+
+            Lista los procesos amigable. Tono casual.
+
+            RESPONDE:"""
     
     elif tipo_consulta == "Ubicaciones":
-        if 'salones' in datos_bd:  # Es un edificio
-            prompt = f"""Eres un asistente universitario del Instituto Tecnológico de Morelia.
+        if 'salones' in datos_bd:
+            prompt = f"""PREGUNTA: "{user_query}"
 
-            El usuario preguntó sobre una ubicación: "{user_query}"
-
-            Aquí está la información del edificio:
-
+            EDIFICIO:
             {datos_json}
 
-            Explica de forma amigable: qué es el edificio, para qué se usa, dónde está ubicado (nodo del campus).
-            Si preguntan por salones, menciona algunos ejemplos.
-            NO menciones coordenadas exactas a menos que sea necesario.
+            Explica dónde está y para qué sirve. Casual. NO repitas pregunta.
 
-            Responde:"""
-        
-        elif 'edificio' in datos_bd:  # Es un salón
-            prompt = f"""Eres un asistente universitario del Instituto Tecnológico de Morelia.
+            RESPONDE:"""
+        elif 'edificio' in datos_bd:
+            prompt = f"""PREGUNTA: "{user_query}"
 
-            El usuario preguntó: "{user_query}"
-
-            Aquí está la información del salón:
-
+            SALÓN:
             {datos_json}
 
-            Explica dónde está el salón: edificio, piso, capacidad.
+            Explica dónde está. Casual. NO repitas pregunta.
 
-            Responde:"""
-    
-    else:  # Consulta general
-        prompt = f"""Eres un asistente universitario del Instituto Tecnológico de Morelia.
+            RESPONDE:"""
+        else:
+            prompt = f"""PREGUNTA: "{user_query}"
 
-        El usuario preguntó: "{user_query}"
+            EDIFICIOS:
+            {datos_json}
 
-        Información disponible:
+            Lista edificios. Casual.
 
+            RESPONDE:"""
+    else:
+        prompt = f"""PREGUNTA: "{user_query}"
+
+        INFO:
         {datos_json}
 
-        Responde de forma clara y amigable basándote en esta información.
+        Responde claro y casual.
 
-        Responde:"""
+        RESPONDE:"""
     
-    return [{"role": "user", "content": prompt}]
+    return {"role": "user", "content": prompt}
 
-
-def obtener_datos_desde_bd(parametros):
-    """
-    Según los parámetros de DialogFlow, consulta la base de datos
-    Retorna: (datos_bd, tipo_consulta)
-    """
-    tipo_consulta = parametros.get('consulta', '')
-    print(f"Parámetros recibidos en obtener_datos_desde_bd: {parametros}")
+def clasificar_mensaje_localmente(mensaje):
+    query = mensaje.lower()
     
+    proceso_keywords = [
+        'tramita', 'requisitos', 'procedimiento', 'solicitar', 
+        'kardex', 'titulo', 'servicio social', 'pasos', 'tramitar',
+        'paso', 'tramite', 'proceso', 'como hago', 'titulacion',
+        'constancia', 'credito'
+    ]
     
-    # PROCESOS
-    if tipo_consulta == 'Procesos':
-        # Buscar nombre del proceso
-        proceso_nombre = parametros.get('proceso_nombre', '') or parametros.get('proceso', '')
-        
-        # Buscar paso específico
-        paso_numero = parametros.get('paso_numero', '') or parametros.get('paso', '')
-
-        print(f"Proceso: '{proceso_nombre}' | Paso: '{paso_numero}'")
-        
-        if paso_numero and proceso_nombre:
-            # Usuario pregunta por un paso específico de un proceso
-            # CONSTRUIR IDENTIFICADOR (SS-03, TIT-02, etc.)
-            print(f"Construyendo identificador para {proceso_nombre} - {paso_numero}")
-            identificador = construir_identificador_paso(proceso_nombre, paso_numero)
-            
-            if identificador:
-                print(f"Identificador construido: {identificador}")
-                datos = buscar_paso_especifico(identificador)
-                
-                if datos:
-                    print(f"Datos encontrados para paso: {datos}")
-                    return datos, 'Procesos-Paso'
-                else:
-                    print(f"No se encontraron datos para identificador: {identificador}")
-                    return None, 'Procesos-Paso-NoEncontrado'
-            else:
-                print(f"No se pudo construir identificador para {proceso_nombre} - {paso_numero}")
-                return None, 'Procesos-Paso-Error'
-        
-        elif paso_numero:
-            # Solo tiene número de paso sin proceso
-            print(f"Paso especificado sin proceso: {paso_numero}")
-            return None, 'Procesos-Paso-Sin-Proceso'
-        
-        elif proceso_nombre:
-            # Usuario pregunta por un proceso completo
-            print(f"Buscando proceso completo: {proceso_nombre}")
-            datos = buscar_proceso(proceso_nombre)
-            return datos, 'Procesos-Completo'
-        
-        else:
-            # Usuario pregunta qué procesos hay
-            print(f"Listando todos los procesos")
-            datos = {'procesos_disponibles': listar_todos_procesos()}
-            return datos, 'Procesos-Lista'
+    ubicacion_keywords = [
+        'donde', 'ubicación', 'esta', 'está', 'salon', 'salón',
+        'laboratorio', 'edificio', 'aula', 'encuentra'
+    ]
     
-    # UBICACIONES
-    elif tipo_consulta == 'Ubicaciones':
-        edificio_nombre = parametros.get('edificio', '') or parametros.get('edificio_nombre', '')
-        salon_numero = parametros.get('salon', '') or parametros.get('salon_numero', '')
-        
-        print(f"Edificio: '{edificio_nombre}' | Salón: '{salon_numero}'")
-        
-        if salon_numero:
-            datos = buscar_salon(salon_numero)
-            return datos, 'Ubicaciones-Salon'
-        
-        elif edificio_nombre:
-            datos = buscar_edificio(edificio_nombre)
-            return datos, 'Ubicaciones-Edificio'
-        
-        else:
-            datos = {'edificios_disponibles': listar_todos_edificios()}
-            return datos, 'Ubicaciones-Lista'
-        
-    print(f"No se pudo determinar tipo de consulta o no hay datos")
-    return None, ''
+    if any(kw in query for kw in proceso_keywords):
+        return 'Procesos'
+    elif any(kw in query for kw in ubicacion_keywords):
+        return 'Ubicaciones'
+    else:
+        return 'General'
 
+def necesita_llamar_dialog(session_id, mensaje):
+    estado = obtener_estado_conversacion(session_id)
+    tipo_actual = estado.get("tipo_consulta")
+    proceso_actual = estado.get("proceso_actual")
+    
+    if tipo_actual is None:
+        return True, "Primera consulta"
+    
+    tipo_nuevo = clasificar_mensaje_localmente(mensaje)
+    
+    if tipo_nuevo != tipo_actual and tipo_nuevo != 'General':
+        return True, f"Cambio de tipo: {tipo_actual} → {tipo_nuevo}"
+    
+    if tipo_actual == "Procesos" and tipo_nuevo == "Procesos":
+        procesos_conocidos = ['servicio social', 'titulacion', 'kardex', 'constancia']
+        for proc in procesos_conocidos:
+            if proc in mensaje.lower() and proceso_actual and proc not in proceso_actual.lower():
+                return True, f"Cambio de proceso: {proceso_actual} → {proc}"
+    
+    return False, "Misma conversación en curso"
 
 def procesar_mensaje(mensaje, session_id=None):
-    """
-    FLUJO PRINCIPAL:
-    1. Recibe mensaje del usuario
-    2. Envía a DialogFlow para clasificar
-    3. Consulta la base de datos según parámetros
-    4. Envía datos a la IA para generar respuesta natural
-    5. Guarda en Contexto y Consulta
-    """
-
     print(f"\n{'='*60}")
     print(f"PROCESANDO MENSAJE: {mensaje}")
     print(f"{'='*60}\n")
     
-    # 1. Crear o usar session_id existente
     if not session_id:
         session_id = uuid.uuid4()
     
-    # Guardar mensaje del usuario en Contexto
+    session_id_str = str(session_id)
+    
     Contexto.objects.create(
         session_id=session_id,
         role="USER",
         contenido=mensaje,
         fecha=timezone.now()
     )
-    
-    # 2. ENVIAR A DIALOGFLOW
-    try:
-        print("Llamando a DialogFlow...")
-        dialogflow_result = detect_intent_texts(str(session_id), mensaje)
-        
-        if isinstance(dialogflow_result, str):
-            # Error de DialogFlow
-            print(f"Error en DialogFlow: {dialogflow_result}")
-            respuesta_final = dialogflow_result
-            tipo_consulta = "Error"
-        else:
-            # DialogFlow retornó correctamente
-            parametros = dialogflow_result.get('parameters', {})
-            print(f"DialogFlow respondió. Parámetros: {parametros}")
-            
-            # 3. CONSULTAR BASE DE DATOS
-            print("\nConsultando base de datos...")
-            datos_bd, tipo_consulta_detallado = obtener_datos_desde_bd(parametros)
 
-            if datos_bd:
-                print(f"Datos encontrados en BD:")
-                print(f"{json.dumps(datos_bd, indent=2, ensure_ascii=False)}\n")
+    # Detectar despedidas
+    if es_despedida(mensaje):
+        respuesta_final = "¡De nada! Cualquier cosa me preguntas 😊"
+        
+        Contexto.objects.create(
+            session_id=session_id,
+            role="ASSISTANT",
+            contenido=respuesta_final,
+            fecha=timezone.now()
+        )
+        
+        print(f"Despedida detectada\n")
+        return respuesta_final, session_id
+    
+    debe_llamar_dialog, razon = necesita_llamar_dialog(session_id_str, mensaje)
+    print(f"¿Llamar a Dialog? {debe_llamar_dialog} - Razón: {razon}\n")
+    
+    estado = obtener_estado_conversacion(session_id_str)
+    
+    try:
+        if debe_llamar_dialog:
+            print("Llamando a DialogFlow...")
+            dialogflow_result = detect_intent_texts(session_id_str, mensaje)
+            
+            if isinstance(dialogflow_result, str):
+                print(f"Error en DialogFlow: {dialogflow_result}")
+                respuesta_final = "Hubo un problema procesando tu consulta. ¿Podrías reformular tu pregunta?"
+                tipo_consulta = "Error"
             else:
-                print(f"No se encontraron datos en BD. Tipo: {tipo_consulta_detallado}\n")
+                parametros = dialogflow_result.get('parameters', {})
+                tipo_consulta = parametros.get('consulta', 'General')
+                print(f"DialogFlow respondió. Tipo: {tipo_consulta}")
+                print(f"Parámetros: {parametros}\n")
+                
+                print("Consultando base de datos...")
+                
+                if tipo_consulta == "Procesos":
+                    proceso_nombre = parametros.get('proceso_nombre', '') or parametros.get('proceso', '')
+                    
+                    if proceso_nombre:
+                        print(f"Trayendo TODO el proceso: {proceso_nombre}")
+                        datos_bd = buscar_proceso_completo(proceso_nombre)
+                        
+                        if datos_bd:
+                            actualizar_estado_conversacion(
+                                session_id_str,
+                                proceso_actual=proceso_nombre,
+                                info_proceso=datos_bd,
+                                tipo_consulta="Procesos"
+                            )
+                            print(f"Proceso cacheado: {datos_bd.get('total_pasos', 0)} pasos\n")
+                        else:
+                            print(f"Proceso no encontrado\n")
+                    else:
+                        print("Listando procesos")
+                        datos_bd = {'procesos_disponibles': listar_todos_procesos()}
+                    
+                    tipo_consulta_detallado = 'Procesos-Completo'
+                
+                elif tipo_consulta == "Ubicaciones":
+                    edificio_nombre = parametros.get('edificio', '')
+                    salon_numero = parametros.get('salon', '')
+                    
+                    if salon_numero:
+                        datos_bd = buscar_salon(salon_numero)
+                        tipo_consulta_detallado = 'Ubicaciones-Salon'
+                    elif edificio_nombre:
+                        datos_bd = buscar_edificio(edificio_nombre)
+                        tipo_consulta_detallado = 'Ubicaciones-Edificio'
+                    else:
+                        datos_bd = {'edificios_disponibles': listar_todos_edificios()}
+                        tipo_consulta_detallado = 'Ubicaciones-Lista'
+                    
+                    actualizar_estado_conversacion(session_id_str, tipo_consulta="Ubicaciones")
+                
+                else:
+                    datos_bd = None
+                    tipo_consulta_detallado = 'General'
+                
+                prompt_usuario = construir_prompt_inicial(mensaje, datos_bd, tipo_consulta)
+                
+                if tipo_consulta in ['Procesos', 'Ubicaciones']:
+                    Consulta.objects.create(
+                        session_id=session_id,
+                        modulo_consulta=tipo_consulta.upper(),
+                        tipo_consulta=tipo_consulta_detallado,
+                        fecha=timezone.now()
+                    )
+        else:
+            print("Usando cache...")
+            info_proceso = estado.get("info_proceso")
             
-            # Extraer tipo general (Procesos o Ubicaciones)
-            tipo_consulta = parametros.get('consulta', 'General')
-            
-            # 4. CONSTRUIR PROMPT PARA LA IA
-            print("Construyendo prompt para IA...")
-            prompt_ia = construir_prompt_para_ia(mensaje, datos_bd, tipo_consulta)
-            
-            # 5. LLAMAR A LA IA (OLLAMA)
-            print("Llamando a Ollama...")
-            respuesta_final = ollama_respuesta(prompt_ia)
-            print(f"Respuesta de Ollama recibida: {respuesta_final[:100]}...\n")
-            
-            # 6. GUARDAR EN CONSULTA
-            if tipo_consulta in ['Procesos', 'Ubicaciones']:
-                Consulta.objects.create(
-                    modulo_consulta=tipo_consulta.upper(),
-                    tipo_consulta=tipo_consulta_detallado,
-                    fecha=timezone.now()
-                )
-                print(f"Consulta guardada en BD")
+            if info_proceso:
+                print(f"Cache disponible\n")
+                prompt_usuario = construir_prompt_con_info_proceso(mensaje, info_proceso)
+            else:
+                print("Sin cache\n")
+                prompt_usuario = {
+                    "role": "user",
+                    "content": f"PREGUNTA: '{mensaje}'\n\nResponde basándote en contexto previo."
+                }
+        
+        print("Llamando a Llama...")
+        mensajes_previos = obtener_contexto_reciente(session_id_str)
+        mensajes_completos = [construir_prompt_sistema()] + mensajes_previos + [prompt_usuario]
+        
+        print("\n===== MENSAJES AL MODELO =====")
+        for i, m in enumerate(mensajes_completos, 1):
+            preview = m['content'][:100] + "..." if len(m['content']) > 100 else m['content']
+            print(f"[{i}] {m['role']}: {preview}")
+        print("===== FIN =====\n")
+        
+        respuesta_final = ollama_respuesta(mensajes_completos)
+        print(f"Respuesta: {respuesta_final[:80]}...\n")
     
     except Exception as e:
-        print(f"Error en procesar_mensaje: {e}")
-        respuesta_final = "Lo siento, hubo un error procesando tu consulta. Por favor intenta de nuevo."
-        tipo_consulta = "Error"
+        print(f"Error: {e}")
+        respuesta_final = "Lo siento, hubo un error. Intenta de nuevo."
     
-    # 7. GUARDAR RESPUESTA DEL ASISTENTE EN CONTEXTO
     Contexto.objects.create(
         session_id=session_id,
         role="ASSISTANT",
         contenido=respuesta_final,
         fecha=timezone.now()
     )
-
-    print(f"\n{'='*60}")
-    print(f"PROCESO COMPLETADO")
-    print(f"{'='*60}\n")
+    
+    print(f"{'='*60}\nPROCESO COMPLETADO\n{'='*60}\n")
     
     return respuesta_final, session_id

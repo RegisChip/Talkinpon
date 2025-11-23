@@ -1,0 +1,1 @@
+AL momento de hacer el pull de esta version, ejecuta los comandos makemigrations y migrate, asi como cambiar la base de datos por la tuya y tu contraseña
