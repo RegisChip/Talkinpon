@@ -1,4 +1,4 @@
-# Talkinpon\Chat\ollama_servidor.py
+# Talkinpon/Chat/ollama_servidor.py
 
 import requests
 import json
@@ -14,9 +14,11 @@ def respuesta (mensaje):
     data = {
         "model": OLLAMA_MODEL,
         "messages": mensaje,
-        #"prompt": "\n".join([f"{m['role']}: {m['content']}" for m in mensaje]),
-        #"max_tokens": 200,
-        "stream": False
+        "stream": False,
+        "options": {
+            "num_predict": 750,  # Máximo 150 tokens (aprox 500 palabras)
+            "temperature": 0.6,  # Un poco más creativo pero controlado
+        }
     }
 
     try:
