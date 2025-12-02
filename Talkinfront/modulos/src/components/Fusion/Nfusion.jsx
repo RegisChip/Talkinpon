@@ -14,31 +14,34 @@ export default function Fusion() {
   const [ubicacionesData, setUbicacionesData] = useState([]);
   const [edificiosCargados, setEdificiosCargados] = useState(false);
 
+  //nuwevos estados para mostrar la respuesta 
+  const [showMap, setShowMap] = useState(false);
+  const [animateMap, setAnimateMap] = useState(false);
+  const [rutaData, setRutaData] = useState(null);
+
   const navigate = useNavigate();
   const chatEndRef = useRef(null);
   const textareaRef = useRef(null);
 
   const predefinedOptions = [
     { img: "/item-chat.png", text: "Kardex" },
-    { img: "/item-chat.png", text: "Constancia" },
-    { img: "/item-chat.png", text: "Titulacion" },
-    { img: "/item-chat.png", text: "Creditos" },
+    { img: "/item-chat.png", text: "Constancia de Estudios" },
+    { img: "/item-chat.png", text: "Creditos Complementarios" },
+    { img: "/item-chat.png", text: "Servicio Social" },
     { img: "/item-chat.png", text: "Mas opciones..." },
   ];
 
   const additionalOptions = [
-    { img: "/item-chat.png", text: "Historial Academico" },
-    { img: "/item-chat.png", text: "Pagos y Finanzas" },
-    { img: "/item-chat.png", text: "Horarios" },
+    { img: "/item-chat.png", text: "Resellar Credencial" },
+    { img: "/item-chat.png", text: "Tramitar Credencial" },
+    { img: "/item-chat.png", text: "Baja Temporal" },
   ];
 
   const [messages, setMessages] = useState([
     { type: "bot", content: "options", timestamp: new Date() },
   ]);
   const [inputValue, setInputValue] = useState("");
-  const [showMap, setShowMap] = useState(false);
-  const [animateMap, setAnimateMap] = useState(false);
-  const [showMoreOptions, setShowMoreOptions] = useState(false);
+
 
   // Cargar edificios directamente desde Django al montar el componente
   useEffect(() => {
@@ -66,6 +69,107 @@ export default function Fusion() {
     loadEdificios();
   }, []);
 
+  //limpiar descripocion al cerrr el mapa 
+  const toggleMap = () => {
+    if (showMap) {
+      setAnimateMap(false);
+      setTimeout(() => setShowMap(false), 300);
+       // Limpiar descripción al cerrar el mapa
+    } else {
+      setShowMap(true);
+      setTimeout(() => setAnimateMap(true), 10);
+    }
+  }
+
+  const handleRouteCalculationSuccess = (routeData) => {
+    setRutaData(routeData);
+    // Add the AI description as a new message
+    if (routeData && routeData.descripcion_ia) {
+      
+    } else {
+      // Fallback if the description is missing for some reason
+      handleRouteCalculationError("No se pudo generar la descripción de la ruta.");
+    }
+  };
+
+  const handleClearRoute = () => {
+    setRutaData(null);
+  };
+
+
+  const handleRouteCalculationError = (errorMessage) => {
+    // Add an error message to the chat
+    setMessages((prev) => [
+      ...prev,
+      { type: "bot", content: `Lo sentimos, hubo un problema al calcular la ruta. Por favor, inténtalo de nuevo.`, timestamp: new Date() }
+    ]);
+  };
+
+  // --- FUNCIONES PARA EL REGISTRO DE LA CONVERSACION ---
+
+  // GENERAR SESSION_ID AL MONTAR EL COMPONENTE
+  useEffect(() => {
+    // Verificar si ya existe un session_id
+    let sessionId = localStorage.getItem("session_id");
+    
+    if (!sessionId) {
+      // Generar nuevo UUID
+      sessionId = crypto.randomUUID();
+      localStorage.setItem("session_id", sessionId);
+      console.log("Nueva sesión creada:", sessionId);
+    } else {
+      console.log("Sesión recuperada:", sessionId);
+    }
+  }, []); // Solo se ejecuta una vez al montar
+
+  // LIMPIAR CONTEXTO AL DESMONTAR EL COMPONENTE (navegar a otra ruta)
+  useEffect(() => {
+    // Función de limpieza que se ejecuta al salir
+    return () => {
+      const sessionId = localStorage.getItem("session_id");
+      if (sessionId) {
+        console.log("🔀 Limpiando contexto al cambiar de ruta...");
+        borrarContexto(sessionId);
+        localStorage.removeItem("session_id");
+      }
+    };
+  }, []);
+
+  // DETECTAR RECARGA DE PÁGINA O CIERRE DE PESTAÑA/NAVEGADOR
+  // OPCIÓN 2: Borrar TODO siempre (recarga o cierre)
+  useEffect(() => {
+      const handleBeforeUnload = (e) => {
+        const sessionId = localStorage.getItem("session_id");
+        
+        console.log("🚨 beforeunload disparado");  // AGREGAR
+        console.log("   Session ID:", sessionId);  // AGREGAR
+        
+        if (sessionId) {
+          console.log("🔄/🚪 Recarga o cierre detectado - Borrando contexto");
+          
+          const data = new Blob(
+            [JSON.stringify({ session_id: sessionId })],
+            { type: 'application/json' }
+          );
+          
+          console.log("   Enviando sendBeacon...");  // AGREGAR
+          const result = navigator.sendBeacon('http://localhost:8000/api/borrar-contexto/', data);
+          console.log("   sendBeacon result:", result);  // AGREGAR (true si se envió)
+          
+          localStorage.removeItem("session_id");
+          console.log("   localStorage limpiado");  // AGREGAR
+        } else {
+          console.log("   No hay session_id para borrar");  // AGREGAR
+        }
+      };
+
+      window.addEventListener('beforeunload', handleBeforeUnload);
+      
+      return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+      };
+  }, []);
+
   // Autoajustar textarea
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -89,9 +193,9 @@ export default function Fusion() {
   // Funciones
   const handleOptionClick = (option) => {
     const userMessage = { type: "user", content: option, timestamp: new Date() };
-
+    
     if (option === "Mas opciones...") {
-      setShowMoreOptions(true);
+
       setMessages((prev) => [
         ...prev,
         userMessage,
@@ -100,65 +204,72 @@ export default function Fusion() {
       ]);
       return;
     }
-
-    const botInfo = {
-      type: "bot",
-      content: `Para el proceso de ${option.toLowerCase()} se tiene que hacer lo siguiente:
-
-1.- Ingresa al SIM con tu número de control y contraseña.
-2.- Dirígete al módulo correspondiente.
-3.- Ahí te aparecerá una tabla con las opciones relacionadas, selecciona la que necesites.
-4.- Por último, sigue las instrucciones mostradas.`,
-      timestamp: new Date(),
-    };
-
-    const botActions = {
-      type: "bot",
-      content: 'Si quiere cambiar de proceso, presione el botón de opciones en el área de texto.',
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, userMessage, botInfo, botActions]);
+    
+    // Enviar opción al backend con flag de que viene de botón
+    handleSendMessage(option, true); // true = saltarDialog
   };
 
+  const handleSendMessage = async (messageToSend = null, saltarDialog = false) => {
+    const mensaje = messageToSend || inputValue;
 
-  const handleSendMessage = async () => {
-
-    if(!inputValue.trim() || isLoading) return;
-
-    const userMessage = {type: "user", content: inputValue, timestamp: new Date()};
+    if (!mensaje.trim() || isLoading) return;
+    
+    const userMessage = { type: "user", content: mensaje, timestamp: new Date() };
     setMessages((prev) => [...prev, userMessage]);
-
-    const mensajeParaEnviar = inputValue;
-    setInputValue("");
+    
+    if (!messageToSend) setInputValue("");
+    
     setLoading(true);
-
+    
+    // Agregar indicador de "escribiendo..."
     const tempId = Date.now();
     setMessages((prev) => [
       ...prev,
       { type: "bot", content: "typing", timestamp: new Date(), id: tempId }
     ]);
-
+    
     try {
-      const data = await sendUsuarioMensaje(mensajeParaEnviar);
+      // Obtener session_id de localStorage
+      const sessionId = localStorage.getItem("session_id");
+      
+      // Llamada a Django con flag saltarDialog
+      const data = await sendUsuarioMensaje(mensaje, sessionId, saltarDialog);
+
+      // Ver qué llegó del backend
+      console.log("- RESPUESTA DEL BACKEND:", data);
+      console.log("   - Tipo de data:", typeof data);
+      console.log("   - Keys:", Object.keys(data));
+      console.log("   - data.reply:", data.reply);
+      console.log("   - data.error:", data.error);
+      
+      // Remover indicador
       setMessages((prev) => prev.filter(msg => msg.id !== tempId));
       
       if (!data.error) {
+        // Guardar session_id si es nuevo
+        if (data.session_id && data.session_id !== sessionId) {
+          localStorage.setItem("session_id", data.session_id);
+          console.log("Session ID guardado:", data.session_id);
+        }
+
+        // Verificar antes de agregar mensaje
+        console.log("Agregando mensaje del bot:", data.reply);
+        
         setMessages((prev) => [
           ...prev,
-          {type: "bot", content: data.reply, timestamp: new Date()}
+          { type: "bot", content: data.reply, timestamp: new Date() }
         ]);
       } else {
         setMessages((prev) => [
           ...prev,
-          {type: "bot", content: "Hubo un problema procesando tu consulta. Por favor intenta de nuevo.", timestamp: new Date() }
+          { type: "bot", content: "Hubo un problema procesando tu consulta.", timestamp: new Date() }
         ]);
       }
     } catch (err) {
       setMessages((prev) => prev.filter(msg => msg.id !== tempId));
       setMessages((prev) => [
         ...prev,
-        {type: "bot", content: "No se pudo conectar con el servidor. Verifica tu conexión.", timestamp: new Date()}
+        { type: "bot", content: "No se pudo conectar con el servidor.", timestamp: new Date() }
       ]);
     } finally {
       setLoading(false);
@@ -166,40 +277,34 @@ export default function Fusion() {
   };
 
   const handleProcessChange = () => {
-    setShowMoreOptions(true);
+
     setMessages((prev) => [...prev, { type: "bot", content: "options", timestamp: new Date() }]);
   };
 
-  const toggleMap = () => {
-    if (showMap) {
-      setAnimateMap(false);
-      setTimeout(() => setShowMap(false), 300);
-    } else {
-      setShowMap(true);
-      setTimeout(() => setAnimateMap(true), 10);
-    }
-  };
+  
+  const salirDelChat = () => {
+      const session_id = localStorage.getItem("session_id");
+      alert("saliendo del chat")
+      if (session_id) {
+          // Llamar al endpoint de borrado de forma síncrona con fetch
+          fetch("http://localhost:8000/api/borrar-contexto/", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ session_id: session_id }),
+              keepalive: true  // IMPORTANTE: mantiene la petición aunque se cierre la página
+          }).then(response => {
+              console.log("Contexto borrado, status:", response.status);
+              alert("contexto borrado")
+          }).catch(err => {
+              console.error("Error borrando contexto:", err);
+          });
+          
+          // Limpiar localStorage
+          localStorage.removeItem("session_id");
+      }
 
-  const handleMapButtonClick = (id) => {
-    const ubicacion = ubicacionesData.find((u) => u.id === id);
-    if (!ubicacion) return;
-    const userMessage = { type: "user", content: id, timestamp: new Date() };
-    const botResponses = [
-      { type: "bot", content: ubicacion.texto, timestamp: new Date() },
-      { type: "bot", content: "building_image", buildingImage: ubicacion.imagen, timestamp: new Date() },
-    ];
-    setMessages((prev) => [...prev, userMessage, ...botResponses]);
-  };
-
-  const salirDelChat = async () => {
-    const session_id = localStorage.getItem("session_id");
-
-    if (session_id) {
-        await borrarContexto(session_id);
-        localStorage.removeItem("session_id");
-    }
-
-    navigate("/");
+      // Navegar después de iniciar el borrado
+      navigate("/");
   };
 
   return (
@@ -291,11 +396,12 @@ export default function Fusion() {
             {edificiosCargados ? (
               <MapaInteractivoDijkstra 
                 ubicacionesData={ubicacionesData}
-                onClose={() => {
-                  setAnimateMap(false);
-                  setTimeout(() => setShowMap(false), 300);
-                }}
+                onClose={toggleMap}
                 apiEndpoint="http://localhost:8000/ruta/dijkstra/"
+                onRouteCalculationSuccess={handleRouteCalculationSuccess}
+                onRouteCalculationError={handleRouteCalculationError}
+                rutaData={rutaData} // Cambiado a rutaData
+                onClearRoute={handleClearRoute} // Pasar función de limpieza
               />
             ) : (
               <div style={{ padding: '40px', textAlign: 'center' }}>

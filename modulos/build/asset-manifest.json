@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "./static/css/main.e1f3670c.css",
+    "main.js": "./static/js/main.d85775d6.js",
+    "static/media/mapa_tec.png": "./static/media/mapa_tec.e4bde54e960ce2107ac6.png",
+    "static/media/Escuela_tec.jpg": "./static/media/Escuela_tec.c08db0b2984e7842431e.jpg",
+    "static/media/bootstrap-icons.woff?": "./static/media/bootstrap-icons.1295669cd4e305c97f2c.woff",
+    "static/media/logo-fondo.png": "./static/media/logo-fondo.a2eec42fd621a16949c0.png",
+    "static/media/bootstrap-icons.woff2?": "./static/media/bootstrap-icons.92ea18a81d737146ff04.woff2",
+    "index.html": "./index.html",
+    "main.e1f3670c.css.map": "./static/css/main.e1f3670c.css.map",
+    "main.d85775d6.js.map": "./static/js/main.d85775d6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e1f3670c.css",
+    "static/js/main.d85775d6.js"
+  ]
+}

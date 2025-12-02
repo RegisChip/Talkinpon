@@ -1,854 +1,187 @@
 [
-    {
-        "model": "mapa.edificio",
-        "pk": 2,
-        "fields": {
-            "nombre": "B",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T18:47:32.081663-06:00",
-            "ubicacion_id": 2
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 3,
-        "fields": {
-            "nombre": "C",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T18:47:43.585770-06:00",
-            "ubicacion_id": 3
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 8,
-        "fields": {
-            "nombre": "CH",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T18:49:02.440932-06:00",
-            "ubicacion_id": 8
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 12,
-        "fields": {
-            "nombre": "Acceso Principal",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T18:59:19.549595-06:00",
-            "ubicacion_id": 37
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 13,
-        "fields": {
-            "nombre": "Acceso Estacionamiento",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:00:10.640485-06:00",
-            "ubicacion_id": 38
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 16,
-        "fields": {
-            "nombre": "Estacionamiento 4",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:01:30.220562-06:00",
-            "ubicacion_id": 41
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 17,
-        "fields": {
-            "nombre": "Acceso Canchas",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:02:10.769110-06:00",
-            "ubicacion_id": 42
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 19,
-        "fields": {
-            "nombre": "J",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:27:41.329999-06:00",
-            "ubicacion_id": 47
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 20,
-        "fields": {
-            "nombre": "I",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:27:54.852113-06:00",
-            "ubicacion_id": 48
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 23,
-        "fields": {
-            "nombre": "K",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:29:33.481668-06:00",
-            "ubicacion_id": 56
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 27,
-        "fields": {
-            "nombre": "O",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:48:55.122612-06:00",
-            "ubicacion_id": 63
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 29,
-        "fields": {
-            "nombre": "P",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:49:37.914612-06:00",
-            "ubicacion_id": 65
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 30,
-        "fields": {
-            "nombre": "Ñ",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:49:51.824980-06:00",
-            "ubicacion_id": 66
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 33,
-        "fields": {
-            "nombre": "L",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:53:42.560646-06:00",
-            "ubicacion_id": 84
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 35,
-        "fields": {
-            "nombre": "S3",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:58:00.502987-06:00",
-            "ubicacion_id": 105
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 37,
-        "fields": {
-            "nombre": "Pisina",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:58:31.571492-06:00",
-            "ubicacion_id": 107
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 38,
-        "fields": {
-            "nombre": "AG",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T19:58:41.788035-06:00",
-            "ubicacion_id": 108
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 40,
-        "fields": {
-            "nombre": "Q",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:06:32.130930-06:00",
-            "ubicacion_id": 121
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 42,
-        "fields": {
-            "nombre": "Canchas Gradas",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:10:17.252672-06:00",
-            "ubicacion_id": 127
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 47,
-        "fields": {
-            "nombre": "LL",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:13:07.448930-06:00",
-            "ubicacion_id": 132
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 49,
-        "fields": {
-            "nombre": "N",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:14:55.833849-06:00",
-            "ubicacion_id": 136
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 50,
-        "fields": {
-            "nombre": "M",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:15:02.413154-06:00",
-            "ubicacion_id": 137
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 52,
-        "fields": {
-            "nombre": "S",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:16:25.401911-06:00",
-            "ubicacion_id": 143
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 54,
-        "fields": {
-            "nombre": "U",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:18:23.582790-06:00",
-            "ubicacion_id": 152
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 55,
-        "fields": {
-            "nombre": "V",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:19:36.643672-06:00",
-            "ubicacion_id": 157
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 56,
-        "fields": {
-            "nombre": "W",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:21:36.064253-06:00",
-            "ubicacion_id": 162
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 57,
-        "fields": {
-            "nombre": "Z",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:21:42.557821-06:00",
-            "ubicacion_id": 163
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 59,
-        "fields": {
-            "nombre": "AA",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:23:35.058375-06:00",
-            "ubicacion_id": 170
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 61,
-        "fields": {
-            "nombre": "Y",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:26:05.652501-06:00",
-            "ubicacion_id": 184
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 62,
-        "fields": {
-            "nombre": "AE",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:26:12.939965-06:00",
-            "ubicacion_id": 185
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 63,
-        "fields": {
-            "nombre": "AF",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:26:19.506794-06:00",
-            "ubicacion_id": 186
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 64,
-        "fields": {
-            "nombre": "Cancha Tierra",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:29:39.236985-06:00",
-            "ubicacion_id": 196
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 65,
-        "fields": {
-            "nombre": "Cancha Rapido",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-02T20:29:50.931793-06:00",
-            "ubicacion_id": 197
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 69,
-        "fields": {
-            "nombre": "D",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:40:21.437409-06:00",
-            "ubicacion_id": 209
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 70,
-        "fields": {
-            "nombre": "E",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:40:33.340798-06:00",
-            "ubicacion_id": 210
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 71,
-        "fields": {
-            "nombre": "G",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:40:46.719948-06:00",
-            "ubicacion_id": 211
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 76,
-        "fields": {
-            "nombre": "T",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:46:44.035274-06:00",
-            "ubicacion_id": 231
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 77,
-        "fields": {
-            "nombre": "S1",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:47:16.428984-06:00",
-            "ubicacion_id": 237
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 78,
-        "fields": {
-            "nombre": "S2",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:47:23.595275-06:00",
-            "ubicacion_id": 238
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 79,
-        "fields": {
-            "nombre": "AC",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:48:49.239848-06:00",
-            "ubicacion_id": 245
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 80,
-        "fields": {
-            "nombre": "AD",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:48:58.920924-06:00",
-            "ubicacion_id": 246
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 81,
-        "fields": {
-            "nombre": "AH",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:49:20.018341-06:00",
-            "ubicacion_id": 247
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 82,
-        "fields": {
-            "nombre": "AB",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:50:36.706517-06:00",
-            "ubicacion_id": 254
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 83,
-        "fields": {
-            "nombre": "R",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:51:21.090823-06:00",
-            "ubicacion_id": 256
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 84,
-        "fields": {
-            "nombre": "X",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:54:00.391232-06:00",
-            "ubicacion_id": 267
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 85,
-        "fields": {
-            "nombre": "Estacionamiento 5",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:55:46.636086-06:00",
-            "ubicacion_id": 270
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 86,
-        "fields": {
-            "nombre": "H",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:58:17.861873-06:00",
-            "ubicacion_id": 285
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 87,
-        "fields": {
-            "nombre": "Arco Techo",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T19:58:52.455660-06:00",
-            "ubicacion_id": 286
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 88,
-        "fields": {
-            "nombre": "F",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:01:44.060144-06:00",
-            "ubicacion_id": 290
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 89,
-        "fields": {
-            "nombre": "Campana",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:02:20.027622-06:00",
-            "ubicacion_id": 292
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 90,
-        "fields": {
-            "nombre": "Pony Plaza",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:04:19.631020-06:00",
-            "ubicacion_id": 297
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 91,
-        "fields": {
-            "nombre": "Cancha Pony Plaza",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:04:57.689310-06:00",
-            "ubicacion_id": 299
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 92,
-        "fields": {
-            "nombre": "Cancha basquet",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:05:40.573605-06:00",
-            "ubicacion_id": 304
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 94,
-        "fields": {
-            "nombre": "2C",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:12:19.011908-06:00",
-            "ubicacion_id": 330
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 96,
-        "fields": {
-            "nombre": "2D",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:12:38.594666-06:00",
-            "ubicacion_id": 332
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 97,
-        "fields": {
-            "nombre": "2H",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:12:46.597076-06:00",
-            "ubicacion_id": 333
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 99,
-        "fields": {
-            "nombre": "2F",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:13:02.596496-06:00",
-            "ubicacion_id": 335
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 100,
-        "fields": {
-            "nombre": "2E",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:13:10.202148-06:00",
-            "ubicacion_id": 336
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 101,
-        "fields": {
-            "nombre": "2J",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:13:17.113149-06:00",
-            "ubicacion_id": 337
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 102,
-        "fields": {
-            "nombre": "2K",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:13:24.566442-06:00",
-            "ubicacion_id": 338
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 103,
-        "fields": {
-            "nombre": "Estacionamiento 2",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:14:51.556291-06:00",
-            "ubicacion_id": 341
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 104,
-        "fields": {
-            "nombre": "2G",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:16:42.165362-06:00",
-            "ubicacion_id": 351
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 105,
-        "fields": {
-            "nombre": "3A",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:20:06.468031-06:00",
-            "ubicacion_id": 361
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 106,
-        "fields": {
-            "nombre": "3B",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:20:11.559957-06:00",
-            "ubicacion_id": 362
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 107,
-        "fields": {
-            "nombre": "Estacionamiento 3",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:20:23.887305-06:00",
-            "ubicacion_id": 363
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 108,
-        "fields": {
-            "nombre": "Entrada Posgrado",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:20:47.329065-06:00",
-            "ubicacion_id": 365
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 109,
-        "fields": {
-            "nombre": "Salida Admin",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:22:25.043703-06:00",
-            "ubicacion_id": 369
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 111,
-        "fields": {
-            "nombre": "2B",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:37:17.968209-06:00",
-            "ubicacion_id": 371
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 114,
-        "fields": {
-            "nombre": "A",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:38:18.017521-06:00",
-            "ubicacion_id": 374
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 115,
-        "fields": {
-            "nombre": "2A",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-04T20:38:45.161984-06:00",
-            "ubicacion_id": 375
-        }
-    },
-    {
-        "model": "mapa.edificio",
-        "pk": 116,
-        "fields": {
-            "nombre": "Estacionamiento 1",
-            "uso": "",
-            "num_salones": 0,
-            "carreras": "",
-            "created_at": "2025-11-06T10:41:34.817266-06:00",
-            "ubicacion_id": 378
-        }
-    }
+  {
+    "id_edificio": 38,
+    "nombre": "AG",
+    "url_imagen": "ima_edificios/AG.jpg"
+  },
+  {
+    "id_edificio": 3,
+    "nombre": "C",
+    "url_imagen": "ima_edificios/C.jpg"
+  },
+  {
+    "id_edificio": 8,
+    "nombre": "CH",
+    "url_imagen": "ima_edificios/CH.jpg"
+  },
+  {
+    "id_edificio": 69,
+    "nombre": "D",
+    "url_imagen": "ima_edificios/D.jpg"
+  },
+  {
+    "id_edificio": 2,
+    "nombre": "B",
+    "url_imagen": "ima_edificios/B.jpg"
+  },
+  {
+    "id_edificio": 114,
+    "nombre": "A",
+    "url_imagen": "ima_edificios/A.jpg"
+  },
+  {
+    "id_edificio": 70,
+    "nombre": "E",
+    "url_imagen": "ima_edificios/E.jpg"
+  },
+  {
+    "id_edificio": 71,
+    "nombre": "G",
+    "url_imagen": "ima_edificios/G.jpg"
+  },
+  {
+    "id_edificio": 88,
+    "nombre": "F",
+    "url_imagen": "ima_edificios/F.jpg"
+  },
+  {
+    "id_edificio": 20,
+    "nombre": "I",
+    "url_imagen": "ima_edificios/I.jpg"
+  },
+  {
+    "id_edificio": 23,
+    "nombre": "K",
+    "url_imagen": "ima_edificios/K.jpg"
+  },
+  {
+    "id_edificio": 27,
+    "nombre": "O",
+    "url_imagen": "ima_edificios/O.jpg"
+  },
+  {
+    "id_edificio": 29,
+    "nombre": "P",
+    "url_imagen": "ima_edificios/P.jpg"
+  },
+  {
+    "id_edificio": 30,
+    "nombre": "�",
+    "url_imagen": "ima_edificios/�.jpg"
+  },
+  {
+    "id_edificio": 47,
+    "nombre": "LL",
+    "url_imagen": "ima_edificios/LL.jpg"
+  },
+  {
+    "id_edificio": 19,
+    "nombre": "J",
+    "url_imagen": "ima_edificios/J.jpg"
+  },
+  {
+    "id_edificio": 33,
+    "nombre": "L",
+    "url_imagen": "ima_edificios/L.jpg"
+  },
+  {
+    "id_edificio": 50,
+    "nombre": "M",
+    "url_imagen": "ima_edificios/M.jpg"
+  },
+  {
+    "id_edificio": 52,
+    "nombre": "S",
+    "url_imagen": "ima_edificios/S.jpg"
+  },
+  {
+    "id_edificio": 77,
+    "nombre": "S1",
+    "url_imagen": "ima_edificios/S1.jpg"
+  },
+  {
+    "id_edificio": 78,
+    "nombre": "S2",
+    "url_imagen": "ima_edificios/S2.jpg"
+  },
+  {
+    "id_edificio": 49,
+    "nombre": "N",
+    "url_imagen": "ima_edificios/N.jpg"
+  },
+  {
+    "id_edificio": 76,
+    "nombre": "T",
+    "url_imagen": "ima_edificios/T.jpg"
+  },
+  {
+    "id_edificio": 54,
+    "nombre": "U",
+    "url_imagen": "ima_edificios/U.jpg"
+  },
+  {
+    "id_edificio": 83,
+    "nombre": "R",
+    "url_imagen": "ima_edificios/R.jpg"
+  },
+  {
+    "id_edificio": 55,
+    "nombre": "V",
+    "url_imagen": "ima_edificios/V.jpg"
+  },
+  {
+    "id_edificio": 56,
+    "nombre": "W",
+    "url_imagen": "ima_edificios/W.jpg"
+  },
+  {
+    "id_edificio": 57,
+    "nombre": "Z",
+    "url_imagen": "ima_edificios/Z.jpg"
+  },
+  {
+    "id_edificio": 59,
+    "nombre": "AA",
+    "url_imagen": "ima_edificios/AA.jpg"
+  },
+  {
+    "id_edificio": 82,
+    "nombre": "AB",
+    "url_imagen": "ima_edificios/AB.jpg"
+  },
+  {
+    "id_edificio": 61,
+    "nombre": "Y",
+    "url_imagen": "ima_edificios/Y.jpg"
+  },
+  {
+    "id_edificio": 40,
+    "nombre": "Q",
+    "url_imagen": "ima_edificios/Q.jpg"
+  },
+  {
+    "id_edificio": 62,
+    "nombre": "AE",
+    "url_imagen": "ima_edificios/AE.jpg"
+  },
+  {
+    "id_edificio": 63,
+    "nombre": "AF",
+    "url_imagen": "ima_edificios/AF.jpg"
+  },
+  {
+    "id_edificio": 81,
+    "nombre": "AH",
+    "url_imagen": "ima_edificios/AH.jpg"
+  },
+  {
+    "id_edificio": 84,
+    "nombre": "X",
+    "url_imagen": "ima_edificios/X.jpg"
+  },
+  {
+    "id_edificio": 89,
+    "nombre": "Campana",
+    "url_imagen": "ima_edificios/CAMPANA.jpg"
+  }
 ]

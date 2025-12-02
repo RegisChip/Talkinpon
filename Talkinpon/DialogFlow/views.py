@@ -25,7 +25,6 @@ def chat_interface(request):
         if user_query:
             # Llamar a la función y obtener el diccionario completo
                 result = detect_intent_texts(session_id, user_query)
-                
                 # Separar los resultados para el contexto
                 dialogflow_response = result['response_text']
                 extracted_parameters = result['parameters']

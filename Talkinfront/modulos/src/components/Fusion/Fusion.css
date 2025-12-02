@@ -10,11 +10,11 @@
     width: 100vw;
     font-family: sans-serif;
     position: relative;
-    background: transparent;
     overflow: hidden;
-    border: 2px solid #750f0f;
+    background: transparent; /* El contenedor principal es transparente */
 }
 
+/* Pseudo-elemento para el fondo */
 .fusionApp-container::before {
     content: "";
     position: fixed;
@@ -28,8 +28,7 @@
     background-repeat: no-repeat;
     background-position: center;
     opacity: 0.25;
-    z-index: -1;
-    pointer-events: none;
+    z-index: -1; /* Detrás de todo el contenido */
 }
 
 /* ================= Header ================= */
@@ -822,4 +821,43 @@ body.fusionApp-map-open {
   .map-right-panel {
     width: 100%;
   }
+}
+
+/* ==================== Route Description Styles ==================== */
+
+.map-info-ruta-container {
+  display: flex;
+  width: 100%;
+}
+
+.map-ia-description {
+  width: 100%;
+  padding-right: 10px;
+  border-right: 1px solid #ddd;
+  max-height: 300px; /* Adjust height as needed */
+  overflow-y: auto;
+  position: relative;
+}
+
+/*.map-ia-image-container {
+  width: 35%;
+  text-align: center;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}*/
+
+.map-ia-description::-webkit-scrollbar {
+    width: 6px;
+}
+
+.map-ia-description::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.map-ia-description::-webkit-scrollbar-thumb {
+    background-color: #750f0f;
+    border-radius: 3px;
 }

@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.db import models
 from django.views.decorators.http import require_http_methods
 from .models import Ubicacion, Edificio, RelacionU
+from Chat.ollama_servidor import respuesta as respuesta_ollama
 import heapq
 import json
 import math
@@ -161,18 +162,19 @@ def obtener_edificios_json(request):
             edificios_json.append(edificio_data)
             
             print(f"   {i}. {ed.nombre:<20} → ({ed.ubicacion.pos_x:>6.1f}, {ed.ubicacion.pos_y:>6.1f}) | Nodo: {ed.ubicacion.nom_nodo}")
-        
+        print(f"\n Todos los edificios procesados correctamente.\n")
         response_data = {
             'edificios': edificios_json,
             'total': len(edificios_json)
         }
+        print("es response dsta ha terminado")
         
         # IMPRIMIR JSON COMPLETO
-        print("\n" + "-"*80)
-        print("📤 JSON DE RESPUESTA:")
-        print("-"*80)
-        print(json.dumps(response_data, indent=2, ensure_ascii=False))
-        print("="*80 + "\n")
+        #print("\n" + "-"*80)
+        #print("📤 JSON DE RESPUESTA:")
+        #print("-"*80)
+        #print(json.dumps(response_data, indent=2, ensure_ascii=False))
+        #print("="*80 + "\n")
         
         return JsonResponse(response_data)
         
@@ -373,7 +375,59 @@ def dijkstra_ruta(request):
     print(json.dumps(json_para_consola, indent=2, ensure_ascii=False))
     print("\n Esta en la linea 363, json para mandarselo al modelos de IA")
 
-    # Retornar JsonResponse completo (CON camino_coordenadas para React)
+    # ====== INICIO: BLOQUE DE INTEGRACIÓN CON OLLAMA ======
+    descripcion_ia = "No se pudo generar una descripción detallada en este momento." # Default message
+    try:
+        # 1. Convertir el JSON para la IA en un string formateado
+        contexto_ruta_str = json.dumps(json_para_consola, indent=2, ensure_ascii=False)
+
+        # 2. Crear el prompt para el modelo
+        prompt = f"""Eres un **asistente virtual amigable del Tecnológico de Morelia**. Tu tarea es generar una descripción textual clara y fácil de seguir para guiar a un estudiante desde un punto de origen a uno de destino dentro del campus.
+
+        Utiliza el siguiente JSON como contexto, que describe la ruta calculada:
+        {contexto_ruta_str}
+
+        Basado en el JSON, genera una guía de ruta paso a paso siguiendo estrictamente estas reglas de formato:
+
+        Reglas de Generación
+
+        
+        1. Formato de Lista Estricto: Genera la ruta como una lista ordenada de pasos. Cada paso debe ser un elemento separado de la lista.
+        2. Verbos Imperativos: Cada paso debe iniciar con un verbo de acción en modo imperativo (Ej: "Dirígete", "Gira", "Camina", "Continúa").
+        3. Puntos de Referencia: Menciona los puntos de referencia (edificios cercanos) cuando estén disponibles en los datos para ayudar en la navegación.
+        4. Output Limpio: No incluyas el JSON en tu respuesta. La respuesta debe ser únicamente el saludo, la guía textual en lista y el mensaje final.
+
+        Ejemplo del formato de lista deseado (debe ser estricto):
+        * Dirígete al Norte por el pasillo principal.
+        * Gira a la derecha frente al Edificio Z.
+        * Camina hasta la segunda puerta.
+        * Has llegado a tu destino.
+        """
+
+        # 3. Preparar el mensaje para la función respuesta_ollama
+        mensaje_para_ia = [{"role": "user", "content": prompt}]
+
+        # 4. Llamar al servidor de Ollama
+        print("\n🤖 Enviando solicitud a Ollama para generar descripción...")
+        descripcion_generada = respuesta_ollama(mensaje_para_ia)
+        
+        # 5. Validar y asignar la respuesta
+        if not descripcion_generada.startswith("[ERROR]"):
+            descripcion_ia = descripcion_generada
+            print("✅ Descripción generada por IA recibida con éxito.")
+        else:
+            print(f"⚠️  ADVERTENCIA: Falló la llamada a Ollama: {descripcion_generada}")
+            # Se usará el mensaje por defecto.
+
+    except Exception as e:
+        print(f"❌ ERROR CRÍTICO al intentar comunicarse con Ollama: {str(e)}")
+        # En caso de cualquier error, se mantiene el mensaje por defecto.
+
+    # 6. Añadir la descripción al JSON de respuesta final
+    json_ruta['descripcion_ia'] = descripcion_ia
+    # ====== FIN: BLOQUE DE INTEGRACIÓN CON OLLAMA ======
+
+    # Retornar JsonResponse completo (CON camino_coordenadas y descripcion_ia para React)
     return JsonResponse(json_ruta)
 
 def construir_grafo():

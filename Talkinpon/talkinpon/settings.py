@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'TalkinponDB', # Base de datos
         'USER': 'postgres',
-        'PASSWORD': 'R3g1nard-0710', # Contraseña
+        'PASSWORD': 'chivas%%2023', # Contraseña
         'HOST': 'localhost',
         'PORT': '5432',
     }

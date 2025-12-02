@@ -1,80 +1,35 @@
-# Talkinpon\Chat\database_queries.py
+# Talkinpon/Chat/database_queries.py
 
 """
 Funciones para consultar la base de datos según los parámetros de DialogFlow
 """
+
 from Procesos.models import Procesos, Paso, RequisitoProceso, RequisitoPaso, PasoResponsable
 from Ubicaciones.models import Ubicacion, Edificio, Salon
 from django.db.models import Q
 import re
 
-# Mapeo de nombres de procesos a sus prefijos de identificador
+
+# ==========================================
+# MAPEO DE PROCESOS
+# ==========================================
 PROCESO_PREFIJOS = {
     'servicio social': 'SS',
+    'titulacion': 'TIT',
+    'kardex': 'KAR',
+    'constancia': 'CON',
+    # Agregar más según tus procesos
 }
 
-#### Conseguir el numero del paso y su querie ####
-def extraer_numero_paso(texto_paso):
+# ==========================================
+# QUERIES DE PROCESOS
+# ==========================================
+def buscar_proceso_completo(nombre_proceso):
     """
-    Extrae el número de un texto como 'Paso 3', 'paso 3', '3', etc.
-    Retorna: número como string ('3', '01', etc.)
-    """
-    if not texto_paso:
-        return None
-    
-    # Buscar cualquier número en el texto
-    match = re.search(r'\d+', str(texto_paso))
-    if match:
-        numero = match.group()
-        # Asegurar formato de 2 dígitos (3 -> 03)
-        return numero.zfill(2)
-    return None
-
-def construir_identificador_paso(proceso_nombre, numero_paso):
-    """
-    Construye el identificador completo del paso (ej: SS-03)
-    
-    Args:
-        proceso_nombre: 'Servicio Social', 'servicio social', etc.
-        numero_paso: 'Paso 3', '3', 'paso 3', etc.
-    
-    Returns:
-        'SS-03' o None si no se puede construir
-    """
-    if not proceso_nombre or not numero_paso:
-        return None
-    
-    # Normalizar nombre del proceso
-    proceso_lower = proceso_nombre.lower().strip()
-    
-    # Obtener prefijo
-    prefijo = None
-    for nombre_proceso, codigo in PROCESO_PREFIJOS.items():
-        if nombre_proceso in proceso_lower:
-            prefijo = codigo
-            break
-    
-    if not prefijo:
-        print(f"No se encontró prefijo para proceso: {proceso_nombre}")
-        return None
-    
-    # Extraer número
-    numero = extraer_numero_paso(numero_paso)
-    if not numero:
-        print(f"No se pudo extraer número de: {numero_paso}")
-        return None
-    
-    # Construir identificador
-    identificador = f"{prefijo}-{numero}"
-    print(f"Identificador construido: {identificador}")
-    return identificador
-
-##################################################
-
-def buscar_proceso(nombre_proceso):
-    """
-    Busca un proceso por nombre (búsqueda flexible)
-    Retorna un diccionario con toda la información estructurada
+    FUNCIÓN PRINCIPAL:
+    Busca un proceso por nombre y retorna TODA su información estructurada.
+    Esta es la info que se cachea en memoria para no volver a consultar.
+    Retorna: Diccionario completo con proceso, requisitos generales y todos los pasos
     """
     try:
         # Búsqueda case-insensitive y parcial
@@ -88,13 +43,13 @@ def buscar_proceso(nombre_proceso):
         
         print(f"Proceso encontrado: {proceso.nombre}")
         
-        # Obtiene los requisitos generales
+        # Requisitos generales del proceso
         requisitos_generales = [
             req.descripcion 
             for req in proceso.requisitos.all()
         ]
         
-        # Obtiene todos los pasos ordenados
+        # Todos los pasos ordenados con su info completa
         pasos_data = []
         pasos = proceso.pasos.all().order_by('id')
         
@@ -119,62 +74,35 @@ def buscar_proceso(nombre_proceso):
                 'requisitos_especificos': requisitos_paso
             })
         
-        return {
+        resultado = {
             'proceso': proceso.nombre,
             'descripcion': proceso.descripcion,
             'requisitos_generales': requisitos_generales,
             'pasos': pasos_data,
             'total_pasos': len(pasos_data)
         }
+        
+        print(f"Info completa del proceso preparada: {len(pasos_data)} pasos")
+        return resultado
     
     except Exception as e:
-        print(f"Error en buscar_proceso: {e}")
+        print(f"Error en buscar_proceso_completo: {e}")
         return None
 
-
-def buscar_paso_especifico(identificador_paso):
+def listar_todos_procesos():
     """
-    Busca un paso específico por su identificador (ej: SS-01, SS-02)
+    Lista todos los procesos disponibles (para cuando el usuario pregunta qué procesos hay)
     """
     try:
-        print(f"Buscando paso con identificador: {identificador_paso}")
-        paso = Paso.objects.filter(iden__iexact=identificador_paso).first()
-        
-        if not paso:
-            print(f"Paso no encontrado: {identificador_paso}")
-            return None
-        
-        print(f"Paso encontrado: {paso.iden} - {paso.actividad}")
-        
-        # Requisitos específicos del paso
-        requisitos_paso = [
-            req.descripcion 
-            for req in paso.requisitos.all()
-        ]
-        
-        # Responsables del paso
-        responsables = [
-            pr.entidad.nombre 
-            for pr in paso.responsables.all()
-        ]
-        
-        return {
-            'proceso': paso.proceso.nombre,
-            'numero': paso.iden,
-            'actividad': paso.actividad,
-            'tiempo_estimado': paso.tiempo_estimado,
-            'responsables': responsables,
-            'requisitos_especificos': requisitos_paso
-        }
-    
+        procesos = Procesos.objects.all()
+        return [{'nombre': p.nombre, 'descripcion': p.descripcion} for p in procesos]
     except Exception as e:
-        print(f"Error en buscar_paso_especifico: {e}")
-        return None
+        print(f"Error en listar_todos_procesos: {e}")
+        return []
 
-
-
-#### Aun sin utilizar ####
-
+# ==========================================
+# QUERIES DE UBICACIONES
+# ==========================================
 def buscar_edificio(nombre_edificio):
     """
     Busca información de un edificio
@@ -185,7 +113,10 @@ def buscar_edificio(nombre_edificio):
         ).first()
         
         if not edificio:
+            print(f"Edificio no encontrado: {nombre_edificio}")
             return None
+        
+        print(f"Edificio encontrado: {edificio.nombre}")
         
         # Obtener salones del edificio
         salones = []
@@ -205,13 +136,12 @@ def buscar_edificio(nombre_edificio):
                 'pos_x': edificio.ubicacion.pos_x,
                 'pos_y': edificio.ubicacion.pos_y
             },
-            'salones': salones
+            'salones': salones[:5]  # Limitar a 5 salones de ejemplo
         }
     
     except Exception as e:
         print(f"Error en buscar_edificio: {e}")
         return None
-
 
 def buscar_salon(numero_salon):
     """
@@ -221,7 +151,10 @@ def buscar_salon(numero_salon):
         salon = Salon.objects.filter(numero__icontains=numero_salon).first()
         
         if not salon:
+            print(f"Salón no encontrado: {numero_salon}")
             return None
+        
+        print(f"Salón encontrado: {salon.numero}")
         
         return {
             'numero': salon.numero,
@@ -238,21 +171,6 @@ def buscar_salon(numero_salon):
     except Exception as e:
         print(f"Error en buscar_salon: {e}")
         return None
-
-
-#### LISTAS ####
-
-def listar_todos_procesos():
-    """
-    Lista todos los procesos disponibles (para cuando el usuario pregunta qué procesos hay)
-    """
-    try:
-        procesos = Procesos.objects.all()
-        return [{'nombre': p.nombre, 'descripcion': p.descripcion} for p in procesos]
-    except Exception as e:
-        print(f"Error en listar_todos_procesos: {e}")
-        return []
-
 
 def listar_todos_edificios():
     """
