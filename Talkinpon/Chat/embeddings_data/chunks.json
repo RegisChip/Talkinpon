@@ -1,0 +1,931 @@
+[
+  {
+    "tipo": "general",
+    "proceso": "Servicio Social",
+    "texto": "Proceso: Servicio Social. . Total de pasos: 8.",
+    "metadata": {
+      "proceso": "Servicio Social",
+      "descripcion": "",
+      "total_pasos": 8
+    }
+  },
+  {
+    "tipo": "requisitos_generales",
+    "proceso": "Servicio Social",
+    "texto": "Requisitos generales para Servicio Social: Los estudiantes solo pueden prestar Servicio Social en proyectos aprobados por el Instituto (ya sea avalados por el Subdirector o el Comité Académico según el año de ingreso), Deben estar registrados y autorizados por el Departamento de Gestión Tecnológica y Vinculación, Solo se puede iniciar Servicio Social una vez aprobado el porcentaje de créditos requerido por la normativa vigente, Presentar solicitud de autorización si el Servicio Social se realizará en otra institución educativa",
+    "metadata": {
+      "proceso": "Servicio Social",
+      "requisitos": [
+        "Los estudiantes solo pueden prestar Servicio Social en proyectos aprobados por el Instituto (ya sea avalados por el Subdirector o el Comité Académico según el año de ingreso)",
+        "Deben estar registrados y autorizados por el Departamento de Gestión Tecnológica y Vinculación",
+        "Solo se puede iniciar Servicio Social una vez aprobado el porcentaje de créditos requerido por la normativa vigente",
+        "Presentar solicitud de autorización si el Servicio Social se realizará en otra institución educativa"
+      ]
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Servicio Social",
+    "numero_paso": "1",
+    "iden_tecnico": "1",
+    "texto": "Proceso Servicio Social, Paso 1: Registrarse para curso de inducción de servicio social. Tiempo estimado: 1 semana. Responsable(s): Estudiante. Requisitos específicos: Mínimo 70% de créditos aprobados para registro.",
+    "metadata": {
+      "numero": "1",
+      "iden_tecnico": "SS-01",
+      "actividad": "Registrarse para curso de inducción de servicio social",
+      "tiempo_estimado": "1 semana",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Mínimo 70% de créditos aprobados para registro"
+      ],
+      "numero_limpio": "1"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Servicio Social",
+    "numero_paso": "2",
+    "iden_tecnico": "2",
+    "texto": "Proceso Servicio Social, Paso 2: Asistir a curso de inducción obligatorio. Tiempo estimado: 1 día. Responsable(s): Estudiante. Requisitos específicos: Asistencia obligatoria al curso de inducción.",
+    "metadata": {
+      "numero": "2",
+      "iden_tecnico": "SS-02",
+      "actividad": "Asistir a curso de inducción obligatorio",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Asistencia obligatoria al curso de inducción"
+      ],
+      "numero_limpio": "2"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Servicio Social",
+    "numero_paso": "3",
+    "iden_tecnico": "3",
+    "texto": "Proceso Servicio Social, Paso 3: Recibir carta de presentación. Tiempo estimado: 3 días. Responsable(s): Departamento de Gestión Tecnológica y Vinculación. Requisitos específicos: Carta de presentación oficial del Instituto.",
+    "metadata": {
+      "numero": "3",
+      "iden_tecnico": "SS-03",
+      "actividad": "Recibir carta de presentación",
+      "tiempo_estimado": "3 días",
+      "responsables": [
+        "Departamento de Gestión Tecnológica y Vinculación"
+      ],
+      "requisitos_especificos": [
+        "Carta de presentación oficial del Instituto"
+      ],
+      "numero_limpio": "3"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Servicio Social",
+    "numero_paso": "4",
+    "iden_tecnico": "4",
+    "texto": "Proceso Servicio Social, Paso 4: Entregar carta de presentación en la instancia receptora. Tiempo estimado: 1 semana. Responsable(s): Estudiante.",
+    "metadata": {
+      "numero": "4",
+      "iden_tecnico": "SS-04",
+      "actividad": "Entregar carta de presentación en la instancia receptora",
+      "tiempo_estimado": "1 semana",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [],
+      "numero_limpio": "4"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Servicio Social",
+    "numero_paso": "5",
+    "iden_tecnico": "5",
+    "texto": "Proceso Servicio Social, Paso 5: Obtener carta de aceptación de la instancia. Tiempo estimado: 1 semana. Responsable(s): Instancia (Empresa/Organismo). Requisitos específicos: Carta de aceptación de la instancia receptora.",
+    "metadata": {
+      "numero": "5",
+      "iden_tecnico": "SS-05",
+      "actividad": "Obtener carta de aceptación de la instancia",
+      "tiempo_estimado": "1 semana",
+      "responsables": [
+        "Instancia (Empresa/Organismo)"
+      ],
+      "requisitos_especificos": [
+        "Carta de aceptación de la instancia receptora"
+      ],
+      "numero_limpio": "5"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Servicio Social",
+    "numero_paso": "6",
+    "iden_tecnico": "6",
+    "texto": "Proceso Servicio Social, Paso 6: Realizar servicio social (480 horas). Tiempo estimado: 6 meses. Responsable(s): Estudiante.",
+    "metadata": {
+      "numero": "6",
+      "iden_tecnico": "SS-06",
+      "actividad": "Realizar servicio social (480 horas)",
+      "tiempo_estimado": "6 meses",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [],
+      "numero_limpio": "6"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Servicio Social",
+    "numero_paso": "7",
+    "iden_tecnico": "7",
+    "texto": "Proceso Servicio Social, Paso 7: Entregar reportes bimestrales. Tiempo estimado: Cada 2 meses. Responsable(s): Estudiante. Requisitos específicos: Entrega de reportes bimestrales de actividades.",
+    "metadata": {
+      "numero": "7",
+      "iden_tecnico": "SS-07",
+      "actividad": "Entregar reportes bimestrales",
+      "tiempo_estimado": "Cada 2 meses",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Entrega de reportes bimestrales de actividades"
+      ],
+      "numero_limpio": "7"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Servicio Social",
+    "numero_paso": "8",
+    "iden_tecnico": "8",
+    "texto": "Proceso Servicio Social, Paso 8: Obtener constancia de terminación. Tiempo estimado: 1 semana. Responsable(s): Departamento de Gestión Tecnológica y Vinculación. Requisitos específicos: Carta de terminación de la instancia receptora.",
+    "metadata": {
+      "numero": "8",
+      "iden_tecnico": "SS-08",
+      "actividad": "Obtener constancia de terminación",
+      "tiempo_estimado": "1 semana",
+      "responsables": [
+        "Departamento de Gestión Tecnológica y Vinculación"
+      ],
+      "requisitos_especificos": [
+        "Carta de terminación de la instancia receptora"
+      ],
+      "numero_limpio": "8"
+    }
+  },
+  {
+    "tipo": "general",
+    "proceso": "Créditos Complementarios",
+    "texto": "Proceso: Créditos Complementarios. Proceso para validar créditos complementarios mediante actividades culturales, deportivas y académicas. Total de pasos: 4.",
+    "metadata": {
+      "proceso": "Créditos Complementarios",
+      "descripcion": "Proceso para validar créditos complementarios mediante actividades culturales, deportivas y académicas",
+      "total_pasos": 4
+    }
+  },
+  {
+    "tipo": "requisitos_generales",
+    "proceso": "Créditos Complementarios",
+    "texto": "Requisitos generales para Créditos Complementarios: Participar en actividades autorizadas por Actividades Extraescolares, Obtener constancia de participación con 80% de asistencia, Completar 5 actividades antes del sexto semestre, Cumplir horas mínimas por tipo de actividad",
+    "metadata": {
+      "proceso": "Créditos Complementarios",
+      "requisitos": [
+        "Participar en actividades autorizadas por Actividades Extraescolares",
+        "Obtener constancia de participación con 80% de asistencia",
+        "Completar 5 actividades antes del sexto semestre",
+        "Cumplir horas mínimas por tipo de actividad"
+      ]
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Créditos Complementarios",
+    "numero_paso": "1",
+    "iden_tecnico": "1",
+    "texto": "Proceso Créditos Complementarios, Paso 1: Participar en actividad autorizada. Tiempo estimado: Variable. Responsable(s): Estudiante, Responsable de la actividad. Requisitos específicos: Actividad debe estar en catálogo autorizado, Mínimo 80% de asistencia para constancia.",
+    "metadata": {
+      "numero": "1",
+      "iden_tecnico": "CC-01",
+      "actividad": "Participar en actividad autorizada",
+      "tiempo_estimado": "Variable",
+      "responsables": [
+        "Estudiante",
+        "Responsable de la actividad"
+      ],
+      "requisitos_especificos": [
+        "Actividad debe estar en catálogo autorizado",
+        "Mínimo 80% de asistencia para constancia"
+      ],
+      "numero_limpio": "1"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Créditos Complementarios",
+    "numero_paso": "2",
+    "iden_tecnico": "2",
+    "texto": "Proceso Créditos Complementarios, Paso 2: Obtener constancia de participación. Tiempo estimado: 1 semana. Responsable(s): Responsable de la actividad, Estudiante. Requisitos específicos: Constancia con datos completos y firma del responsable.",
+    "metadata": {
+      "numero": "2",
+      "iden_tecnico": "CC-02",
+      "actividad": "Obtener constancia de participación",
+      "tiempo_estimado": "1 semana",
+      "responsables": [
+        "Responsable de la actividad",
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Constancia con datos completos y firma del responsable"
+      ],
+      "numero_limpio": "2"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Créditos Complementarios",
+    "numero_paso": "3",
+    "iden_tecnico": "3",
+    "texto": "Proceso Créditos Complementarios, Paso 3: Completar 5 actividades diferentes. Tiempo estimado: Variable. Responsable(s): Estudiante. Requisitos específicos: Total de 5 actividades requeridas.",
+    "metadata": {
+      "numero": "3",
+      "iden_tecnico": "CC-03",
+      "actividad": "Completar 5 actividades diferentes",
+      "tiempo_estimado": "Variable",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Total de 5 actividades requeridas"
+      ],
+      "numero_limpio": "3"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Créditos Complementarios",
+    "numero_paso": "4",
+    "iden_tecnico": "4",
+    "texto": "Proceso Créditos Complementarios, Paso 4: Verificar captura de créditos en sistema. Tiempo estimado: 3 días hábiles. Responsable(s): Departamento de Servicios Escolares. Requisitos específicos: Revisar captura en plataforma SIM.",
+    "metadata": {
+      "numero": "4",
+      "iden_tecnico": "CC-04",
+      "actividad": "Verificar captura de créditos en sistema",
+      "tiempo_estimado": "3 días hábiles",
+      "responsables": [
+        "Departamento de Servicios Escolares"
+      ],
+      "requisitos_especificos": [
+        "Revisar captura en plataforma SIM"
+      ],
+      "numero_limpio": "4"
+    }
+  },
+  {
+    "tipo": "general",
+    "proceso": "Credencial Escolar",
+    "texto": "Proceso: Credencial Escolar. Proceso para obtener credencial de identificación estudiantil. Total de pasos: 4.",
+    "metadata": {
+      "proceso": "Credencial Escolar",
+      "descripcion": "Proceso para obtener credencial de identificación estudiantil",
+      "total_pasos": 4
+    }
+  },
+  {
+    "tipo": "requisitos_generales",
+    "proceso": "Credencial Escolar",
+    "texto": "Requisitos generales para Credencial Escolar: Estar inscrito en el semestre actual, No tener adeudos pendientes",
+    "metadata": {
+      "proceso": "Credencial Escolar",
+      "requisitos": [
+        "Estar inscrito en el semestre actual",
+        "No tener adeudos pendientes"
+      ]
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Credencial Escolar",
+    "numero_paso": "1",
+    "iden_tecnico": "1",
+    "texto": "Proceso Credencial Escolar, Paso 1: Recibir notificación de credencial disponible. Tiempo estimado: 1 día. Responsable(s): Departamento de Servicios Escolares. Requisitos específicos: Notificación por correo institucional.",
+    "metadata": {
+      "numero": "1",
+      "iden_tecnico": "CE-01",
+      "actividad": "Recibir notificación de credencial disponible",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Departamento de Servicios Escolares"
+      ],
+      "requisitos_especificos": [
+        "Notificación por correo institucional"
+      ],
+      "numero_limpio": "1"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Credencial Escolar",
+    "numero_paso": "2",
+    "iden_tecnico": "2",
+    "texto": "Proceso Credencial Escolar, Paso 2: Acudir a Servicios Escolares en Edificio A. Tiempo estimado: 1 semana. Responsable(s): Estudiante. Requisitos específicos: Verificar inscripción activa y sin adeudos.",
+    "metadata": {
+      "numero": "2",
+      "iden_tecnico": "CE-02",
+      "actividad": "Acudir a Servicios Escolares en Edificio A",
+      "tiempo_estimado": "1 semana",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Verificar inscripción activa y sin adeudos"
+      ],
+      "numero_limpio": "2"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Credencial Escolar",
+    "numero_paso": "3",
+    "iden_tecnico": "3",
+    "texto": "Proceso Credencial Escolar, Paso 3: Firmar recibido de credencial. Tiempo estimado: 1 día. Responsable(s): Estudiante.",
+    "metadata": {
+      "numero": "3",
+      "iden_tecnico": "CE-03",
+      "actividad": "Firmar recibido de credencial",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [],
+      "numero_limpio": "3"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Credencial Escolar",
+    "numero_paso": "4",
+    "iden_tecnico": "4",
+    "texto": "Proceso Credencial Escolar, Paso 4: Verificar datos correctos en credencial. Tiempo estimado: 1 día. Responsable(s): Estudiante. Requisitos específicos: Credencial con datos completos y vigencia.",
+    "metadata": {
+      "numero": "4",
+      "iden_tecnico": "CE-04",
+      "actividad": "Verificar datos correctos en credencial",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Credencial con datos completos y vigencia"
+      ],
+      "numero_limpio": "4"
+    }
+  },
+  {
+    "tipo": "general",
+    "proceso": "Sello Semestral de Credencial",
+    "texto": "Proceso: Sello Semestral de Credencial. Proceso para validar credencial con sello del semestre actual. Total de pasos: 4.",
+    "metadata": {
+      "proceso": "Sello Semestral de Credencial",
+      "descripcion": "Proceso para validar credencial con sello del semestre actual",
+      "total_pasos": 4
+    }
+  },
+  {
+    "tipo": "requisitos_generales",
+    "proceso": "Sello Semestral de Credencial",
+    "texto": "Requisitos generales para Sello Semestral de Credencial: Credencial vigente y en buen estado, Inscrito en el semestre actual, Sin adeudos pendientes, Acudir personalmente con credencial original",
+    "metadata": {
+      "proceso": "Sello Semestral de Credencial",
+      "requisitos": [
+        "Credencial vigente y en buen estado",
+        "Inscrito en el semestre actual",
+        "Sin adeudos pendientes",
+        "Acudir personalmente con credencial original"
+      ]
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Sello Semestral de Credencial",
+    "numero_paso": "1",
+    "iden_tecnico": "1",
+    "texto": "Proceso Sello Semestral de Credencial, Paso 1: Acudir a Servicios Escolares con credencial. Tiempo estimado: 1 día. Responsable(s): Estudiante. Requisitos específicos: Asistencia personalmente obligatoria, Credencial sin daños y con espacio para sello.",
+    "metadata": {
+      "numero": "1",
+      "iden_tecnico": "SC-01",
+      "actividad": "Acudir a Servicios Escolares con credencial",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Asistencia personalmente obligatoria",
+        "Credencial sin daños y con espacio para sello"
+      ],
+      "numero_limpio": "1"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Sello Semestral de Credencial",
+    "numero_paso": "2",
+    "iden_tecnico": "2",
+    "texto": "Proceso Sello Semestral de Credencial, Paso 2: Validar inscripción y situación académica. Tiempo estimado: Mismo día. Responsable(s): Departamento de Servicios Escolares. Requisitos específicos: Verificar inscripción activa y sin adeudos.",
+    "metadata": {
+      "numero": "2",
+      "iden_tecnico": "SC-02",
+      "actividad": "Validar inscripción y situación académica",
+      "tiempo_estimado": "Mismo día",
+      "responsables": [
+        "Departamento de Servicios Escolares"
+      ],
+      "requisitos_especificos": [
+        "Verificar inscripción activa y sin adeudos"
+      ],
+      "numero_limpio": "2"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Sello Semestral de Credencial",
+    "numero_paso": "3",
+    "iden_tecnico": "3",
+    "texto": "Proceso Sello Semestral de Credencial, Paso 3: Aplicar sello semestral en credencial. Tiempo estimado: Mismo día. Responsable(s): Departamento de Servicios Escolares. Requisitos específicos: Sello oficial del semestre actual.",
+    "metadata": {
+      "numero": "3",
+      "iden_tecnico": "SC-03",
+      "actividad": "Aplicar sello semestral en credencial",
+      "tiempo_estimado": "Mismo día",
+      "responsables": [
+        "Departamento de Servicios Escolares"
+      ],
+      "requisitos_especificos": [
+        "Sello oficial del semestre actual"
+      ],
+      "numero_limpio": "3"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Sello Semestral de Credencial",
+    "numero_paso": "4",
+    "iden_tecnico": "4",
+    "texto": "Proceso Sello Semestral de Credencial, Paso 4: Recibir credencial sellada. Tiempo estimado: Mismo día. Responsable(s): Estudiante.",
+    "metadata": {
+      "numero": "4",
+      "iden_tecnico": "SC-04",
+      "actividad": "Recibir credencial sellada",
+      "tiempo_estimado": "Mismo día",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [],
+      "numero_limpio": "4"
+    }
+  },
+  {
+    "tipo": "general",
+    "proceso": "Constancia de Estudios",
+    "texto": "Proceso: Constancia de Estudios. Proceso para obtener constancia oficial de situación académica. Total de pasos: 4.",
+    "metadata": {
+      "proceso": "Constancia de Estudios",
+      "descripcion": "Proceso para obtener constancia oficial de situación académica",
+      "total_pasos": 4
+    }
+  },
+  {
+    "tipo": "requisitos_generales",
+    "proceso": "Constancia de Estudios",
+    "texto": "Requisitos generales para Constancia de Estudios: Inscrito en semestre actual, Sin adeudos pendientes, Pago de $70 en caja, Comprobante de pago sellado",
+    "metadata": {
+      "proceso": "Constancia de Estudios",
+      "requisitos": [
+        "Inscrito en semestre actual",
+        "Sin adeudos pendientes",
+        "Pago de $70 en caja",
+        "Comprobante de pago sellado"
+      ]
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Constancia de Estudios",
+    "numero_paso": "1",
+    "iden_tecnico": "1",
+    "texto": "Proceso Constancia de Estudios, Paso 1: Pagar $70 en caja por constancia. Tiempo estimado: 1 día. Responsable(s): Estudiante, Caja. Requisitos específicos: Pago exacto de $80 en efectivo.",
+    "metadata": {
+      "numero": "1",
+      "iden_tecnico": "CT-01",
+      "actividad": "Pagar $70 en caja por constancia",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Estudiante",
+        "Caja"
+      ],
+      "requisitos_especificos": [
+        "Pago exacto de $80 en efectivo"
+      ],
+      "numero_limpio": "1"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Constancia de Estudios",
+    "numero_paso": "2",
+    "iden_tecnico": "2",
+    "texto": "Proceso Constancia de Estudios, Paso 2: Obtener comprobante de pago sellado. Tiempo estimado: Mismo día. Responsable(s): Caja. Requisitos específicos: Comprobante sellado y firmado por caja.",
+    "metadata": {
+      "numero": "2",
+      "iden_tecnico": "CT-02",
+      "actividad": "Obtener comprobante de pago sellado",
+      "tiempo_estimado": "Mismo día",
+      "responsables": [
+        "Caja"
+      ],
+      "requisitos_especificos": [
+        "Comprobante sellado y firmado por caja"
+      ],
+      "numero_limpio": "2"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Constancia de Estudios",
+    "numero_paso": "3",
+    "iden_tecnico": "3",
+    "texto": "Proceso Constancia de Estudios, Paso 3: Llevar comprobante a Servicios Escolares. Tiempo estimado: Mismo día. Responsable(s): Estudiante. Requisitos específicos: Verificar inscripción activa y sin adeudos.",
+    "metadata": {
+      "numero": "3",
+      "iden_tecnico": "CT-03",
+      "actividad": "Llevar comprobante a Servicios Escolares",
+      "tiempo_estimado": "Mismo día",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Verificar inscripción activa y sin adeudos"
+      ],
+      "numero_limpio": "3"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Constancia de Estudios",
+    "numero_paso": "4",
+    "iden_tecnico": "4",
+    "texto": "Proceso Constancia de Estudios, Paso 4: Recibir constancia de estudios. Tiempo estimado: Mismo día. Responsable(s): Departamento de Servicios Escolares, Estudiante. Requisitos específicos: Constancia con datos académicos actualizados.",
+    "metadata": {
+      "numero": "4",
+      "iden_tecnico": "CT-04",
+      "actividad": "Recibir constancia de estudios",
+      "tiempo_estimado": "Mismo día",
+      "responsables": [
+        "Departamento de Servicios Escolares",
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Constancia con datos académicos actualizados"
+      ],
+      "numero_limpio": "4"
+    }
+  },
+  {
+    "tipo": "general",
+    "proceso": "Kardex",
+    "texto": "Proceso: Kardex. Proceso para obtener historial académico completo. Total de pasos: 4.",
+    "metadata": {
+      "proceso": "Kardex",
+      "descripcion": "Proceso para obtener historial académico completo",
+      "total_pasos": 4
+    }
+  },
+  {
+    "tipo": "requisitos_generales",
+    "proceso": "Kardex",
+    "texto": "Requisitos generales para Kardex: Inscrito en semestre actual, Sin adeudos pendientes, Pago de $80 en caja, Comprobante de pago sellado",
+    "metadata": {
+      "proceso": "Kardex",
+      "requisitos": [
+        "Inscrito en semestre actual",
+        "Sin adeudos pendientes",
+        "Pago de $80 en caja",
+        "Comprobante de pago sellado"
+      ]
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Kardex",
+    "numero_paso": "1",
+    "iden_tecnico": "1",
+    "texto": "Proceso Kardex, Paso 1: Pagar $70 en caja por kardex. Tiempo estimado: 1 día. Responsable(s): Estudiante, Caja. Requisitos específicos: Pago exacto de $80 en efectivo.",
+    "metadata": {
+      "numero": "1",
+      "iden_tecnico": "KX-01",
+      "actividad": "Pagar $70 en caja por kardex",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Estudiante",
+        "Caja"
+      ],
+      "requisitos_especificos": [
+        "Pago exacto de $80 en efectivo"
+      ],
+      "numero_limpio": "1"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Kardex",
+    "numero_paso": "2",
+    "iden_tecnico": "2",
+    "texto": "Proceso Kardex, Paso 2: Obtener comprobante de pago sellado. Tiempo estimado: Mismo día. Responsable(s): Caja. Requisitos específicos: Comprobante sellado y firmado por caja.",
+    "metadata": {
+      "numero": "2",
+      "iden_tecnico": "KX-02",
+      "actividad": "Obtener comprobante de pago sellado",
+      "tiempo_estimado": "Mismo día",
+      "responsables": [
+        "Caja"
+      ],
+      "requisitos_especificos": [
+        "Comprobante sellado y firmado por caja"
+      ],
+      "numero_limpio": "2"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Kardex",
+    "numero_paso": "3",
+    "iden_tecnico": "3",
+    "texto": "Proceso Kardex, Paso 3: Llevar comprobante a Servicios Escolares en el edificio A. Tiempo estimado: Mismo día. Responsable(s): Estudiante. Requisitos específicos: Verificar inscripción activa y sin adeudos.",
+    "metadata": {
+      "numero": "3",
+      "iden_tecnico": "KX-03",
+      "actividad": "Llevar comprobante a Servicios Escolares en el edificio A",
+      "tiempo_estimado": "Mismo día",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Verificar inscripción activa y sin adeudos"
+      ],
+      "numero_limpio": "3"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Kardex",
+    "numero_paso": "4",
+    "iden_tecnico": "4",
+    "texto": "Proceso Kardex, Paso 4: Recibir kardex con historial completo. Tiempo estimado: Mismo día. Responsable(s): Departamento de Servicios Escolares, Estudiante. Requisitos específicos: Kardex con materias, calificaciones y promedios.",
+    "metadata": {
+      "numero": "4",
+      "iden_tecnico": "KX-04",
+      "actividad": "Recibir kardex con historial completo",
+      "tiempo_estimado": "Mismo día",
+      "responsables": [
+        "Departamento de Servicios Escolares",
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Kardex con materias, calificaciones y promedios"
+      ],
+      "numero_limpio": "4"
+    }
+  },
+  {
+    "tipo": "general",
+    "proceso": "Baja Temporal",
+    "texto": "Proceso: Baja Temporal. Proceso para solicitar interrupción temporal de estudios. Total de pasos: 5.",
+    "metadata": {
+      "proceso": "Baja Temporal",
+      "descripcion": "Proceso para solicitar interrupción temporal de estudios",
+      "total_pasos": 5
+    }
+  },
+  {
+    "tipo": "requisitos_generales",
+    "proceso": "Baja Temporal",
+    "texto": "Requisitos generales para Baja Temporal: Sin adeudos económicos, Haber cursado al menos un semestre, Solicitud dentro de primeras 4 semanas, Formato de baja debidamente llenado",
+    "metadata": {
+      "proceso": "Baja Temporal",
+      "requisitos": [
+        "Sin adeudos económicos",
+        "Haber cursado al menos un semestre",
+        "Solicitud dentro de primeras 4 semanas",
+        "Formato de baja debidamente llenado"
+      ]
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Baja Temporal",
+    "numero_paso": "1",
+    "iden_tecnico": "1",
+    "texto": "Proceso Baja Temporal, Paso 1: Acceder a la pagina institucional y seleccionar la seccion de alumnos. Tiempo estimado: 1 día. Responsable(s): Estudiante. Requisitos específicos: Formato oficial de solicitud de baja.",
+    "metadata": {
+      "numero": "1",
+      "iden_tecnico": "BT-01",
+      "actividad": "Acceder a la pagina institucional y seleccionar la seccion de alumnos",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Formato oficial de solicitud de baja"
+      ],
+      "numero_limpio": "1"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Baja Temporal",
+    "numero_paso": "2",
+    "iden_tecnico": "2",
+    "texto": "Proceso Baja Temporal, Paso 2: Descargar formato de baja temporal. Tiempo estimado: 1 día. Responsable(s): Estudiante. Requisitos específicos: Datos completos y firmados.",
+    "metadata": {
+      "numero": "2",
+      "iden_tecnico": "BT-02",
+      "actividad": "Descargar formato de baja temporal",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Datos completos y firmados"
+      ],
+      "numero_limpio": "2"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Baja Temporal",
+    "numero_paso": "3",
+    "iden_tecnico": "3",
+    "texto": "Proceso Baja Temporal, Paso 3: Llenar solicitud con datos y motivo. Tiempo estimado: 1 día. Responsable(s): Estudiante. Requisitos específicos: Entrega física o por correo electrónico.",
+    "metadata": {
+      "numero": "3",
+      "iden_tecnico": "BT-03",
+      "actividad": "Llenar solicitud con datos y motivo",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Entrega física o por correo electrónico"
+      ],
+      "numero_limpio": "3"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Baja Temporal",
+    "numero_paso": "4",
+    "iden_tecnico": "4",
+    "texto": "Proceso Baja Temporal, Paso 4: Entregar documentación a Servicios Escolares. Tiempo estimado: 1 día. Responsable(s): Departamento de Servicios Escolares. Requisitos específicos: Notificación por correo institucional, Verificación de adeudos y tiempo de estancia.",
+    "metadata": {
+      "numero": "4",
+      "iden_tecnico": "BT-04",
+      "actividad": "Entregar documentación a Servicios Escolares",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Departamento de Servicios Escolares"
+      ],
+      "requisitos_especificos": [
+        "Notificación por correo institucional",
+        "Verificación de adeudos y tiempo de estancia"
+      ],
+      "numero_limpio": "4"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Baja Temporal",
+    "numero_paso": "5",
+    "iden_tecnico": "5",
+    "texto": "Proceso Baja Temporal, Paso 5: Recibir notificación de resolución. Tiempo estimado: 5 días hábiles. Responsable(s): Estudiante. Requisitos específicos: Verificar fechas en portal institucional y correo.",
+    "metadata": {
+      "numero": "5",
+      "iden_tecnico": "BT-05",
+      "actividad": "Recibir notificación de resolución",
+      "tiempo_estimado": "5 días hábiles",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Verificar fechas en portal institucional y correo"
+      ],
+      "numero_limpio": "5"
+    }
+  },
+  {
+    "tipo": "general",
+    "proceso": "Alta después de Baja Temporal",
+    "texto": "Proceso: Alta después de Baja Temporal. Proceso para reincorporarse a estudios después de baja temporal. Total de pasos: 4.",
+    "metadata": {
+      "proceso": "Alta después de Baja Temporal",
+      "descripcion": "Proceso para reincorporarse a estudios después de baja temporal",
+      "total_pasos": 4
+    }
+  },
+  {
+    "tipo": "requisitos_generales",
+    "proceso": "Alta después de Baja Temporal",
+    "texto": "Requisitos generales para Alta después de Baja Temporal: Baja temporal autorizada y vigente, Sin adeudos pendientes, Dentro de fechas establecidas para alta, Formato de solicitud de alta llenado",
+    "metadata": {
+      "proceso": "Alta después de Baja Temporal",
+      "requisitos": [
+        "Baja temporal autorizada y vigente",
+        "Sin adeudos pendientes",
+        "Dentro de fechas establecidas para alta",
+        "Formato de solicitud de alta llenado"
+      ]
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Alta después de Baja Temporal",
+    "numero_paso": "1",
+    "iden_tecnico": "1",
+    "texto": "Proceso Alta después de Baja Temporal, Paso 1: Consultar fechas de alta en medios oficiales. Tiempo estimado: 1 día. Responsable(s): Estudiante. Requisitos específicos: Formato oficial de solicitud de alta, Datos completos de reincorporación.",
+    "metadata": {
+      "numero": "1",
+      "iden_tecnico": "AT-01",
+      "actividad": "Consultar fechas de alta en medios oficiales",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Formato oficial de solicitud de alta",
+        "Datos completos de reincorporación"
+      ],
+      "numero_limpio": "1"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Alta después de Baja Temporal",
+    "numero_paso": "2",
+    "iden_tecnico": "2",
+    "texto": "Proceso Alta después de Baja Temporal, Paso 2: Descargar y llenar formato de alta. Tiempo estimado: 1 día. Responsable(s): Estudiante. Requisitos específicos: Entrega en ventanilla o por correo electrónico.",
+    "metadata": {
+      "numero": "2",
+      "iden_tecnico": "AT-02",
+      "actividad": "Descargar y llenar formato de alta",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Estudiante"
+      ],
+      "requisitos_especificos": [
+        "Entrega en ventanilla o por correo electrónico"
+      ],
+      "numero_limpio": "2"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Alta después de Baja Temporal",
+    "numero_paso": "3",
+    "iden_tecnico": "3",
+    "texto": "Proceso Alta después de Baja Temporal, Paso 3: Entregar solicitud a Servicios Escolares. Tiempo estimado: 1 día. Responsable(s): Departamento de Servicios Escolares. Requisitos específicos: Notificación por correo institucional, Verificación de periodo de baja autorizado.",
+    "metadata": {
+      "numero": "3",
+      "iden_tecnico": "AT-03",
+      "actividad": "Entregar solicitud a Servicios Escolares",
+      "tiempo_estimado": "1 día",
+      "responsables": [
+        "Departamento de Servicios Escolares"
+      ],
+      "requisitos_especificos": [
+        "Notificación por correo institucional",
+        "Verificación de periodo de baja autorizado"
+      ],
+      "numero_limpio": "3"
+    }
+  },
+  {
+    "tipo": "paso",
+    "proceso": "Alta después de Baja Temporal",
+    "numero_paso": "4",
+    "iden_tecnico": "4",
+    "texto": "Proceso Alta después de Baja Temporal, Paso 4: Recibir notificación de alta y reinscribirse. Tiempo estimado: 3 días hábiles. Responsable(s): .",
+    "metadata": {
+      "numero": "4",
+      "iden_tecnico": "AT-04",
+      "actividad": "Recibir notificación de alta y reinscribirse",
+      "tiempo_estimado": "3 días hábiles",
+      "responsables": [],
+      "requisitos_especificos": [],
+      "numero_limpio": "4"
+    }
+  }
+]

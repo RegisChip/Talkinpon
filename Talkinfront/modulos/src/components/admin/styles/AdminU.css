@@ -1,0 +1,872 @@
+/* AdminU.css - Estilos para el panel de administración de ubicaciones */
+
+.adminU-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ================ HEADER ================ */
+.adminP-header {
+  background: white;
+  color: #4a0909;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.adminP-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.adminP-title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.admin-user-back-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.admin-user-back-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(-3px);
+}
+
+.adminU-map-action-container {
+  display: flex;
+  gap: 10px;
+}
+
+/* Menú de usuario */
+.superadmin-user-menu-wrapper {
+  position: relative;
+}
+
+.superadmin-user-btn {
+
+  border: none;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+
+.superadmin-user-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 200px;
+  overflow: hidden;
+  z-index: 1001;
+}
+
+.superadmin-dropdown-item {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  background: white;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.2s;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.superadmin-dropdown-item:hover {
+  background: #f5f5f5;
+}
+
+.superadmin-dropdown-item.logout {
+  color: #dc3545;
+  border-top: 1px solid #eee;
+}
+
+.superadmin-dropdown-item.logout:hover {
+  background: #fff5f5;
+}
+
+/* ================ MAIN CONTENT ================ */
+.adminU-main {
+  padding: 2rem;
+  max-width: 1500px;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #eae5d6;
+}
+
+.adminU-section {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.adminU-section-header {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.8rem;
+  color: #750f0f;
+  border-bottom: 3px solid #750f0f;
+  padding-bottom: 0.5rem;
+}
+
+/* ================ TABLAS ================ */
+.adminU-table-container {
+  margin-bottom: 2.5rem;
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.adminU-table-container h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adminU-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.adminU-table thead {
+  background: #ceb10f;
+  color: white;
+}
+
+.adminU-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.adminU-table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+}
+
+.adminU-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.adminU-table td {
+  padding: 1rem;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.adminU-table td strong {
+  color: #750f0f;
+}
+
+/* Contenedor que agrupa el título y la flecha */
+.adminU-table-header-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.adminU-table-header-toggle h3{
+    color: #750f0f;
+}
+
+.adminU-toggle-button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.adminU-toggle-button:hover {
+    background: #eaeaea;
+}
+
+/* Ícono de la flecha */
+.adminU-toggle-icon {
+    font-size: 20px;
+    font-weight: 1000;
+    transition: transform 0.3s ease;
+    color: #4a0909;
+    display: inline-block; 
+}
+
+/* Rotación cuando está abierto */
+.adminU-toggle-icon.open {
+  transform: rotate(180deg);
+}
+
+/* ================ tabla salones en Edificios ================ */
+
+.adminU-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0 0 0 / 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.adminU-modal {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 550px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0 0 0 / 0.3);
+  animation: popup 0.2s ease-out;
+}
+
+@keyframes popup {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.adminU-btn-close {
+  margin-top: 20px;
+  padding: 8px 16px;
+  border: none;
+  background: #d33;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.adminU-modal-large {
+  background: rgb(235, 234, 234);
+  padding: 20px;
+  border-radius: 14px;
+  width: 900px;         /* Modal más grande porque es una tabla */
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  animation: adminU-modal-pop 0.2s ease-out;
+}
+
+.adminU-modal-large h2{
+  color: #4a0909;
+}
+
+.adminU-salones-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  color: rgb(118, 12, 12);
+  padding: 6px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+@keyframes adminU-modal-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+.adminU-btn-view {
+  color: #1d3557;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.adminU-btn-view:hover {
+  background: #457b9d;
+}
+
+
+
+/* ================ FILTROS / BUSCADOR - Edificios ================ */
+
+.adminU-filter-section {
+  padding: 12px 0 18px 0;
+  margin-bottom: 8px;
+}
+
+.adminU-search-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.adminU-search-label {
+  font-weight: 600;
+  color: #444;
+}
+
+/* select integrado (estilo B) */
+.adminU-attr-inline-select {
+  border: 1px solid #ddd;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* checkboxes horizontales */
+.adminU-attr-checkboxes {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.adminU-attr-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #333;
+  user-select: none;
+  transition: background 0.18s, box-shadow 0.18s;
+  border: 1px solid transparent;
+}
+
+.adminU-attr-checkbox input {
+  width: 16px;
+  height: 16px;
+}
+
+/* apariencia cuando está seleccionado */
+.adminU-attr-checkbox.checked {
+  background: linear-gradient(90deg, rgba(117,15,15,0.10), rgba(117,15,15,0.03));
+  border-color: rgba(117,15,15,0.18);
+  box-shadow: 0 2px 6px rgba(117,15,15,0.06);
+  font-weight: 700;
+}
+
+/* search row */
+.adminU-search-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.adminU-search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  min-width: 0;
+  flex: 1;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+
+.adminU-search-input-wrap i {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+/* input */
+.adminU-search-input {
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  width: 100%;
+  min-width: 120px;
+  font-family: inherit;
+}
+
+.adminU-search-input:disabled {
+  background: none;
+  cursor: not-allowed;
+  color: #999;
+}
+
+.adminU-search-input-wrap[disabled] {
+  opacity: 0.6;
+}
+
+
+/* contador de resultados */
+.adminU-search-count {
+  font-size: 0.9rem;
+  color: #555;
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+/* responsive tweaks */
+@media (max-width: 768px) {
+  .adminU-attr-checkboxes {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .adminU-search-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .adminU-search-count {
+    align-self: flex-end;
+  }
+}
+
+/* Modal de agregar/editar salón: debe ir por encima */
+.adminU-modal-overlay.form-salon {
+  z-index: 3000 !important;
+}
+
+.adminU-modal-content {
+  position: relative;
+  z-index: 3001;
+}
+
+/* Modal de lista de salones */
+.adminU-modal-overlay.salones-list {
+  z-index: 2000 !important;
+}
+
+
+/* ================ BOTONES ================ */
+.adminU-add-user-btn {
+  background: linear-gradient(135deg, #750f0f 0%, #4a0909 100%);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(117, 15, 15, 0.3);
+}
+
+.adminU-add-user-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(117, 15, 15, 0.4);
+}
+
+.adminU-option-btn {
+  border: none;
+  padding: 0.5rem 0.8rem;
+  margin: 0 0.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.adminU-option-btn.edit {
+  background: none;
+  color: #0dbff0;
+}
+
+.adminU-option-btn.edit:hover {
+  background: none;
+  color: #0a77c0;
+  transform: scale(1.25);
+}
+
+.adminU-option-btn.delete {
+  background: none;
+  color: #dc3545;
+}
+
+.adminU-option-btn.delete:hover {
+  background: none;
+  color: #bb2d3b;
+  transform: scale(1.25);
+}
+
+.adminU-btn-view:hover{
+  background: none;
+  color: #112280;
+  transform: scale(1.25);
+}
+
+/* ================ MODAL ================ */
+.adminU-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.adminU-modal-content {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.adminU-modal-header {
+  background: linear-gradient(135deg, #750f0f 0%, #4a0909 100%);
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px 12px 0 0;
+}
+
+.adminU-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.adminU-modal-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.adminU-modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ================ FORMULARIO ================ */
+.adminU-edit-form {
+  padding: 2rem;
+}
+
+.adminU-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.adminU-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.adminU-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adminU-form-group input,
+.adminU-form-group select{
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.adminU-form-group span {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  font-family: inherit;
+  display: block;
+}
+
+
+.adminU-form-group input:focus,
+.adminU-form-group select:focus {
+  outline: none;
+  border-color: #750f0f;
+  box-shadow: 0 0 0 3px rgba(117, 15, 15, 0.1);
+}
+
+.adminU-form-group select {
+  cursor: pointer;
+  background: white;
+}
+
+/* ================ ACCIONES DEL FORMULARIO ================ */
+.adminU-form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #eee;
+}
+
+.adminU-btn-cancel,
+.adminU-btn-save {
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adminU-btn-cancel {
+  background: #6c757d;
+  color: white;
+}
+
+.adminU-btn-cancel:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+
+.adminU-btn-save {
+  background: linear-gradient(135deg, #28a745 0%, #20863a 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.adminU-btn-save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+/* ================ RESPONSIVE ================ */
+@media (max-width: 1200px) {
+  .adminU-main {
+    /* padding: 1.5rem; */
+  }
+}
+
+@media (max-width: 768px) {
+  .adminP-header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .adminP-title {
+    font-size: 1.5rem;
+  }
+
+  .adminU-main {
+    padding: 1rem;
+  }
+
+  .adminU-section {
+    padding: 1rem;
+  }
+
+  .adminU-table-container {
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  .adminU-table {
+    font-size: 0.85rem;
+  }
+
+  .adminU-table th,
+  .adminU-table td {
+    padding: 0.6rem;
+  }
+
+  .adminU-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .adminU-modal-content {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .adminU-edit-form {
+    padding: 1rem;
+  }
+
+  .adminU-form-actions {
+    flex-direction: column;
+  }
+
+  .adminU-btn-cancel,
+  .adminU-btn-save {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ================ BADGES Y ESTADOS ================ */
+.badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge-primary {
+  background: #0d6efd;
+  color: white;
+}
+
+.badge-success {
+  background: #28a745;
+  color: white;
+}
+
+.badge-warning {
+  background: #ffc107;
+  color: #333;
+}
+
+.badge-danger {
+  background: #dc3545;
+  color: white;
+}
+
+/* ================ LOADING Y ERRORES ================ */
+.loading-spinner {
+  text-align: center;
+  padding: 3rem;
+}
+
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #dc3545;
+  margin-bottom: 1rem;
+}
+
+.success-message {
+  background: #d4edda;
+  color: #155724;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #28a745;
+  margin-bottom: 1rem;
+}
+
+/* ================ SCROLLBAR CUSTOM ================ */
+.adminU-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.adminU-modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.adminU-modal-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.adminU-modal-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

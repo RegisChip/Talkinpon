@@ -1,0 +1,42 @@
+<--! Talkinpon\Talkinpon\DialogFlow\templates\chat.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Chatbot de Django y Dialogflow</title>
+</head>
+<body>
+    <h1>Consulta a tu Agente Conversacional</h1>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <label for="user_input">Tu Pregunta:</label><br>
+        <input type="text" id="user_input" name="user_input" placeholder="Ej: Donde esta el edificio de sistemas" required><br><br>
+        <button type="submit">Enviar Consulta</button>
+    </form>
+    
+    <hr>
+    
+    <h2>Respuesta del Agente</h2>
+
+    {% if current_query %}
+        <p><strong>Tú:</strong> {{ current_query }}</p>
+        
+        <p><strong>Agente responde:</strong> 
+            <span style="font-weight: bold; color: darkblue;">{{ final_response }}</span>
+        </p>
+
+        {% if extracted_params %}
+            <h3>Palabras Clave Extraídas (Parámetros):</h3>
+            <ul>
+                {% for key, value in extracted_params.items %}
+                    <li><strong>{{ key }}:</strong> {{ value }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+             <p>No se extrajeron parámetros clave para esta consulta.</p>
+        {% endif %}
+    {% endif %}
+
+</body>
+</html>

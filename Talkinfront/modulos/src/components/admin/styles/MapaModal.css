@@ -1,0 +1,255 @@
+/* =============================
+   RESET BÁSICO
+============================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* =============================
+   OVERLAY DEL MODAL
+============================= */
+.mapa-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* =============================
+   CONTENEDOR DEL MODAL
+============================= */
+.mapa-modal-container {
+  width: auto;
+  height: auto;
+  background: #f7fafc;
+  border-radius: 20px;
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+}
+
+.mapa-modal-container h1 {
+  margin-bottom: 10px;
+  color: #003049;
+  font-size: 26px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+/* =============================
+   BOTÓN CERRAR
+============================= */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 28px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  transition: 0.2s;
+}
+
+.close-btn:hover {
+  color: #0077b6;
+}
+
+/* =============================
+   MAPA
+============================= */
+#mapa {
+  position: relative;
+  width: 770px;
+  height: 680px;
+  background-image: url('/public/mapa-tec.png');
+  background-size: 770px 680px; /* EXACT MATCH */
+  background-repeat: no-repeat;
+  border: 2px solid #0077b6;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  overflow: visible;
+}
+
+/* =============================
+   SVG PARA RELACIONES
+============================= */
+#mapa > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 770px;
+  height: 680px;
+  pointer-events: none;
+}
+
+/* LÍNEAS ENTRE NODOS */
+line {
+  stroke: #b17606 !important;
+  stroke-width: 2.6;
+  opacity: 0.85;
+  transition: 0.2s;
+  pointer-events: auto;
+}
+
+line:hover {
+  stroke-width: 4px;
+  opacity: 1;
+  stroke: #00b4d8 !important;
+}
+
+/* =============================
+   NODOS VISUALMENTE MEJORADOS
+============================= */
+.nodo {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s ease-out;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+  border: 2px solid white;
+}
+
+.nodo:hover {
+  transform: translate(-50%, -50%) scale(1.25);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.45);
+}
+
+/* Edificio */
+.nodo.edificio {
+  width: 20px;
+  height: 20px;
+  background: #0077ff;
+}
+
+/* Punto Intermedio */
+.nodo.intermedio {
+  width: 14px;
+  height: 14px;
+  background: #34c759;
+}
+
+/* =============================
+   MENÚ CONTEXTUAL
+============================= */
+.menu-opciones {
+  position: absolute;
+  background: #fff;
+  padding: 6px 0;
+  border-radius: 10px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.30);
+  z-index: 999999;
+  overflow: hidden;
+  min-width: 150px;
+}
+
+.menu-opciones div {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: 0.15s;
+  white-space: nowrap;
+}
+
+.menu-opciones div:last-child {
+  border-bottom: none;
+}
+
+.menu-opciones div:hover {
+  background: #e9f5ff;
+  color: #0077b6;
+  font-weight: 600;
+}
+
+/* =============================
+   MODAL DE NUEVO NODO
+============================= */
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 22px;
+  width: 300px;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #003049;
+  font-size: 20px;
+}
+
+.modal-content label {
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.modal-content button {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  width: 48%;
+}
+
+.modal-content button:nth-child(odd) {
+  background: #ddd;
+}
+
+.modal-content button:nth-child(even) {
+  background: #0077b6;
+  color: white;
+}
+
+.modal-content button:hover {
+  opacity: 0.85;
+}
+
+/* =============================
+   ANIMACIÓN
+============================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+
+
