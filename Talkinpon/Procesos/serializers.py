@@ -13,11 +13,30 @@ class PasoWriteSerializer(serializers.ModelSerializer):
         model = Paso
         fields = ['iden', 'actividad', 'tiempo_estimado']
 
-# Serializer para mostrar los Pasos de un Proceso (lectura)
+# REEMPLAZAR tu PasoSerializer actual por este:
 class PasoSerializer(serializers.ModelSerializer):
+    requisitos_count = serializers.SerializerMethodField()
+    responsables_nombres = serializers.SerializerMethodField()
+    responsables_data = serializers.SerializerMethodField()
+    
     class Meta:
         model = Paso
-        fields = ['id', 'iden', 'actividad', 'tiempo_estimado'] 
+        fields = [
+            'id', 'iden', 'actividad', 'tiempo_estimado', 'proceso',
+            'requisitos_count', 'responsables_nombres', 'responsables_data'
+        ]
+    
+    def get_requisitos_count(self, obj):
+        return obj.requisitos.count()
+    
+    def get_responsables_nombres(self, obj):
+        return [pr.entidad.nombre for pr in obj.responsables.all()]
+    
+    def get_responsables_data(self, obj):
+        return [
+            {'id': pr.id, 'nombre': pr.entidad.nombre}
+            for pr in obj.responsables.all()
+        ]
 
 
 class ProcesosRequisitosSerializer(serializers.ModelSerializer):
@@ -90,3 +109,27 @@ class ProcesosSerializer(serializers.ModelSerializer):
         instance.save()
         
         return instance
+    
+# ============== AGREGAR ESTOS SERIALIZERS AL FINAL ==============
+
+# Serializer para RequisitoPaso
+class RequisitoPasoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RequisitoPaso
+        fields = ['id', 'descripcion', 'paso']
+
+
+# Serializer para EntidadResponsable
+class EntidadResponsableSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EntidadResponsable
+        fields = ['id', 'nombre']
+
+
+# Serializer para PasoResponsable
+class PasoResponsableSerializer(serializers.ModelSerializer):
+    entidad_nombre = serializers.CharField(source='entidad.nombre', read_only=True)
+    
+    class Meta:
+        model = PasoResponsable
+        fields = ['id', 'paso', 'entidad', 'entidad_nombre']

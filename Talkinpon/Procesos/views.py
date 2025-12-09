@@ -43,3 +43,50 @@ class PasoDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [AllowAny]
     lookup_field = 'pk'
 # Create your views here.
+
+# ============== AGREGAR ESTAS VIEWS AL FINAL ==============
+
+class RequisitoPasoListCreateAPIView(generics.ListCreateAPIView):
+    queryset = RequisitoPaso.objects.all()
+    serializer_class = RequisitoPasoSerializer
+    permission_classes = [AllowAny]
+    
+    def get_queryset(self):
+        queryset = RequisitoPaso.objects.all()
+        paso_id = self.request.query_params.get('paso_id', None)
+        if paso_id is not None:
+            queryset = queryset.filter(paso_id=paso_id)
+        return queryset
+
+
+class RequisitoPasoDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = RequisitoPaso.objects.all()
+    serializer_class = RequisitoPasoSerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'pk'
+
+
+class EntidadResponsableListCreateAPIView(generics.ListCreateAPIView):
+    queryset = EntidadResponsable.objects.all()
+    serializer_class = EntidadResponsableSerializer
+    permission_classes = [AllowAny]
+
+
+class EntidadResponsableDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = EntidadResponsable.objects.all()
+    serializer_class = EntidadResponsableSerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'pk'
+
+
+class PasoResponsableListCreateAPIView(generics.ListCreateAPIView):
+    queryset = PasoResponsable.objects.all()
+    serializer_class = PasoResponsableSerializer
+    permission_classes = [AllowAny]
+
+
+class PasoResponsableDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PasoResponsable.objects.all()
+    serializer_class = PasoResponsableSerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'pk'

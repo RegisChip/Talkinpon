@@ -422,16 +422,24 @@ function AdminU({ locations, user, onLogout, onViewInfo }) {
           <div className="adminU-table-container">
             <div className="adminU-table-header-toggle">
               <h3><i className="bi bi-building"></i> Edificios ({dataList.buildings.length})</h3>
+
+              <div className="adminU-header-buttons">
                 <button
                   className="adminU-add-user-btn"
                   onClick={() => handleEditClick({}, 'edificio')}
                 >
                   <i className="bi bi-plus-circle"></i> Agregar nuevo Edificio
                 </button>
-              <button onClick={() => toggleTableVisibility('buildings')} className="adminU-toggle-button">
-                <i className={`bi bi-chevron-down adminU-toggle-icon ${showBuildings ? 'open' : ''}`}></i>
-              </button>
+
+                <button
+                  onClick={() => toggleTableVisibility('buildings')}
+                  className="adminU-toggle-button"
+                >
+                  <i className={`bi bi-chevron-down adminU-toggle-icon ${showBuildings ? 'open' : ''}`}></i>
+                </button>
+              </div>
             </div>
+
 
             {/* FILTROS Y BUSCADOR (solo para Edificios) */}
             {showBuildings && (

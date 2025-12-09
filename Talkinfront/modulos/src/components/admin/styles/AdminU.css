@@ -63,7 +63,6 @@
 }
 
 .superadmin-user-btn {
-
   border: none;
   color: white;
   padding: 0.6rem 1.2rem;
@@ -203,7 +202,7 @@
 /* Contenedor que agrupa el título y la flecha */
 .adminU-table-header-toggle {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   padding: 0.5rem 0;
 }
@@ -218,6 +217,7 @@
     cursor: pointer;
     padding: 6px 8px;
     border-radius: 8px;
+    margin-left: 30px;
     transition: background 0.25s ease, transform 0.25s ease;
 }
 
@@ -500,11 +500,12 @@
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
+  align-items: end;
   gap: 0.5rem;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(117, 15, 15, 0.3);
+  margin-left: auto;
 }
 
 .adminU-add-user-btn:hover {

@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 const PROCESOS_API_URL = "http://localhost:8000/api/procesos/";
 const PASOS_API_URL = "http://localhost:8000/api/procesos/pasos/";
+const REQUISITOS_PASO_API_URL = "http://localhost:8000/api/procesos/requisitos-paso/";
+const ENTIDADES_API_URL = "http://localhost:8000/api/procesos/entidades/";
+const PASO_RESPONSABLE_API_URL = "http://localhost:8000/api/procesos/paso-responsable/";
 
 function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -19,8 +22,20 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
   const [editingPaso, setEditingPaso] = useState(null);
   
   // Estados para toggle de tablas
-  const [showProcesses, setShowProcesses] = useState(true);
+  const [showProcesses, setShowProcesses] = useState(false);
   const [showStepsModal, setShowStepsModal] = useState(false);
+
+  // Estados para requisitos de paso y entidades responsables
+  const [showRequisitoModal, setShowRequisitoModal] = useState(false);
+  const [editingRequisito, setEditingRequisito] = useState(null);
+  const [currentRequisitos, setCurrentRequisitos] = useState([]);
+  const [selectedPasoId, setSelectedPasoId] = useState(null);
+
+  const [entidades, setEntidades] = useState([]);
+  const [showEntidadModal, setShowEntidadModal] = useState(false);
+  const [editingEntidad, setEditingEntidad] = useState(null);
+  const [showAsignarResponsableModal, setShowAsignarResponsableModal] = useState(false);
+  const [selectedPasoForResponsable, setSelectedPasoForResponsable] = useState(null);
 
   // Estados para filtros y búsqueda
   const [processSearchAttr, setProcessSearchAttr] = useState('');
@@ -46,7 +61,7 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
     setShowUserMenu(false);
   };
 
-  // ====== NUEVAS FUNCIONES AGREGADAS ======
+  // ====== FUNCIONES BÁSICAS ======
   
   // Toggle para mostrar/ocultar tabla
   const toggleTableVisibility = (table) => {
@@ -71,7 +86,183 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
     setSelectedProcessId(null);
   };
 
-  // ====== FIN NUEVAS FUNCIONES ======
+  // ====== FUNCIONES PARA ENTIDADES RESPONSABLES ======
+
+  const fetchEntidades = async () => {
+    try {
+      const response = await fetch(ENTIDADES_API_URL);
+      if (response.ok) {
+        const data = await response.json();
+        setEntidades(data);
+      }
+    } catch (error) {
+      console.error("Error al cargar entidades:", error);
+    }
+  };
+
+  const handleAddEditEntidad = (entidad = null) => {
+    setEditingEntidad(entidad || { id: null, nombre: '' });
+    setShowEntidadModal(true);
+  };
+
+  const handleSaveEntidad = async (e) => {
+    e.preventDefault();
+    const isNew = !editingEntidad.id;
+    const url = isNew ? ENTIDADES_API_URL : `${ENTIDADES_API_URL}${editingEntidad.id}/`;
+    const method = isNew ? 'POST' : 'PUT';
+
+    try {
+      const response = await fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre: editingEntidad.nombre }),
+      });
+
+      if (response.ok) {
+        alert(`Entidad ${isNew ? 'creada' : 'actualizada'} con éxito.`);
+        await fetchEntidades();
+      } else {
+        alert("Error al guardar entidad.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setShowEntidadModal(false);
+      setEditingEntidad(null);
+    }
+  };
+
+  const handleDeleteEntidad = async (id) => {
+    if (!window.confirm("¿Eliminar esta entidad?")) return;
+    try {
+      const response = await fetch(`${ENTIDADES_API_URL}${id}/`, { method: 'DELETE' });
+      if (response.status === 204) {
+        await fetchEntidades();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  // ====== FUNCIONES PARA REQUISITOS DE PASO ======
+
+  const fetchRequisitosPaso = async (pasoId) => {
+    if (!pasoId) return;
+    try {
+      const response = await fetch(`${REQUISITOS_PASO_API_URL}?paso_id=${pasoId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setCurrentRequisitos(data);
+      }
+    } catch (error) {
+      console.error("Error al cargar requisitos:", error);
+    }
+  };
+
+  const handleAddEditRequisitoPaso = (requisito = null) => {
+    if (!selectedPasoId) {
+      alert("Selecciona un paso primero.");
+      return;
+    }
+    setEditingRequisito(requisito || { id: null, descripcion: '', paso_id: selectedPasoId });
+    setShowRequisitoModal(false);
+    setTimeout(() => {
+      setEditingRequisito(requisito || { id: null, descripcion: '', paso_id: selectedPasoId });
+    }, 50);
+  };
+
+  const handleSaveRequisitoPaso = async (e) => {
+    e.preventDefault();
+    const isNew = !editingRequisito.id;
+    const url = isNew ? REQUISITOS_PASO_API_URL : `${REQUISITOS_PASO_API_URL}${editingRequisito.id}/`;
+    const method = isNew ? 'POST' : 'PUT';
+
+    try {
+      const response = await fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          descripcion: editingRequisito.descripcion,
+          paso: editingRequisito.paso_id
+        }),
+      });
+
+      if (response.ok) {
+        alert(`Requisito ${isNew ? 'creado' : 'actualizado'} con éxito.`);
+        await fetchRequisitosPaso(selectedPasoId);
+      } else {
+        alert("Error al guardar requisito.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setEditingRequisito(null);
+    }
+  };
+
+  const handleDeleteRequisitoPaso = async (id) => {
+    if (!window.confirm("¿Eliminar este requisito?")) return;
+    try {
+      const response = await fetch(`${REQUISITOS_PASO_API_URL}${id}/`, { method: 'DELETE' });
+      if (response.status === 204) {
+        await fetchRequisitosPaso(selectedPasoId);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  // ====== FUNCIONES PARA ASIGNAR RESPONSABLES A PASOS ======
+
+  const handleAsignarResponsable = (paso) => {
+    setSelectedPasoForResponsable(paso);
+    setShowAsignarResponsableModal(true);
+  };
+
+  const handleSaveAsignacion = async (e) => {
+    e.preventDefault();
+    const entidadId = e.target.entidad.value;
+    
+    if (!entidadId) {
+      alert("Selecciona una entidad.");
+      return;
+    }
+
+    try {
+      const response = await fetch(PASO_RESPONSABLE_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          paso: selectedPasoForResponsable.id,
+          entidad: entidadId
+        }),
+      });
+
+      if (response.ok) {
+        alert("Responsable asignado con éxito.");
+        await fetchPasos(selectedProcessId);
+      } else {
+        alert("Error al asignar responsable.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setShowAsignarResponsableModal(false);
+      setSelectedPasoForResponsable(null);
+    }
+  };
+
+  const handleDeletePasoResponsable = async (pasoResponsableId) => {
+    if (!window.confirm("¿Eliminar esta asignación?")) return;
+    try {
+      const response = await fetch(`${PASO_RESPONSABLE_API_URL}${pasoResponsableId}/`, { method: 'DELETE' });
+      if (response.status === 204) {
+        await fetchPasos(selectedProcessId);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   // FUNCIÓN PARA CARGAR PROCESOS 
   const fetchProcesses = async () => {
@@ -87,7 +278,6 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
           description: p.descripcion,
           requirements: p.requisitos_nombres ? p.requisitos_nombres.join(', ') : 'N/A', 
           time: p.pasos && p.pasos.length > 0 ? p.pasos[0].tiempo_estimado : "N/A",
-          responsable: p.responsable || 'N/A', // Asegúrate que tu API devuelva este campo
           num_pasos: p.pasos ? p.pasos.length : 0
         }));
 
@@ -125,6 +315,7 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
   // Cargar procesos al inicio
   useEffect(() => {
     fetchProcesses();
+    fetchEntidades();
   }, []);
 
   useEffect(() => {
@@ -252,8 +443,8 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
     const isNew = !editingProcess.id;
     
     if (!editingProcess.name || !editingProcess.description || 
-        !editingProcess.requirements || !editingProcess.time || !editingProcess.responsable) {
-      alert("Todos los campos (Nombre, Descripción, Requisitos, Tiempo y Responsable) son obligatorios.");
+        !editingProcess.requirements || !editingProcess.time) {
+      alert("Todos los campos (Nombre, Descripción, Requisitos y Tiempo) son obligatorios.");
       return;
     }
     
@@ -269,8 +460,7 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
           actividad: editingProcess.description,
           tiempo_estimado: editingProcess.time 
         }
-      ],
-      responsable: editingProcess.responsable
+      ]
     };
     
     let url = PROCESOS_API_URL;
@@ -334,8 +524,7 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
       name: "",
       description: "",
       requirements: "",
-      time: "",
-      responsable: ""
+      time: ""
     };
     setEditingProcess(newProcess);
     setShowEditModal(true);
@@ -405,16 +594,32 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
           <div className="adminU-table-container">
             <div className="adminU-table-header-toggle">
               <h3><i className="bi bi-diagram-3"></i> Procesos ({processesList.length})</h3>
-              <button
-                className="adminU-add-user-btn"
-                onClick={handleAddProcess}
-              >
-                <i className="bi bi-plus-circle"></i> Agregar nuevo Proceso
-              </button>
-              <button onClick={() => toggleTableVisibility('processes')} className="adminU-toggle-button">
-                <i className={`bi bi-chevron-down adminU-toggle-icon ${showProcesses ? 'open' : ''}`}></i>
-              </button>
+
+              <div className="adminU-header-buttons">
+                <button
+                  className="adminU-add-user-btn"
+                  style={{ background: '#28a745', marginRight:'20px' }}
+                  onClick={() => handleAddEditEntidad()}
+                >
+                  <i className="bi bi-building"></i> Gestionar Entidades
+                </button>
+
+                <button
+                  className="adminU-add-user-btn"
+                  onClick={handleAddProcess}
+                >
+                  <i className="bi bi-plus-circle"></i> Agregar nuevo Proceso
+                </button>
+
+                <button
+                  onClick={() => toggleTableVisibility('processes')}
+                  className="adminU-toggle-button"
+                >
+                  <i className={`bi bi-chevron-down adminU-toggle-icon ${showProcesses ? 'open' : ''}`}></i>
+                </button>
+              </div>
             </div>
+
 
             {/* FILTROS Y BUSCADOR para Procesos */}
             {showProcesses && (
@@ -441,15 +646,6 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                         onChange={() => toggleAttr(processSearchAttr, setProcessSearchAttr, "description")}
                       />
                       Descripción
-                    </label>
-
-                    <label className={`adminU-attr-checkbox ${processSearchAttr === 'responsable' ? 'checked' : ''}`}>
-                      <input
-                        type="checkbox"
-                        checked={processSearchAttr === 'responsable'}
-                        onChange={() => toggleAttr(processSearchAttr, setProcessSearchAttr, "responsable")}
-                      />
-                      Responsable
                     </label>
                   </div>
 
@@ -481,7 +677,6 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                         <th>Nombre del Proceso</th>
                         <th>Descripción</th>
                         <th>Requisitos</th>
-                        <th>Responsable</th>
                         <th>Tiempo Estimado</th>
                         <th>Pasos</th>
                         <th>Opciones</th>
@@ -490,7 +685,7 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                     <tbody>
                       {filteredProcesses.length === 0 ? (
                         <tr>
-                          <td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>
+                          <td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>
                             No hay procesos que coincidan
                           </td>
                         </tr>
@@ -500,16 +695,6 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                             <td><strong>{p.name}</strong></td>
                             <td>{p.description || '-'}</td>
                             <td>{p.requirements || '-'}</td>
-                            <td>
-                              <span style={{
-                                background: '#e3f2fd',
-                                padding: '2px 8px',
-                                borderRadius: '4px',
-                                fontSize: '12px'
-                              }}>
-                                {p.responsable || '-'}
-                              </span>
-                            </td>
                             <td>{p.time || '-'}</td>
                             <td>
                               {p.num_pasos || 0}
@@ -520,7 +705,7 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                                   marginLeft: "10px",
                                   background: "none",
                                   color: "#1d3557",
-                                  padding: "4px 10px",
+                                  padding: "4px 5px",
                                   borderRadius: "6px",
                                   border: "none",
                                   cursor: "pointer",
@@ -572,13 +757,15 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                 <strong>{processesList.find(p => p.id === selectedProcessId)?.name}</strong>
               </h2>
 
-              <button
-                className="adminU-add-user-btn"
-                style={{ marginBottom: "15px" }}
-                onClick={() => handleAddEditPaso()}
-              >
-                <i className="bi bi-plus-circle"></i> Agregar nuevo Paso
-              </button>
+              <div style={{ display: 'flex', gap: '10px', marginBottom: '15px', flexWrap: 'wrap' }}>
+                <button
+                  className="adminU-add-user-btn"
+                  onClick={() => handleAddEditPaso()}
+                >
+                  <i className="bi bi-plus-circle"></i> Agregar Paso
+                </button>
+
+              </div>
 
               <div className="adminU-table-container" style={{ marginTop: "15px" }}>
                 <table className="adminU-table">
@@ -587,6 +774,8 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                       <th>Identificador</th>
                       <th>Actividad</th>
                       <th>Tiempo Estimado</th>
+                      <th>Responsables</th>
+                      <th>Requisitos</th>
                       <th style={{ width: "120px" }}>Opciones</th>
                     </tr>
                   </thead>
@@ -594,7 +783,7 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                   <tbody>
                     {currentPasos.length === 0 ? (
                       <tr>
-                        <td colSpan="4" style={{ textAlign: "center", padding: "20px" }}>
+                        <td colSpan="6" style={{ textAlign: "center", padding: "20px" }}>
                           Este proceso no tiene pasos registrados.
                         </td>
                       </tr>
@@ -614,6 +803,70 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                             >
                               {paso.tiempo_estimado}
                             </span>
+                          </td>
+
+<td>
+  <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '4px' }}>
+    {paso.responsables_nombres && paso.responsables_nombres.length > 0 ? (
+      paso.responsables_nombres.map((resp, idx) => (
+        <span
+          key={idx}
+          style={{
+            background: "#e3f2fd",
+            padding: "2px 4px",
+            borderRadius: "3px",
+            fontSize: "11px",
+          }}
+        >
+          {resp}
+        </span>
+      ))
+    ) : (
+      <span style={{ color: '#999', fontSize: '12px' }}>Sin asignar</span>
+    )}
+
+    <button
+      className="adminU-btn-view"
+      onClick={() => handleAsignarResponsable(paso)}
+      style={{
+        marginLeft: "8px",
+        background: "none",
+        color: "#28a745",
+        padding: "2px 4px",
+        border: "none",
+        cursor: "pointer",
+        fontSize: "0.9rem"
+      }}
+      title="Asignar Responsable"
+    >
+      <i className="bi bi-person-plus-fill"></i>
+    </button>
+  </div>
+</td>
+
+
+                          <td>
+                            {paso.requisitos_count || 0}
+                            <button
+                              className="adminU-btn-view"
+                              onClick={() => {
+                                setSelectedPasoId(paso.id);
+                                fetchRequisitosPaso(paso.id);
+                                setShowRequisitoModal(true);
+                              }}
+                              style={{
+                                marginLeft: "8px",
+                                background: "none",
+                                color: "#1d3557",
+                                padding: "2px 4px",
+                                border: "none",
+                                cursor: "pointer",
+                                fontSize: "0.9rem"
+                              }}
+                              title="Ver Requisitos"
+                            >
+                              <i className="bi bi-clipboard-check"></i>
+                            </button>
                           </td>
 
                           <td style={{ textAlign: "center" }}>
@@ -685,17 +938,6 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                   value={editingProcess.requirements || ''}
                   onChange={(e) => setEditingProcess({ ...editingProcess, requirements: e.target.value })}
                   placeholder="Requisitos necesarios"
-                  required
-                />
-              </div>
-
-              <div className="adminU-form-group">
-                <label><i className="bi bi-person-badge"></i> Responsable:</label>
-                <input
-                  type="text"
-                  value={editingProcess.responsable || ''}
-                  onChange={(e) => setEditingProcess({ ...editingProcess, responsable: e.target.value })}
-                  placeholder="Entidad responsable (ej: Depto. Servicios Escolares)"
                   required
                 />
               </div>
@@ -776,6 +1018,264 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL DE GESTIÓN DE ENTIDADES RESPONSABLES */}
+      {showEntidadModal && (
+        <div className="adminU-modal-overlay form-salon" onClick={() => setShowEntidadModal(false)}>
+          <div className="adminU-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="adminU-modal-header">
+              <h2><i className="bi bi-building"></i> Gestión de Entidades Responsables</h2>
+              <button className="adminU-modal-close" onClick={() => setShowEntidadModal(false)}>✕</button>
+            </div>
+
+            {editingEntidad && (
+              <form className="adminU-edit-form" onSubmit={handleSaveEntidad} style={{ marginBottom: '20px' }}>
+                <div className="adminU-form-group">
+                  <label><i className="bi bi-building"></i> Nombre de la Entidad:</label>
+                  <input
+                    type="text"
+                    value={editingEntidad.nombre || ''}
+                    onChange={(e) => setEditingEntidad({ ...editingEntidad, nombre: e.target.value })}
+                    placeholder="Ej: Departamento de Servicios Escolares"
+                    required
+                  />
+                </div>
+
+                <div className="adminU-form-actions">
+                  <button type="button" className="adminU-btn-cancel" onClick={() => setEditingEntidad(null)}>
+                    Cancelar
+                  </button>
+                  <button type="submit" className="adminU-btn-save">
+                    <i className="bi bi-check-circle"></i> Guardar
+                  </button>
+                </div>
+              </form>
+            )}
+
+            <h3 style={{ marginTop: '20px', marginBottom: '10px' }}>Entidades Existentes:</h3>
+            <div className="adminU-table-container">
+              <table className="adminU-table">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th style={{ width: '120px' }}>Opciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {entidades.length === 0 ? (
+                    <tr>
+                      <td colSpan="2" style={{ textAlign: 'center', padding: '20px' }}>
+                        No hay entidades registradas
+                      </td>
+                    </tr>
+                  ) : (
+                    entidades.map((ent) => (
+                      <tr key={ent.id}>
+                        <td><strong>{ent.nombre}</strong></td>
+                        <td style={{ textAlign: 'center' }}>
+                          <button
+                            className="adminU-option-btn edit"
+                            onClick={() => handleAddEditEntidad(ent)}
+                            title="Editar"
+                          >
+                            <i className="bi bi-pencil-fill"></i>
+                          </button>
+                          <button
+                            className="adminU-option-btn delete"
+                            onClick={() => handleDeleteEntidad(ent.id)}
+                            title="Eliminar"
+                          >
+                            <i className="bi bi-trash-fill"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL DE REQUISITOS DEL PASO */}
+      {showRequisitoModal && selectedPasoId && (
+        <div className="adminU-modal-overlay form-salon" onClick={() => setShowRequisitoModal(false)}>
+          <div className="adminU-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="adminU-modal-header">
+              <h2><i className="bi bi-clipboard-check"></i> Requisitos del Paso</h2>
+              <button className="adminU-modal-close" onClick={() => setShowRequisitoModal(false)}>✕</button>
+            </div>
+
+            <button
+              className="adminU-add-user-btn"
+              style={{ marginBottom: '15px' }}
+              onClick={() => handleAddEditRequisitoPaso()}
+            >
+              <i className="bi bi-plus-circle"></i> Agregar Requisito
+            </button>
+
+            <div className="adminU-table-container">
+              <table className="adminU-table">
+                <thead>
+                  <tr>
+                    <th>Descripción</th>
+                    <th style={{ width: '120px' }}>Opciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentRequisitos.length === 0 ? (
+                    <tr>
+                      <td colSpan="2" style={{ textAlign: 'center', padding: '20px' }}>
+                        Este paso no tiene requisitos
+                      </td>
+                    </tr>
+                  ) : (
+                    currentRequisitos.map((req) => (
+                      <tr key={req.id}>
+                        <td>{req.descripcion}</td>
+                        <td style={{ textAlign: 'center' }}>
+                          <button
+                            className="adminU-option-btn edit"
+                            onClick={() => {
+                              setShowRequisitoModal(false);
+                              setEditingRequisito({ ...req, paso_id: req.paso });
+                            }}
+                            title="Editar"
+                          >
+                            <i className="bi bi-pencil-fill"></i>
+                          </button>
+                          <button
+                            className="adminU-option-btn delete"
+                            onClick={() => handleDeleteRequisitoPaso(req.id)}
+                            title="Eliminar"
+                          >
+                            <i className="bi bi-trash-fill"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL PARA AGREGAR/EDITAR REQUISITO */}
+      {editingRequisito && !showRequisitoModal && (
+        <div className="adminU-modal-overlay form-salon" onClick={() => setEditingRequisito(null)}>
+          <div className="adminU-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="adminU-modal-header">
+              <h2>{editingRequisito.id ? "Editar Requisito" : "Agregar Requisito"}</h2>
+              <button className="adminU-modal-close" onClick={() => setEditingRequisito(null)}>✕</button>
+            </div>
+
+            <form className="adminU-edit-form" onSubmit={handleSaveRequisitoPaso}>
+              <div className="adminU-form-group">
+                <label><i className="bi bi-card-text"></i> Descripción:</label>
+                <textarea
+                  value={editingRequisito.descripcion || ''}
+                  onChange={(e) => setEditingRequisito({ ...editingRequisito, descripcion: e.target.value })}
+                  placeholder="Descripción del requisito"
+                  rows="3"
+                  required
+                  style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
+                />
+              </div>
+
+              <div className="adminU-form-actions">
+                <button type="button" className="adminU-btn-cancel" onClick={() => setEditingRequisito(null)}>
+                  Cancelar
+                </button>
+                <button type="submit" className="adminU-btn-save">
+                  <i className="bi bi-check-circle"></i> Guardar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL PARA ASIGNAR RESPONSABLE A PASO */}
+      {showAsignarResponsableModal && selectedPasoForResponsable && (
+        <div className="adminU-modal-overlay form-salon" onClick={() => setShowAsignarResponsableModal(false)}>
+          <div className="adminU-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="adminU-modal-header">
+              <h2><i className="bi bi-person-plus"></i> Asignar Responsable</h2>
+              <button className="adminU-modal-close" onClick={() => setShowAsignarResponsableModal(false)}>✕</button>
+            </div>
+
+            <p style={{ marginBottom: '15px' }}>
+              <strong>Paso:</strong> {selectedPasoForResponsable.iden} - {selectedPasoForResponsable.actividad}
+            </p>
+
+            <form className="adminU-edit-form" onSubmit={handleSaveAsignacion}>
+              <div className="adminU-form-group">
+                <label><i className="bi bi-building"></i> Seleccionar Entidad:</label>
+                <select
+                  name="entidad"
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '8px',
+                    borderRadius: '4px',
+                    border: '1px solid #ddd'
+                  }}
+                >
+                  <option value="">-- Selecciona una entidad --</option>
+                  {entidades.map((ent) => (
+                    <option key={ent.id} value={ent.id}>
+                      {ent.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="adminU-form-actions">
+                <button type="button" className="adminU-btn-cancel" onClick={() => setShowAsignarResponsableModal(false)}>
+                  Cancelar
+                </button>
+                <button type="submit" className="adminU-btn-save">
+                  <i className="bi bi-check-circle"></i> Asignar
+                </button>
+              </div>
+            </form>
+
+            {/* Mostrar responsables actuales */}
+            {selectedPasoForResponsable.responsables_data && selectedPasoForResponsable.responsables_data.length > 0 && (
+              <div style={{ marginTop: '20px' }}>
+                <h3 style={{ marginBottom: '10px' }}>Responsables Actuales:</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {selectedPasoForResponsable.responsables_data.map((resp) => (
+                    <div
+                      key={resp.id}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '8px',
+                        background: '#f8f9fa',
+                        borderRadius: '4px'
+                      }}
+                    >
+                      <span>{resp.nombre}</span>
+                      <button
+                        className="adminU-option-btn delete"
+                        onClick={() => handleDeletePasoResponsable(resp.id)}
+                        title="Eliminar"
+                      >
+                        <i className="bi bi-trash-fill"></i>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
