@@ -241,7 +241,7 @@
 
 /* ================ tabla salones en Edificios ================ */
 
-.adminU-modal-overlay {
+/* .adminU-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -252,7 +252,7 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
-}
+} */
 
 .adminU-modal {
   background: white;
@@ -474,19 +474,19 @@
   }
 }
 
-/* Modal de agregar/editar salón: debe ir por encima */
+/* Modal de agregar/editar salón */
 .adminU-modal-overlay.form-salon {
-  z-index: 3000 !important;
+  z-index: 1500 !important; /* <-- REDUCIDO */
 }
 
 .adminU-modal-content {
   position: relative;
-  z-index: 3001;
+  z-index: 1501; /* <-- REDUCIDO */
 }
 
 /* Modal de lista de salones */
 .adminU-modal-overlay.salones-list {
-  z-index: 2000 !important;
+  z-index: 1200 !important; /* <-- REDUCIDO */
 }
 
 
@@ -562,7 +562,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000;
+  z-index: 1000; /* <-- REDUCIDO para que el mapa esté encima */
   animation: fadeIn 0.2s ease;
 }
 

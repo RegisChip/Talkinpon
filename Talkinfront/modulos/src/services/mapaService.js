@@ -7,48 +7,65 @@
    📌 2. Crear un nodo
 =========================================================================== */
 export const crearNodo = async (x, y, tipo) => {
-  const res = await fetch("/api/ubicaciones/crear_nodo/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": getCookie("csrftoken"),
-    },
-    body: JSON.stringify({
-      pos_x: x,
-      pos_y: y,
-      tipo: tipo,
-    }),
-  });
+    // 🚀 CORRECCIÓN CONFIRMADA: Usar GUION MEDIO (-) para coincidir con urls.py
+    const res = await fetch("http://localhost:8000/api/ubicaciones/crear-nodo/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify({
+            pos_x: x,
+            pos_y: y,
+            tipo: tipo,
+        }),
+    });
 
-  const data = await res.json();
+    // 💡 Mejora: Manejar la respuesta HTTP antes de intentar parsear JSON
+    if (!res.ok) {
+        const errorText = await res.text();
+        console.error(`Error ${res.status} al crear nodo:`, errorText);
+        throw new Error(`Error ${res.status}: La ruta no existe o hubo un fallo en el servidor.`);
+    }
 
-  if (!data.ok) throw new Error("Error al crear nodo");
+    const data = await res.json();
 
-  return data;
+    if (!data.ok) throw new Error("Error al crear nodo");
+
+    return data;
 };
 
 /* ============================================================================
    📌 3. Crear relación entre dos nodos
 =========================================================================== */
-export const crearRelacion = async (origen, destino) => {
-  const res = await fetch("/api/ubicaciones/crear_relacion/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": getCookie("csrftoken"),
-    },
-    body: JSON.stringify({
-      origen,
-      destino,
-    }),
-  });
+// mapaService.js
+export const crearRelacion = async (origenId, destinoId) => {
+    try {
+        const response = await fetch('http://localhost:8000/api/ubicaciones/crear-relacion/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                origen_id: origenId,
+                destino_id: destinoId,
+            }),
+        });
 
-  const data = await res.json();
+        const data = await response.json();
 
-  if (!data.ok) throw new Error("Error al crear relación");
+        if (!response.ok || !data.ok) {
+            throw new Error("Error al crear relación");
+        }
 
-  return data;
+        return data;
+    } catch (error) {
+        console.error("Error en crearRelacion:", error);
+        throw error;
+    }
 };
+
+
 
 /* ============================================================================
    📌 4. Eliminar nodo

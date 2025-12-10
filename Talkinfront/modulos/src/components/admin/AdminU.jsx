@@ -552,7 +552,7 @@ function AdminU({ locations, user, onLogout, onViewInfo }) {
                                   fontWeight: "900px",
                                 }}
                               >
-                                <i class="bi bi-eye-fill"></i>
+                                <i className="bi bi-eye-fill"></i>
                               </button>
                             </td>
                             <td>
