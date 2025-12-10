@@ -4,7 +4,15 @@ from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from .models import *
-from .serializers import *
+from .serializers import (
+    ProcesosSerializer,
+    PasoSerializer,
+    PasoWriteSerializer,
+    RequisitoPasoSerializer,
+    EntidadResponsableSerializer,
+    PasoResponsableSerializer,
+)
+
 
 class ProcesosListCreateAPIView(generics.ListCreateAPIView):
     queryset = Procesos.objects.all()
@@ -18,12 +26,9 @@ class ProcesosDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'pk'
 
 class PasoListCreateAPIView(generics.ListCreateAPIView):
-    # La consulta debe poder filtrar por proceso_id
     queryset = Paso.objects.all()
-    serializer_class = PasoSerializer # Usamos el Serializer de Lectura
     permission_classes = [AllowAny]
     
-    # Sobreescribir get_queryset para filtrar por proceso_id si se envía
     def get_queryset(self):
         queryset = Paso.objects.all()
         proceso_id = self.request.query_params.get('proceso_id', None)
@@ -31,11 +36,26 @@ class PasoListCreateAPIView(generics.ListCreateAPIView):
             queryset = queryset.filter(proceso_id=proceso_id)
         return queryset
 
-    # Usar PasoWriteSerializer para la creación
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return PasoWriteSerializer
         return PasoSerializer
+    
+    # ✅ AGREGAR ESTE MÉTODO
+    def perform_create(self, serializer):
+        # Debug: imprimir lo que llega
+        print("=" * 50)
+        print("Datos recibidos en perform_create:")
+        print("request.data:", self.request.data)
+        print("serializer.validated_data:", serializer.validated_data)
+        print("=" * 50)
+        
+        # Validar que proceso esté presente
+        if 'proceso' not in serializer.validated_data or not serializer.validated_data['proceso']:
+            from rest_framework.exceptions import ValidationError
+            raise ValidationError({"proceso": "El campo proceso es obligatorio."})
+        
+        serializer.save()
 
 class PasoDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Paso.objects.all()

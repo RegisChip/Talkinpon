@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles/AdminB.css";
 
@@ -8,7 +8,16 @@ export default function AdminB({ onLoginSuccess }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [user, setUser] = useState(null); // Estado para almacenar la información del usuario
   const navigate = useNavigate();
+
+  // Recuperar la información del usuario desde localStorage al iniciar
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setUser(storedUser); // Si el usuario está en localStorage, lo cargamos
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -37,15 +46,16 @@ export default function AdminB({ onLoginSuccess }) {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        //Login exitoso: Obtener el rol del usuario
-        const userRole = data.rol;
-        
-        // 
+        // Login exitoso: Guardamos la información del usuario en el estado y localStorage
+        setUser(data); // Guardamos la info del usuario en el estado
+        localStorage.setItem('user', JSON.stringify(data)); // Guardamos la info en localStorage
+
         if (onLoginSuccess) {
-            onLoginSuccess(data); // Pasa todo el objeto del usuario a la app principal
+          onLoginSuccess(data); // Pasa todo el objeto del usuario a la app principal
         }
 
         // Redirección basada en el rol de la BD
+        const userRole = data.rol;
         switch (userRole) {
           case 'SUPER':
             navigate("/adminB/adminS"); 
@@ -88,7 +98,7 @@ export default function AdminB({ onLoginSuccess }) {
           <h2 className="adminB-login-title">Bienvenido Administrador</h2>
           <form onSubmit={handleLogin} className="adminB-login-form">
             <div className="adminB-form-group">
-              <label htmlFor="username">Usuario:</label>
+              <label htmlFor="username">Correo:</label>
               <input
                 type="text"
                 id="username"
@@ -97,7 +107,7 @@ export default function AdminB({ onLoginSuccess }) {
                   setUsername(e.target.value);
                   setError("");
                 }}
-                placeholder="Ingresa tu usuario..."
+                placeholder="Ingresa tu correo..."
                 required
               />
             </div>
@@ -123,14 +133,10 @@ export default function AdminB({ onLoginSuccess }) {
               Iniciar sesión
             </button>
           </form>
-
-          <div className="adminB-hint">
-            <p>
-              Usuarios de prueba: <strong>super</strong>, <strong>proceso</strong>, <strong>ubicacion</strong>
-            </p>
-          </div>
         </div>
       </main>
+
+
     </div>
   );
 }

@@ -356,60 +356,86 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
       alert("Primero selecciona un proceso para agregar pasos.");
       return;
     }
-    const newPaso = paso ? { ...paso, proceso_id: paso.proceso } : {
+    
+    console.log("selectedProcessId:", selectedProcessId); // ✅ DEBUG
+    
+    const newPaso = paso ? { 
+      ...paso, 
+      proceso_id: paso.proceso // ✅ Aseguramos que proceso_id esté presente
+    } : {
       id: null,
       iden: '',
       actividad: '',
       tiempo_estimado: '',
-      proceso_id: selectedProcessId,
+      proceso_id: selectedProcessId, // ✅ Debe tener valor aquí
     };
+    
+    console.log("editingPaso inicial:", newPaso); // ✅ DEBUG
+    
     setEditingPaso(newPaso);
     setShowStepModal(true);
   };
 
-  const handleSavePaso = async (e) => {
-    e.preventDefault();
-    
-    const isNew = !editingPaso.id;
-    
-    if (!editingPaso.iden || !editingPaso.actividad || !editingPaso.tiempo_estimado) {
-      alert("Todos los campos del paso son obligatorios.");
-      return;
-    }
+const handleSavePaso = async (e) => {
+  e.preventDefault();
+  
+  console.log("=== DEBUG INICIO ===");
+  console.log("1. editingPaso completo:", editingPaso);
+  console.log("2. editingPaso.proceso_id:", editingPaso.proceso_id);
+  console.log("3. selectedProcessId:", selectedProcessId);
+  
+  const isNew = !editingPaso.id;
+  
+  if (!editingPaso.iden || !editingPaso.actividad || !editingPaso.tiempo_estimado) {
+    alert("Todos los campos del paso son obligatorios.");
+    return;
+  }
+  
+  // ✅ VALIDACIÓN EXTRA
+  if (!editingPaso.proceso_id) {
+    console.error("ERROR: proceso_id es null o undefined");
+    alert("Error: No se ha seleccionado un proceso. Cierra y vuelve a abrir el modal.");
+    return;
+  }
 
-    const url = isNew ? PASOS_API_URL : `${PASOS_API_URL}${editingPaso.id}/`;
-    const method = isNew ? 'POST' : 'PUT';
-    
-    const dataToSend = {
-      proceso: editingPaso.proceso_id,
-      iden: editingPaso.iden,
-      actividad: editingPaso.actividad,
-      tiempo_estimado: editingPaso.tiempo_estimado,
-    };
-
-    try {
-      const response = await fetch(url, {
-        method: method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dataToSend),
-      });
-
-      if (response.ok) {
-        alert(`Paso ${isNew ? 'creado' : 'actualizado'} con éxito.`);
-        await fetchPasos(selectedProcessId);
-      } else {
-        const errorData = await response.json();
-        console.error("Error al guardar paso:", errorData);
-        alert("Error al guardar paso: " + JSON.stringify(errorData));
-      }
-    } catch (error) {
-      console.error("Error de red:", error);
-      alert("Error de red al guardar paso.");
-    } finally {
-      setShowStepModal(false);
-      setEditingPaso(null);
-    }
+  const url = isNew ? PASOS_API_URL : `${PASOS_API_URL}${editingPaso.id}/`;
+  const method = isNew ? 'POST' : 'PUT';
+  
+  const dataToSend = {
+    proceso: parseInt(editingPaso.proceso_id), // ✅ Convertir a número entero
+    iden: editingPaso.iden,
+    actividad: editingPaso.actividad,
+    tiempo_estimado: editingPaso.tiempo_estimado,
   };
+
+  console.log("4. Datos a enviar:", dataToSend);
+  console.log("5. URL:", url);
+  console.log("6. Method:", method);
+  console.log("=== DEBUG FIN ===");
+
+  try {
+    const response = await fetch(url, {
+      method: method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dataToSend),
+    });
+
+    if (response.ok) {
+      alert(`Paso ${isNew ? 'creado' : 'actualizado'} con éxito.`);
+      await fetchPasos(selectedProcessId);
+    } else {
+      const errorData = await response.json();
+      console.error("Error del servidor:", errorData);
+      alert("Error al guardar paso: " + JSON.stringify(errorData));
+    }
+  } catch (error) {
+    console.error("Error de red:", error);
+    alert("Error de red al guardar paso.");
+  } finally {
+    setShowStepModal(false);
+    setEditingPaso(null);
+  }
+};
 
   const handleDeletePaso = async (pasoId) => {
     if (!window.confirm("¿Estás seguro de eliminar este paso?")) return;
@@ -438,61 +464,123 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
     setEditingProcess(null);
   };
 
-  const handleSaveProcess = async (e) => {
-    e.preventDefault();
-    const isNew = !editingProcess.id;
-    
-    if (!editingProcess.name || !editingProcess.description || 
-        !editingProcess.requirements || !editingProcess.time) {
-      alert("Todos los campos (Nombre, Descripción, Requisitos y Tiempo) son obligatorios.");
-      return;
-    }
-    
-    const processData = {
-      nombre: editingProcess.name,
-      descripcion: editingProcess.description,
-      requisitos_data: [
-        { descripcion: editingProcess.requirements } 
-      ],
-      pasos_data: [
-        { 
-          iden: "Paso 1", 
-          actividad: editingProcess.description,
-          tiempo_estimado: editingProcess.time 
-        }
-      ]
-    };
-    
-    let url = PROCESOS_API_URL;
-    let method = 'POST';
-    
-    if (!isNew) {
-      url = `${PROCESOS_API_URL}${editingProcess.id}/`;
-      method = 'PUT';
-    } 
+const handleSaveProcess = async (e) => {
+  e.preventDefault();
+  
+  console.log("\n" + "=".repeat(80));
+  console.log("📤 ENVIANDO PROCESO AL BACKEND");
+  console.log("=".repeat(80));
+  
+  const isNew = !editingProcess.id;
+  console.log(`Modo: ${isNew ? 'CREAR NUEVO' : 'ACTUALIZAR'}`);
+  console.log(`ID del proceso: ${editingProcess.id || 'N/A'}`);
 
-    try {
-      const response = await fetch(url, {
-        method: method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(processData),
-      });
+  // ✅ Validar campos obligatorios
+  if (!editingProcess.name || !editingProcess.description) {
+    alert("El nombre y la descripción son obligatorios.");
+    return;
+  }
 
-      if (response.ok) {
-        alert(`Proceso ${isNew ? 'registrado' : 'actualizado'} con éxito.`);
-        await fetchProcesses();
-      } else {
-        const errorData = await response.json();
-        console.error("Error al guardar:", errorData);
-        alert("Error al guardar: " + JSON.stringify(errorData));
-      }
-    } catch (error) {
-      console.error("Error de red:", error);
-      alert("No se pudo conectar con el servidor.");
-    }
-    
-    handleCloseModal();
+  // ✅ Procesar requisitos correctamente
+  const requirementsText = editingProcess.requirements || '';
+  console.log(`\n📋 Requisitos (texto original): "${requirementsText}"`);
+  
+  const requisitos = requirementsText
+    .split(',')
+    .map(r => r.trim())
+    .filter(r => r !== "" && r.length > 0)
+    .map(r => ({ descripcion: r }));
+
+  console.log(`📋 Requisitos procesados (${requisitos.length}):`, requisitos);
+
+  // ✅ Construir el payload
+  const processData = {
+    nombre: editingProcess.name,
+    descripcion: editingProcess.description,
+    requisitos_data: requisitos
   };
+
+  console.log("\n📦 Payload completo a enviar:");
+  console.log(JSON.stringify(processData, null, 2));
+
+  // ✅ Configurar URL y método
+  let url = PROCESOS_API_URL;
+  let method = 'POST';
+
+  if (!isNew) {
+    url = `${PROCESOS_API_URL}${editingProcess.id}/`;
+    method = 'PUT';
+  }
+
+  console.log(`\n🌐 URL: ${url}`);
+  console.log(`🔧 Método: ${method}`);
+
+  try {
+    console.log("\n⏳ Enviando petición...");
+    
+    const response = await fetch(url, {
+      method,
+      headers: { 
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(processData),
+    });
+
+    console.log(`\n📡 Respuesta recibida: Status ${response.status} ${response.statusText}`);
+
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log("✅ Respuesta exitosa del servidor:");
+      console.log(JSON.stringify(responseData, null, 2));
+      
+      alert(`✅ Proceso ${isNew ? 'creado' : 'actualizado'} con éxito.`);
+      
+      // Recargar la lista de procesos
+      await fetchProcesses();
+      
+      // Cerrar el modal
+      handleCloseModal();
+      
+      console.log("=".repeat(80));
+      console.log("✅ PROCESO COMPLETADO CON ÉXITO");
+      console.log("=".repeat(80) + "\n");
+      
+    } else {
+      // Intentar obtener el error del servidor
+      let errorMessage = `Error ${response.status}: ${response.statusText}`;
+      
+      try {
+        const errorData = await response.json();
+        console.error("❌ Error del servidor (JSON):", errorData);
+        errorMessage = JSON.stringify(errorData, null, 2);
+      } catch (jsonError) {
+        // Si no es JSON, intentar obtener como texto
+        try {
+          const errorText = await response.text();
+          console.error("❌ Error del servidor (texto):", errorText);
+          errorMessage = errorText;
+        } catch (textError) {
+          console.error("❌ No se pudo leer el error del servidor");
+        }
+      }
+      
+      alert(`❌ Error del servidor:\n${errorMessage}`);
+      
+      console.log("=".repeat(80));
+      console.log("❌ PROCESO FALLIDO");
+      console.log("=".repeat(80) + "\n");
+    }
+    
+  } catch (error) {
+    console.error("\n💥 Error de red o excepción:");
+    console.error(error);
+    alert("❌ No se pudo conectar con el servidor. Verifica tu conexión y que el backend esté corriendo.");
+    
+    console.log("=".repeat(80));
+    console.log("💥 ERROR DE RED");
+    console.log("=".repeat(80) + "\n");
+  }
+};
 
   const handleDeleteProcess = async (id) => {
     if (!window.confirm(`¿Estás seguro de que deseas eliminar este proceso? Esta acción es irreversible.`)) {
@@ -524,7 +612,6 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
       name: "",
       description: "",
       requirements: "",
-      time: ""
     };
     setEditingProcess(newProcess);
     setShowEditModal(true);
@@ -598,7 +685,7 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
               <div className="adminU-header-buttons">
                 <button
                   className="adminU-add-user-btn"
-                  style={{ background: '#28a745', marginRight:'20px' }}
+                  // style={{ background: '#28a745', marginRight:'20px' }}
                   onClick={() => handleAddEditEntidad()}
                 >
                   <i className="bi bi-building"></i> Gestionar Entidades
@@ -677,7 +764,6 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                         <th>Nombre del Proceso</th>
                         <th>Descripción</th>
                         <th>Requisitos</th>
-                        <th>Tiempo Estimado</th>
                         <th>Pasos</th>
                         <th>Opciones</th>
                       </tr>
@@ -695,7 +781,6 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                             <td><strong>{p.name}</strong></td>
                             <td>{p.description || '-'}</td>
                             <td>{p.requirements || '-'}</td>
-                            <td>{p.time || '-'}</td>
                             <td>
                               {p.num_pasos || 0}
                               <button
@@ -938,17 +1023,6 @@ function AdminP({ processes, user, onBack, onViewInfo, onLogout}) {
                   value={editingProcess.requirements || ''}
                   onChange={(e) => setEditingProcess({ ...editingProcess, requirements: e.target.value })}
                   placeholder="Requisitos necesarios"
-                  required
-                />
-              </div>
-
-              <div className="adminU-form-group">
-                <label><i className="bi bi-clock"></i> Tiempo Estimado:</label>
-                <input
-                  type="text"
-                  value={editingProcess.time || ''}
-                  onChange={(e) => setEditingProcess({ ...editingProcess, time: e.target.value })}
-                  placeholder="Ej: 2-3 días hábiles"
                   required
                 />
               </div>

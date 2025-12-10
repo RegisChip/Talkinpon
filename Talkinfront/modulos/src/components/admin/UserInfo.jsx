@@ -1,26 +1,28 @@
 import "./styles/UserInfo.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { useNavigate } from "react-router-dom"; // para navegación
+import { useNavigate } from "react-router-dom";
 
-function UserInfo({ user, onBack, onLogout }) {
+function UserInfo({ onBack, onLogout }) {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user')); // Recuperamos la información del usuario desde localStorage
 
   const handleLogoutAndGoBack = () => {
-    if (onLogout) onLogout();      // cierra sesión
-    navigate("/adminB");            // redirige a AdminB
+    if (onLogout) onLogout(); // Cierra sesión
+    localStorage.removeItem('user'); // Elimina la información del usuario del localStorage
+    navigate("/adminB"); // Redirige a AdminB
   };
 
   const getRoleDisplayName = (roleCode) => {
-      switch (roleCode) {
-          case 'SUPER':
-              return 'Super Administrador';
-          case 'PROCESOS':
-              return 'Administrador de Procesos';
-          case 'UBICACIONES':
-              return 'Administrador de Ubicaciones';
-          default:
-              return 'Usuario';
-      }
+    switch (roleCode) {
+      case 'SUPER':
+        return 'Super Administrador';
+      case 'PROCESOS':
+        return 'Administrador de Procesos';
+      case 'UBICACIONES':
+        return 'Administrador de Ubicaciones';
+      default:
+        return 'Usuario';
+    }
   };
 
   return (
@@ -34,8 +36,6 @@ function UserInfo({ user, onBack, onLogout }) {
           )}
           <h1 className="userinfo-title">TalkinPon</h1>
         </div>
-
-        
       </header>
 
       <main className="userinfo-main">
@@ -43,7 +43,7 @@ function UserInfo({ user, onBack, onLogout }) {
           <h2>Información del Usuario</h2>
 
           <div className="info-section">
-            <label className="info-label">Usuario:</label>
+            <label className="info-label">Nombre:</label>
             <p className="info-value">{user?.nombre}</p>
           </div>
 
@@ -57,15 +57,6 @@ function UserInfo({ user, onBack, onLogout }) {
           <div className="info-section">
             <label className="info-label">Correo electrónico:</label>
             <p className="info-value">{user?.correo}</p>
-          </div>
-
-          <hr className="divider" />
-
-          <div className="info-section">
-            <label className="info-label">Contraseña:</label>
-            <p className="info-value">
-              <i className="bi bi-key-fill"></i> ********
-            </p>
           </div>
 
           <div className="button-group">

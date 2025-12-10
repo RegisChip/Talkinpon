@@ -6,25 +6,22 @@ class AdministradorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Administrador
-        fields = ['id','nombre', 'correo', 'contrasena', 'rol']
-        read_only_fields = ['rol']
+        fields = ['id', 'nombre', 'correo', 'contrasena', 'rol']  # Elimina 'rol' de read_only_fields
 
     def validate_rol(self, value):
         # Si el rol que se intenta guardar es SUPERADMINISTRADOR
         if value == RolChoices.SUPERADMINISTRADOR:
-            
             # Verificar si ya existe un administrador con este rol
             if Administrador.objects.filter(rol=RolChoices.SUPERADMINISTRADOR).exists():
                 raise serializers.ValidationError(
                     "Ya existe un Super Administrador en el sistema. Solo se permite uno."
                 )
         return value
-    
+
     def create(self, validated_data):
         raw_password = validated_data.pop('contrasena')
 
         administrador = Administrador(**validated_data)
-        
         administrador.set_contrasena(raw_password)
 
         administrador.save()
@@ -32,7 +29,6 @@ class AdministradorSerializer(serializers.ModelSerializer):
         return administrador
 
     def update(self, instance, validated_data):
-
         instance.nombre = validated_data.get('nombre', instance.nombre)
         instance.correo = validated_data.get('correo', instance.correo)
         instance.rol = validated_data.get('rol', instance.rol)
@@ -43,6 +39,7 @@ class AdministradorSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
 
 class Login(serializers.Serializer):
     correo = serializers.EmailField()

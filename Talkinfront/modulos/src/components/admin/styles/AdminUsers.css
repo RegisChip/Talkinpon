@@ -1,40 +1,39 @@
-/* ================ CONTENEDOR PRINCIPAL ================ */
-.admin-user-container {
+/* AdminUsers.css - Estilos para el panel de administración de usuarios */
+
+.adminUsers-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  display: flex;
-  flex-direction: column;
 }
 
 /* ================ HEADER ================ */
-.admin-user-header {
+.adminUsers-header {
   background: white;
   color: #4a0909;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.admin-user-header-left {
+.adminUsers-header-left {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.admin-user-title {
+.adminUsers-title {
+  margin: 0;
   font-size: 1.8rem;
   font-weight: bold;
-  margin: 0;
 }
 
-.admin-user-back-btn {
-  background: rgba(255,255,255,0.2);
+.adminUsers-back-btn {
+  background: rgba(255, 255, 255, 0.2);
   border: none;
   color: white;
   width: 40px;
@@ -44,33 +43,90 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.2rem;
   transition: all 0.3s ease;
+  font-size: 1.2rem;
 }
 
-.admin-user-back-btn:hover {
-  background: rgba(255,255,255,0.3);
+.adminUsers-back-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
   transform: translateX(-3px);
 }
 
+/* Menú de usuario */
+.superadmin-user-menu-wrapper {
+  position: relative;
+}
+
+.superadmin-user-btn {
+  border: none;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.superadmin-user-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 200px;
+  overflow: hidden;
+  z-index: 1001;
+}
+
+.superadmin-dropdown-item {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  background: white;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.2s;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.superadmin-dropdown-item:hover {
+  background: #f5f5f5;
+}
+
+.superadmin-dropdown-item.logout {
+  color: #dc3545;
+  border-top: 1px solid #eee;
+}
+
+.superadmin-dropdown-item.logout:hover {
+  background: #fff5f5;
+}
+
 /* ================ MAIN CONTENT ================ */
-.admin-user-main {
-  flex-grow: 1;
+.adminUsers-main {
   padding: 2rem;
   max-width: 1500px;
+  height: 100vh;
   margin: 0 auto;
   background-color: #eae5d6;
 }
 
-/* ================ SECCIONES ================ */
-.admin-user-section {
+.adminUsers-section {
   background: white;
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.admin-user-section-header {
+.adminUsers-section-header {
   margin: 0 0 1.5rem 0;
   font-size: 1.8rem;
   color: #750f0f;
@@ -79,39 +135,105 @@
 }
 
 /* ================ TABLAS ================ */
-.admin-user-table {
+.adminUsers-table-container {
+  margin-bottom: 2.5rem;
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.adminUsers-table-container h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adminUsers-table {
   width: 100%;
   border-collapse: collapse;
   background: white;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.admin-user-table th {
+.adminUsers-table thead {
+  background: #ceb10f;
+  color: white;
+}
+
+.adminUsers-table th {
   padding: 1rem;
   text-align: left;
   font-weight: 600;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  background: #ceb10f;
-  color: white;
 }
 
-.admin-user-table td {
+.adminUsers-table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+}
+
+.adminUsers-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.adminUsers-table td {
   padding: 1rem;
   color: #333;
   font-size: 0.95rem;
 }
 
-.admin-user-table tbody tr:hover {
-  background: #f8f9fa;
+.adminUsers-table td strong {
+  color: #750f0f;
+}
+
+/* Contenedor que agrupa el título y la flecha */
+.adminUsers-table-header-toggle {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.adminUsers-table-header-toggle h3 {
+  color: #750f0f;
+}
+
+.adminUsers-toggle-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+  margin-left: 30px;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.adminUsers-toggle-button:hover {
+  background: #eaeaea;
+}
+
+/* Ícono de la flecha */
+.adminUsers-toggle-icon {
+  font-size: 20px;
+  font-weight: 1000;
+  transition: transform 0.3s ease;
+  color: #4a0909;
+  display: inline-block;
+}
+
+/* Rotación cuando está abierto */
+.adminUsers-toggle-icon.open {
+  transform: rotate(180deg);
 }
 
 /* ================ BOTONES ================ */
-.admin-user-add-user-btn,
-.adminU-add-user-btn {
+.adminUsers-add-user-btn {
   background: linear-gradient(135deg, #750f0f 0%, #4a0909 100%);
   color: white;
   border: none;
@@ -120,44 +242,86 @@
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
+  align-items: end;
   gap: 0.5rem;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(117,15,15,0.3);
+  box-shadow: 0 2px 8px rgba(117, 15, 15, 0.3);
+  margin-left: auto;
 }
 
-.admin-user-add-user-btn:hover,
-.adminU-add-user-btn:hover {
+.adminUsers-add-user-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(117,15,15,0.4);
+  box-shadow: 0 4px 12px rgba(117, 15, 15, 0.4);
 }
 
-/* ================ FORMULARIOS ================ */
-.admin-user-edit-form,
-.adminU-edit-form {
+.adminUsers-option-btn {
+  border: none;
+  padding: 0.5rem 0.8rem;
+  margin: 0 0.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.adminUsers-option-btn.edit {
+  background: none;
+  color: #0dbff0;
+}
+
+.adminUsers-option-btn.edit:hover {
+  background: none;
+  color: #0a77c0;
+  transform: scale(1.25);
+}
+
+.adminUsers-option-btn.delete {
+  background: none;
+  color: #dc3545;
+}
+
+.adminUsers-option-btn.delete:hover {
+  background: none;
+  color: #bb2d3b;
+  transform: scale(1.25);
+}
+
+.adminUsers-btn-view:hover {
+  background: none;
+  color: #112280;
+  transform: scale(1.25);
+}
+
+/* ================ FORMULARIO ================ */
+.adminUsers-edit-form {
   padding: 2rem;
 }
 
-.admin-user-form-group,
-.adminU-form-group {
+.adminUsers-form-group {
   margin-bottom: 1.5rem;
 }
 
-.admin-user-form-group label,
-.adminU-form-group label {
+.adminUsers-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.adminUsers-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
   font-weight: 600;
   font-size: 0.95rem;
-  color: #333;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.admin-user-form-group input,
-.admin-user-form-group select,
-.adminU-form-group input,
-.adminU-form-group select {
+.adminUsers-form-group input,
+.adminUsers-form-group select {
   width: 100%;
   padding: 0.8rem;
   border: 2px solid #e0e0e0;
@@ -167,77 +331,26 @@
   font-family: inherit;
 }
 
-.admin-user-form-group input:focus,
-.admin-user-form-group select:focus,
-.adminU-form-group input:focus,
-.adminU-form-group select:focus {
+.adminUsers-form-group span {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  font-family: inherit;
+  display: block;
+}
+
+.adminUsers-form-group input:focus,
+.adminUsers-form-group select:focus {
   outline: none;
   border-color: #750f0f;
-  box-shadow: 0 0 0 3px rgba(117,15,15,0.1);
+  box-shadow: 0 0 0 3px rgba(117, 15, 15, 0.1);
 }
 
-/* ================ MODALES ================ */
-.admin-user-modal-overlay,
-.adminU-modal-overlay {
-  position: fixed;
-  top:0;
-  left:0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-}
-
-.admin-user-modal-content,
-.adminU-modal-content {
-  background: white;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 600px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-  animation: slideUp 0.3s ease;
-}
-
-.admin-user-modal-header,
-.adminU-modal-header {
-  background: linear-gradient(135deg, #750f0f 0%, #4a0909 100%);
-  color: white;
-  padding: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 12px 12px 0 0;
-}
-
-.admin-user-modal-close,
-.adminU-modal-close {
-  background: rgba(255,255,255,0.2);
-  border: none;
-  color: white;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.admin-user-modal-close:hover,
-.adminU-modal-close:hover {
-  background: rgba(255,255,255,0.3);
-}
-
-/* ================ ACCIONES ================ */
-.admin-user-form-actions,
-.adminU-form-actions {
+/* ================ ACCIONES DEL FORMULARIO ================ */
+.adminUsers-form-actions {
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
@@ -246,10 +359,8 @@
   border-top: 2px solid #eee;
 }
 
-.admin-user-btn-cancel,
-.adminU-btn-cancel,
-.admin-user-btn-save,
-.adminU-btn-save {
+.adminUsers-btn-cancel,
+.adminUsers-btn-save {
   padding: 0.8rem 2rem;
   border: none;
   border-radius: 8px;
@@ -262,31 +373,270 @@
   gap: 0.5rem;
 }
 
-.admin-user-btn-cancel,
-.adminU-btn-cancel {
+.adminUsers-btn-cancel {
   background: #6c757d;
   color: white;
 }
 
-.admin-user-btn-cancel:hover,
-.adminU-btn-cancel:hover {
+.adminUsers-btn-cancel:hover {
   background: #5a6268;
   transform: translateY(-2px);
 }
 
-.admin-user-btn-save {
+.adminUsers-btn-save {
   background: linear-gradient(135deg, #28a745 0%, #20863a 100%);
   color: white;
-  box-shadow: 0 2px 8px rgba(40,167,69,0.3);
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
 }
 
-.admin-user-btn-save:hover {
+.adminUsers-btn-save:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(40,167,69,0.4);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
 }
 
-/* ================ ANIMACIONES ================ */
+/* Contenedor de la tabla */
+.adminUsers-table-container {
+  margin-top: 20px;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Contenedor del encabezado de la tabla y botones */
+.adminUsers-table-header-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.adminUsers-table-header-toggle h3 {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.adminUsers-table-header-toggle h3 i {
+  margin-right: 10px; /* Espacio entre el ícono y el texto */
+}
+
+/* Contenedor de botones */
+.adminUsers-header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.adminUsers-add-user-btn, .adminUsers-toggle-btn {
+  padding: 10px 15px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.adminUsers-toggle-btn i {
+  font-size: 20px;
+}
+
+.adminUsers-toggle-btn {
+  background-color: transparent;
+}
+
+.adminUsers-toggle-icon {
+  transition: transform 0.3s ease;
+}
+
+/* Efecto al abrir/cerrar la tabla */
+.adminUsers-toggle-icon.open {
+  transform: rotate(180deg);
+}
+
+/* Estilos de la tabla */
+.adminUsers-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.adminUsers-table th, .adminUsers-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+
+.adminUsers-option-btn.edit i {
+  font-size: 16px;
+}
+
+.adminUsers-option-btn.delete i {
+  font-size: 16px;
+}
+
+/* ================ MODAL ================ */
+/* Overlay */
+.adminUsers-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fondo oscuro con transparencia */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease-in-out; /* Animación de entrada */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Content */
+.adminUsers-modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); /* Sombra suave */
+  transition: transform 0.3s ease-out;
+  transform: scale(0.95); /* Escala al inicio */
+  animation: slideUp 0.3s ease; /* Animación de aparición */
+}
+
 @keyframes slideUp {
-  from { transform: translateY(50px); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.adminUsers-modal-content.show {
+  transform: scale(1); /* Aumenta la escala cuando se muestra */
+}
+
+/* Modal Header */
+.adminUsers-modal-header {
+  background: linear-gradient(135deg, #750f0f 0%, #4a0909 100%); /* Fondo con gradiente */
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-radius: 12px 12px 0 0;
+  margin: -25px -25px 20px -25px; /* Margen negativo para integrar el borde superior */
+}
+
+.adminUsers-modal-header h2 {
+  font-size: 1.8rem;
+  color: white;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Close Button */
+.adminUsers-modal-close {
+  background: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente */
+  border: none;
+  color: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.adminUsers-modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: #a51e1e; /* Cambio de color al pasar el mouse */
+}
+
+/* Formulario */
+.adminUsers-edit-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.adminUsers-form-group {
+  margin-bottom: 1rem;
+}
+
+.adminUsers-form-group label {
+  font-weight: bold;
+}
+
+.adminUsers-form-group input {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilos para los botones en el modal */
+.adminUsers-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #eee;
+}
+
+.adminUsers-btn-cancel {
+  background-color: #6c757d;
+  color: white;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adminUsers-btn-cancel:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+}
+
+.adminUsers-btn-save {
+  background: linear-gradient(135deg, #28a745 0%, #20863a 100%);
+  color: white;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.adminUsers-btn-save:hover {
+  background-color: #a51e1e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
 }

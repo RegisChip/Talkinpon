@@ -1,6 +1,8 @@
 # Talkinpon\Talkinpon\Procesos\models.py
 
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -66,3 +68,17 @@ class PasoResponsable(models.Model):
 
     def __str__(self):
         return f"{self.entidad.nombre} - {self.paso.iden}"
+
+@receiver(post_delete, sender=ProcesosRequisitos)
+def eliminar_requisito_huerfano(sender, instance, **kwargs):
+    """
+    Cuando se elimina una relación ProcesosRequisitos,
+    verifica si el requisito quedó huérfano (sin ningún proceso asociado)
+    y lo elimina automáticamente.
+    """
+    requisito = instance.requisito
+    
+    # Verificar si el requisito tiene alguna otra relación con procesos
+    if not requisito.procesosrequisitos_set.exists():
+        print(f"🗑️ Eliminando requisito huérfano: '{requisito.descripcion}' (ID: {requisito.id})")
+        requisito.delete()

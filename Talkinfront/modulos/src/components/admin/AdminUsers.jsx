@@ -7,41 +7,39 @@ const REGISTRO_URL = API_BASE_URL + "registro/";
 
 function AdminUsers({ users, user, onBack, onViewInfo, onLogout }) {
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showUserMenu, setShowUserMenu] = useState(false); 
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [usersList, setUsersList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isTableVisible, setIsTableVisible] = useState(false);  // Default to show the table
   const navigate = useNavigate();
 
   const handleLogoutAndGoBack = () => {
-    if (onLogout) onLogout();   // cierra sesión
-    navigate("/adminB");         // redirige a AdminB
+    if (onLogout) onLogout();   // Close session
+    navigate("/adminB");         // Redirect to AdminB
     setShowUserMenu(false);
   };
-  
-  // FUNCIÓN PARA CARGAR USUARIOS DESDE DJANGO
+
+  // Fetch users from Django
   const fetchUsers = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(API_BASE_URL); 
+      const response = await fetch(API_BASE_URL);
       if (response.ok) {
         const data = await response.json();
-        
         const mappedUsers = data.map(admin => ({
-          
-          id: admin.id, 
+          id: admin.id,
           name: admin.nombre,
           email: admin.correo,
           role: admin.rol,
-          username: admin.correo, 
+          username: admin.correo,
         }));
-
         setUsersList(mappedUsers);
       } else {
-        console.error("Error al obtener usuarios:", response.status);
+        console.error("Error getting users:", response.status);
       }
     } catch (error) {
-      console.error("Error de red al obtener usuarios:", error);
+      console.error("Network error getting users:", error);
     } finally {
       setIsLoading(false);
     }
@@ -61,39 +59,35 @@ function AdminUsers({ users, user, onBack, onViewInfo, onLogout }) {
     setEditingUser(null);
   };
 
-  // FUNCIÓN PARA GUARDAR/REGISTRAR USUARIO
   const handleSaveUser = async (e) => {
     e.preventDefault();
 
     const isNewUser = !editingUser.id;
 
-    // Validación general de campos no vacío
     if (!editingUser.name || !editingUser.email || !editingUser.role) {
       alert("Por favor, completa todos los campos requeridos.");
       return;
     }
 
-    // Validación de contraseña solo si es NUEVO USUARIO
     if (isNewUser && !editingUser.password) {
-      alert("La contraseña es obligatoria para nuevos usuarios.");
+      alert("La contraseña es obligatoria para los nuevos usuarios.");
       return;
     }
 
-    // Mapear datos a Serializer de Django
-    const userData = {
-      nombre: editingUser.name,
-      correo: editingUser.email,
-      rol: editingUser.role,
-    };
+const userData = {
+  nombre: editingUser.name,
+  correo: editingUser.email,
+  rol: editingUser.role, // Aquí se pasa el valor del rol
+};
 
-    // Determinar URL y Método
+
     let url = isNewUser ? REGISTRO_URL : `${API_BASE_URL}${editingUser.id}/`;
-    let method = isNewUser ? 'POST' : 'PUT'; // Usamos PUT para edición
-    
+    let method = isNewUser ? 'POST' : 'PUT';
+
     if (isNewUser && editingUser.password) {
-        // Añadir el campo contrasena al objeto solo si estamos registrando
-        userData.contrasena = editingUser.password;
+      userData.contrasena = editingUser.password;
     }
+
     try {
       const response = await fetch(url, {
         method: method,
@@ -104,63 +98,58 @@ function AdminUsers({ users, user, onBack, onViewInfo, onLogout }) {
       });
 
       if (response.ok) {
-        // Éxito: Recargar la lista de usuarios para reflejar la BD
-        alert(`Usuario ${isNewUser ? 'registrado' : 'actualizado'} con éxito.`);
-        await fetchUsers(); 
+        alert(`Usuario ${isNewUser ? 'registrado' : 'actualizado'} exitosamente.`);
+        await fetchUsers();
       } else {
-        // Manejo de errores de Django
         const errorData = await response.json();
-        console.error("Error al guardar usuario:", errorData);
-        
+        console.error("Error al guardar el usuario:", errorData);
+
         const errorMessage = Object.entries(errorData)
           .map(([key, value]) => {
             const fieldName = key === 'contrasena' ? 'Contraseña' : key;
             return `${fieldName}: ${Array.isArray(value) ? value.join(', ') : value}`;
           })
           .join('\n');
-        
+
         alert(`Error de validación o del servidor:\n${errorMessage}`);
       }
     } catch (error) {
-      console.error("Error de red:", error);
-      alert("Error de red al intentar conectar con la API.");
+      console.error("Error en la red:", error);
+      alert("Error de conexión mientras se intentaba guardar el usuario.");
     } finally {
       handleCloseModal();
     }
   };
 
   const handleDeleteUser = async (id, name) => {
-    if (!window.confirm(`¿Estás seguro de que deseas eliminar a ${name}? Esta acción es irreversible.`)) {
-        return;
+    if (!window.confirm(`¿Estás seguro de que deseas eliminar a ${name}? Esta acción no se puede deshacer.`)) {
+      return;
     }
 
     const DELETE_URL = `${API_BASE_URL}${id}/`;
 
     try {
-        const response = await fetch(DELETE_URL, {
-            method: 'DELETE',
-        });
+      const response = await fetch(DELETE_URL, {
+        method: 'DELETE',
+      });
 
-        if (response.status === 204) { // Eliminación exitosa
-            // Actualizar el estado del frontend
-            setUsersList(usersList.filter((u) => u.id !== id));
-        } else {
-            console.error("Error al eliminar usuario:", response.status);
-            alert("Error al eliminar el usuario. El servidor rechazó la petición.");
-        }
+      if (response.status === 204) {
+        setUsersList(usersList.filter((u) => u.id !== id));
+      } else {
+        console.error("Error al eliminar el usuario:", response.status);
+        alert("Error al eliminar el usuario. El servidor rechazó la solicitud.");
+      }
     } catch (error) {
-        console.error("Error de red:", error);
-        alert("Error de red al intentar eliminar el usuario.");
+      console.error("Error de red:", error);
+      alert("Error de red al intentar eliminar el usuario.");
     }
-
   };
 
   const handleAddUser = () => {
     const newUser = {
       id: null,
       name: "",
-      username: `user${usersList.length + 1}`,
-      role: "PROCESOS",
+      role: "",
       email: "",
       password: "",
     };
@@ -169,51 +158,35 @@ function AdminUsers({ users, user, onBack, onViewInfo, onLogout }) {
   };
 
   const handleBack = () => {
-    navigate(-1); // Regresa a la página anterior
+    navigate(-1); // Regresar a la página anterior
+  };
+
+  const toggleTableVisibility = () => {
+    setIsTableVisible(!isTableVisible);  // Alternar visibilidad de la tabla
   };
 
   if (isLoading) {
     return (
-        <div className="admin-user-container">
-            <main className="admin-user-main">
-                <h2 style={{ textAlign: 'center', marginTop: '50px' }}>
-                    Cargando usuarios...
-                </h2>
-            </main>
-        </div>
+      <div className="adminUsers-container">
+        <main className="adminUsers-main">
+          <h2 style={{ textAlign: 'center', marginTop: '50px' }}>
+            Cargando usuarios...
+          </h2>
+        </main>
+      </div>
     );
   }
 
-  const getRoleDisplayName = (roleCode) => {
-      switch (roleCode) {
-          case 'SUPER':
-              return 'Super Administrador';
-          case 'PROCESOS':
-              return 'Administrador de Procesos';
-          case 'UBICACIONES':
-              return 'Administrador de Ubicaciones';
-          default:
-              return 'Usuario';
-      }
-  };
-
   return (
-    <div className="admin-user-container">
-      {/* Header */}
-      <header className="admin-user-header">
-        <div className="admin-user-header-left">
-          {/* Botón de regresar */}
-          <button className="admin-user-back-btn" onClick={handleBack} title="Volver">
-            <i className="bi bi-chevron-double-left"></i>
-          </button>
-          <h1 className="admin-user-title">TalkinPon</h1>
+    <div className="adminUsers-container">
+      {/* HEADER */}
+      <header className="adminUsers-header">
+        <div className="adminUsers-header-left">
+          <h1 className="adminUsers-title">TalkinPon</h1>
         </div>
 
-        {/* Icono de usuario */}
+        {/* Menú de usuario */}
         <div className="superadmin-user-menu-wrapper">
-          <button className="superadmin-user-btn" onClick={() => setShowUserMenu(!showUserMenu)}>
-            <i className="bi bi-person-circle"></i>{getRoleDisplayName(user?.rol)} 
-          </button>
           {showUserMenu && (
             <div className="superadmin-user-dropdown">
               <button
@@ -223,7 +196,7 @@ function AdminUsers({ users, user, onBack, onViewInfo, onLogout }) {
                   setShowUserMenu(false);
                 }}
               >
-                <i className="bi bi-info-circle"></i> Ver información
+                <i className="bi bi-info-circle"></i> Ver Información
               </button>
               <button
                 className="superadmin-dropdown-item logout"
@@ -236,64 +209,78 @@ function AdminUsers({ users, user, onBack, onViewInfo, onLogout }) {
         </div>
       </header>
 
-      {/* Main */}
-      <main className="admin-user-main">
-        <div className="admin-user-section">
-          <h2 className="admin-user-section-header">Gestión de Usuarios</h2>
+      {/* MAIN */}
+      <main className="adminUsers-main">
+        <div className="adminUsers-section">
+          <div className="adminUsers-table-container">
+            <div className="adminUsers-table-header-toggle">
+              <h3>
+                <i className="bi bi-person-circle"></i> Gestión de Usuarios ({usersList.length})
+              </h3>
 
-          <table className="admin-user-table">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Usuario</th>
-                <th>Rol</th>
-                <th>Email</th>
-                <th>Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {usersList.map((u) => (
-                <tr key={u.id}>
-                  <td>{u.name}</td>
-                  <td>{u.username}</td>
-                  <td>{u.role}</td>
-                  <td>{u.email}</td>
-                  <td>
-                    <button className="admin-user-option-btn edit" onClick={() => handleEditClick(u)} title="Editar">
-                      <i className="bi bi-pencil-fill"></i>
-                    </button>
-                    <button className="admin-user-option-btn delete" onClick={() => handleDeleteUser(u.id, u.name)} title="Eliminar">
-                      <i className="bi bi-trash-fill"></i>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+              <div className="adminUsers-header-buttons">
+                {/* Botón para agregar un nuevo usuario */}
+                <button
+                  className="adminUsers-add-user-btn"
+                  onClick={handleAddUser}
+                >
+                  <i className="bi bi-person-plus"></i> Agregar Usuario
+                </button>
 
-          <div className="admin-user-add-user-container">
-            <button className="admin-user-add-user-btn" onClick={handleAddUser}>
-              Agregar nuevo usuario
-            </button>
+                {/* Botón para alternar visibilidad de la tabla */}
+                <button
+                  onClick={toggleTableVisibility}
+                  className="adminUsers-toggle-btn"
+                >
+                  <i className={`bi bi-chevron-${isTableVisible ? 'up' : 'down'} adminUsers-toggle-icon`}></i>
+                </button>
+              </div>
+            </div>
+
+            {/* Mostrar tabla si la visibilidad está activada */}
+            {isTableVisible && (
+              <table className="adminUsers-table">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Rol</th>
+                    <th>Correo</th>
+                    <th>Opciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {usersList.map((u) => (
+                    <tr key={u.id}>
+                      <td>{u.name}</td>
+                      <td>{u.role}</td>
+                      <td>{u.email}</td>
+                      <td>
+                        <button className="adminUsers-option-btn edit" onClick={() => handleEditClick(u)} title="Editar">
+                          <i className="bi bi-pencil-fill"></i>
+                        </button>
+                        <button className="adminUsers-option-btn delete" onClick={() => handleDeleteUser(u.id, u.name)} title="Eliminar">
+                          <i className="bi bi-trash-fill"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
       </main>
 
       {/* Modal */}
       {showEditModal && editingUser && (
-        <div className="admin-user-modal-overlay" onClick={handleCloseModal}>
-          <div className="admin-user-modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="admin-user-modal-header">
-              <h2>
-                {/* Verifica si es nuevo (sin id) o edición */}
-                {!editingUser.id ? "Agregar Usuario" : "Editar Usuario"}
-              </h2>
-              <button className="admin-user-modal-close" onClick={handleCloseModal}>
-                ✕
-              </button>
+        <div className="adminUsers-modal-overlay" onClick={handleCloseModal}>
+          <div className="adminUsers-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="adminUsers-modal-header">
+              <h2>{!editingUser.id ? "Agregar Usuario" : "Editar Usuario"}</h2>
+              <button className="adminUsers-modal-close" onClick={handleCloseModal}>✕</button>
             </div>
-            <form className="admin-user-edit-form" onSubmit={handleSaveUser}>
-              <div className="form-group">
+            <form className="adminUsers-edit-form" onSubmit={handleSaveUser}>
+              <div className="adminUsers-form-group">
                 <label>Nombre:</label>
                 <input
                   type="text"
@@ -303,40 +290,35 @@ function AdminUsers({ users, user, onBack, onViewInfo, onLogout }) {
                   required
                 />
               </div>
-              <div className="admin-user-form-group">
-                <label>Usuario:</label>
-                <input
-                  type="text"
-                  value={editingUser.username} 
-                  onChange={(e) => setEditingUser({ ...editingUser, username: e.target.value })}
-                  placeholder="Nombre de usuario"
-                  required
-                />
-              </div>
-              <div className="admin-user-form-group">
-                <label>Rol:</label>
-                <input
-                  type="text"
-                  value={editingUser.role}
-                  onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value })}
-                  placeholder="Rol del usuario"
-                  required
-                />
-              </div>
-              <div className="admin-user-form-group">
-                <label>Email:</label>
+<div className="adminUsers-form-group">
+  <label>Rol:</label>
+<select
+  value={editingUser.role}
+  onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value })}
+  required
+>
+  <option value="">Selecciona un rol</option>
+  <option value="SUPER">Super Administrador</option>
+  <option value="PROCESOS">Administrador de Procesos</option>
+  <option value="UBICACIONES">Administrador de Ubicaciones</option>
+</select>
+
+</div>
+
+
+              <div className="adminUsers-form-group">
+                <label>Correo:</label>
                 <input
                   type="email"
                   value={editingUser.email}
                   onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
-                  placeholder="Email"
+                  placeholder="Correo"
                   required
                 />
               </div>
-
-              {/* CAMPO DE CONTRASEÑA (Solo para nuevos registros) */}
-              {(!editingUser.id) && (
-                <div className="admin-user-form-group">
+              {/* Password field (only for new users) */}
+              {!editingUser.id && (
+                <div className="adminUsers-form-group">
                   <label>Contraseña:</label>
                   <input
                     type="password"
@@ -348,19 +330,14 @@ function AdminUsers({ users, user, onBack, onViewInfo, onLogout }) {
                 </div>
               )}
 
-              <div className="admin-user-form-actions">
-                <button type="button" className="admin-user-btn-cancel" onClick={handleCloseModal}>
-                  Cancelar
-                </button>
-                <button type="submit" className="admin-user-btn-save">
-                  Guardar
-                </button>
+              <div className="adminUsers-form-actions">
+                <button type="button" className="adminUsers-btn-cancel" onClick={handleCloseModal}>Cancelar</button>
+                <button type="submit" className="adminUsers-btn-save">Guardar</button>
               </div>
             </form>
           </div>
         </div>
       )}
-
     </div>
   );
 }
