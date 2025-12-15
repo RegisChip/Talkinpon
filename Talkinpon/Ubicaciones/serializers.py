@@ -44,14 +44,16 @@ class EdificioSerializer(serializers.ModelSerializer):
     salones_list = SalonSerializer(source='salones', many=True, read_only=True)
     areas_list = AreaEdificioSerializer(source='areas', many=True, read_only=True)
     nombre_especial = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    edificio_imagen_url = serializers.SerializerMethodField()  # NUEVO
 
     class Meta:
         model = Edificio
         fields = [
             'id_edificio', 'nombre', 'nombre_especial', 'uso', 'num_salones',
-            'pos_x', 'pos_y', 'nom_nodo', 'salones_list', 'areas_list', 'ubicacion'
+            'pos_x', 'pos_y', 'nom_nodo', 'salones_list', 'areas_list', 'ubicacion',
+            'edificio_imagen', 'edificio_imagen_url'  # NUEVO
         ]
-        read_only_fields = ['id_edificio', 'pos_x', 'pos_y', 'nom_nodo']
+        read_only_fields = ['id_edificio', 'pos_x', 'pos_y', 'nom_nodo', 'edificio_imagen_url']  # NUEVO
 
     def get_pos_x(self, obj):
         return float(obj.ubicacion.pos_x)
@@ -61,6 +63,14 @@ class EdificioSerializer(serializers.ModelSerializer):
     
     def get_nom_nodo(self, obj):
         return obj.ubicacion.nom_nodo
+    
+    # NUEVO
+    def get_edificio_imagen_url(self, obj):
+        if obj.edificio_imagen:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.edificio_imagen.url)
+        return None
 
 
 # 5. Serializer de Escritura (Crea Ubicacion y Edificio en una sola POST)

@@ -1,6 +1,8 @@
 # Ubicaciones/urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from django.conf import settings  # ← AGREGAR
+from django.conf.urls.static import static  # ← AGREGAR
 from . import views, viewsets
 
 # Router para Django REST Framework
@@ -31,19 +33,16 @@ urlpatterns = [
     # API JSON (endpoints legacy para compatibilidad)
     path('api/edificios/', views.obtener_edificios_json, name='obtener_edificios_json'),
     path('ruta/dijkstra/', views.dijkstra_ruta, name='dijkstra_ruta'),
+    # path('api/rest/', include('Ubicaciones.urls')),
     
     # ==================== API REST FRAMEWORK ====================
     # Incluir todas las rutas del router
-    # Esto genera automáticamente:
-    # - GET    /api/rest/edificios/          -> Lista
-    # - POST   /api/rest/edificios/          -> Crear
-    # - GET    /api/rest/edificios/{id}/     -> Detalle
-    # - PUT    /api/rest/edificios/{id}/     -> Actualizar completo
-    # - PATCH  /api/rest/edificios/{id}/     -> Actualizar parcial
-    # - DELETE /api/rest/edificios/{id}/     -> Eliminar
-    # - GET    /api/rest/edificios/mapa/     -> Custom action (lista para React)
     path('api/rest/', include(router.urls)),
 ]
+
+# Servir archivos media en desarrollo
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # URLs generadas por el router:
 """
@@ -82,6 +81,8 @@ EDIFICIOS:
 - PUT    /api/rest/edificios/{id}/               (actualizar)
 - PATCH  /api/rest/edificios/{id}/               (actualizar parcial)
 - DELETE /api/rest/edificios/{id}/               (eliminar)
+- POST   /api/rest/edificios/{id}/upload_image/  (subir imagen)
+- DELETE /api/rest/edificios/{id}/delete_image/  (eliminar imagen)
 
 UBICACIONES (nodos):
 - GET    /api/rest/ubicaciones/

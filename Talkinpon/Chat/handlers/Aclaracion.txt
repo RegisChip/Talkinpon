@@ -1,0 +1,1 @@
+Handlers ayuda a redactar una resouesta ante las consultas de Detectors: respuesta de rutas, procesos, edificios, salones, etc.

@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import "./styles/AdminU.css";
 import { useNavigate } from "react-router-dom";
 import MapaModal from './MapaModal';
+import ImageModal from './ImageModal'; 
 
 // URLs de la API - Ajustadas para Django REST Framework
 const EDIFICIOS_API_URL = "http://localhost:8000/api/rest/edificios/";
 const SALONES_API_URL = "http://localhost:8000/api/rest/salones/";
 const AREAS_API_URL = "http://localhost:8000/api/rest/areas/";
 const TIPOS_AREA_API_URL = "http://localhost:8000/api/rest/tipos-area/";
-
 
 const getRoleDisplayName = (roleCode) => {
   switch (roleCode) {
@@ -32,6 +32,9 @@ function AdminU({ locations, user, onLogout, onViewInfo }) {
     areas: [],
     tiposArea: []
   });
+  // Estados para el modal de imagen
+const [showImageModal, setShowImageModal] = useState(false);
+const [selectedEdificioForImage, setSelectedEdificioForImage] = useState(null);
   const [modalType, setModalType] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -94,6 +97,23 @@ function AdminU({ locations, user, onLogout, onViewInfo }) {
         return fieldVal.toString().toLowerCase().includes(buildingSearchTerm.toLowerCase());
       })
   : [];
+
+// Agregar estas funciones después de tus otras funciones handler
+
+const handleOpenImageModal = (edificio) => {
+  setSelectedEdificioForImage(edificio);
+  setShowImageModal(true);
+};
+
+const handleCloseImageModal = () => {
+  setShowImageModal(false);
+  setSelectedEdificioForImage(null);
+};
+
+const handleImageUpdated = async (updatedEdificio) => {
+  // Recargar datos después de actualizar la imagen
+  await fetchData();
+};
 
   // Cargar ubicaciones y relaciones desde Django
   useEffect(() => {
@@ -169,7 +189,7 @@ function AdminU({ locations, user, onLogout, onViewInfo }) {
     setShowUserMenu(false);
   };
 
-  const fetchData = async () => {
+const fetchData = async () => {
     setLoading(true);
     setError(null);
     
@@ -186,8 +206,16 @@ function AdminU({ locations, user, onLogout, onViewInfo }) {
       const areas = areasRes.ok ? await areasRes.json() : [];
       const tiposArea = tiposRes.ok ? await tiposRes.json() : [];
 
+      // Actualizar num_salones basándose en salones reales
+      const buildingsWithCount = buildings.map(edificio => ({
+        ...edificio,
+        num_salones: salones.filter(
+          s => s.edificio === edificio.id_edificio || s.id_edificio === edificio.id_edificio
+        ).length
+      }));
+
       setDataList({ 
-        buildings, 
+        buildings: buildingsWithCount, 
         salones, 
         areas,
         tiposArea 
@@ -495,86 +523,119 @@ function AdminU({ locations, user, onLogout, onViewInfo }) {
                 {/* Tabla (usa filteredBuildings en lugar de dataList.buildings) */}
                 <div style={{ overflowX: 'auto' }}>
                   <table className="adminU-table">
-                    <thead>
-                      <tr>
-                        <th>Nombre</th>
-                        <th>Nombre Especial</th>
-                        <th>Uso</th>
-                        <th>Ubicación (X, Y)</th>
-                        <th>Nodo</th>
-                        <th>Salones</th>
-                        <th>Opciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredBuildings.length === 0 ? (
-                        <tr>
-                          <td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>
-                            No hay edificios que coincidan
-                          </td>
-                        </tr>
-                      ) : (
-                        filteredBuildings.map((b) => (
-                          <tr key={b.id_edificio}>
-                            <td><strong>{b.nombre}</strong></td>
-                            <td>{b.nombre_especial || '-'}</td>
-                            <td>{b.uso || '-'}</td>
-                            <td>
-                              <span style={{ fontFamily: 'monospace', fontSize: '12px' }}>
-                                ({b.pos_x?.toFixed(1)}, {b.pos_y?.toFixed(1)})
-                              </span>
-                            </td>
-                            <td>
-                              <span style={{
-                                background: '#e3f2fd',
-                                padding: '2px 8px',
-                                borderRadius: '4px',
-                                fontSize: '12px'
-                              }}>
-                                {b.nom_nodo || '-'}
-                              </span>
-                            </td>
-                            <td>
-                              {b.num_salones || 0}
+<thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Nombre Especial</th>
+    <th>Uso</th>
+    <th>Ubicación (X, Y)</th>
+    <th>Nodo</th>
+    <th>Salones</th>
+    <th>Imagen</th> {/* NUEVA COLUMNA */}
+    <th>Opciones</th>
+  </tr>
+</thead>
+<tbody>
+  {filteredBuildings.length === 0 ? (
+    <tr>
+      <td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>
+        No hay edificios que coincidan
+      </td>
+    </tr>
+  ) : (
+    filteredBuildings.map((b) => (
+      <tr key={b.id_edificio}>
+        <td><strong>{b.nombre}</strong></td>
+        <td>{b.nombre_especial || '-'}</td>
+        <td>{b.uso || '-'}</td>
+        <td>
+          <span style={{ fontFamily: 'monospace', fontSize: '12px' }}>
+            ({b.pos_x?.toFixed(1)}, {b.pos_y?.toFixed(1)})
+          </span>
+        </td>
+        <td>
+          <span style={{
+            background: '#e3f2fd',
+            padding: '2px 8px',
+            borderRadius: '4px',
+            fontSize: '12px'
+          }}>
+            {b.nom_nodo || '-'}
+          </span>
+        </td>
+        <td>
+          {b.num_salones || 0}
+          <button
+            className="adminU-btn-view"
+            onClick={() => openSalonesModal(b)}
+            style={{
+              marginLeft: "10px",
+              background: "none",
+              color: "#1d3557",
+              padding: "4px 10px",
+              borderRadius: "6px",
+              border: "none",
+              cursor: "pointer",
+              fontSize: "1rem",
+              fontWeight: "900px",
+            }}
+          >
+            <i className="bi bi-eye-fill"></i>
+          </button>
+        </td>
+        
+        {/* NUEVA CELDA PARA IMAGEN */}
+        <td style={{ textAlign: 'center' }}>
+          <button
+            onClick={() => handleOpenImageModal(b)}
+            style={{
+              background: b.edificio_imagen_url ? '#28a745' : '#6c757d',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              padding: '6px 12px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.2s'
+            }}
+            title={b.edificio_imagen_url ? 'Ver/Editar imagen' : 'Agregar imagen'}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            <i className="bi bi-eye-fill"></i>
+            {b.edificio_imagen_url ? 'Ver' : 'Sin imagen'}
+          </button>
+        </td>
 
-                              <button
-                                className="adminU-btn-view"
-                                onClick={() => openSalonesModal(b)}
-                                style={{
-                                  marginLeft: "10px",
-                                  background: "none",
-                                  color: "#1d3557",
-                                  padding: "4px 10px",
-                                  borderRadius: "6px",
-                                  border: "none",
-                                  cursor: "pointer",
-                                  fontSize: "1rem",
-                                  fontWeight: "900px",
-                                }}
-                              >
-                                <i className="bi bi-eye-fill"></i>
-                              </button>
-                            </td>
-                            <td>
-                              <button
-                                className="adminU-option-btn edit"
-                                onClick={() => handleEditClick(b, 'edificio')}
-                                title="Editar"
-                              >
-                                <i className="bi bi-pencil-fill"></i>
-                              </button>
-                              <button
-                                className="adminU-option-btn delete"
-                                onClick={() => handleDeleteData(b.id_edificio, 'edificio')}
-                                title="Eliminar"
-                              >
-                                <i className="bi bi-trash-fill"></i>
-                              </button>
-                            </td>
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
+        <td>
+          <button
+            className="adminU-option-btn edit"
+            onClick={() => handleEditClick(b, 'edificio')}
+            title="Editar"
+          >
+            <i className="bi bi-pencil-fill"></i>
+          </button>
+          <button
+            className="adminU-option-btn delete"
+            onClick={() => handleDeleteData(b.id_edificio, 'edificio')}
+            title="Eliminar"
+          >
+            <i className="bi bi-trash-fill"></i>
+          </button>
+        </td>
+      </tr>
+    ))
+  )}
+</tbody>
                   </table>
                 </div>
               </>
@@ -1080,6 +1141,17 @@ function AdminU({ locations, user, onLogout, onViewInfo }) {
       </div>
     )}
     
+
+    {/* ===== Modal de Imagen del Edificio ===== */}
+    {showImageModal && selectedEdificioForImage && (
+      <ImageModal
+        isOpen={showImageModal}
+        onClose={handleCloseImageModal}
+        edificio={selectedEdificioForImage}
+        onImageUpdated={handleImageUpdated}
+      />
+    )}
+
     </div>
   );
 }

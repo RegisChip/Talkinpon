@@ -1,0 +1,1 @@
+Detectors sirve para detectar el tipo de consulta que esta realizar un usuario: algun proceso, algun edificio, alguna ruta o algun departamento o salon

@@ -3,6 +3,7 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser  # AGREGAR ESTA LÍNEA
 from django.db.models import Q
 from .models import TipoArea, AreaEdificio, Salon, Edificio, Ubicacion, RelacionU
 from .serializers import (
@@ -15,7 +16,7 @@ from .serializers import (
     UbicacionSerializer,
     RelacionUSerializer
 )
-
+import os
 
 class TipoAreaViewSet(viewsets.ModelViewSet):
     """
@@ -58,19 +59,20 @@ class SalonViewSet(viewsets.ModelViewSet):
 
 
 class EdificioViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet para CRUD de Edificio
+    queryset = Edificio.objects.select_related('ubicacion').prefetch_related('salones', 'areas').all()
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
     
-    GET /api/edificios/ - Lista todos los edificios
-    GET /api/edificios/{id}/ - Detalle de un edificio
-    POST /api/edificios/ - Crear edificio (requiere pos_x, pos_y)
-    PUT/PATCH /api/edificios/{id}/ - Actualizar edificio
-    DELETE /api/edificios/{id}/ - Eliminar edificio
-    GET /api/edificios/mapa/ - Lista simplificada para React
-    """
-    queryset = Edificio.objects.select_related('ubicacion').prefetch_related(
-        'salones', 'areas', 'areas__tipo'
-    ).all()
+    def get_serializer_class(self):
+        """Usar diferentes serializers para lectura y escritura"""
+        if self.action in ['create', 'update', 'partial_update']:
+            return EdificioWriteSerializer
+        return EdificioSerializer
+    
+    def get_serializer_context(self):
+        """Agregar el request al contexto para generar URLs absolutas"""
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
     
     def get_serializer_class(self):
         """Usar serializer diferente según la acción"""
@@ -111,6 +113,50 @@ class EdificioViewSet(viewsets.ModelViewSet):
         RelacionU.objects.filter(Q(origen=ubicacion) | Q(destino=ubicacion)).delete()
         # Eliminar ubicación
         ubicacion.delete()
+
+
+    @action(detail=True, methods=['post'], parser_classes=[MultiPartParser, FormParser])
+    def upload_image(self, request, pk=None):
+        """Subir o actualizar imagen del edificio"""
+        edificio = self.get_object()
+        
+        if 'edificio_imagen' not in request.FILES:
+            return Response(
+                {'error': 'No se proporcionó ninguna imagen'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Eliminar imagen anterior si existe
+        if edificio.edificio_imagen:
+            if os.path.isfile(edificio.edificio_imagen.path):
+                os.remove(edificio.edificio_imagen.path)
+        
+        # Guardar nueva imagen
+        edificio.edificio_imagen = request.FILES['edificio_imagen']
+        edificio.save()
+        
+        serializer = EdificioSerializer(edificio, context={'request': request})
+        return Response(serializer.data)
+    
+    @action(detail=True, methods=['delete'])
+    def delete_image(self, request, pk=None):
+        """Eliminar imagen del edificio"""
+        edificio = self.get_object()
+        
+        if not edificio.edificio_imagen:
+            return Response(
+                {'error': 'Este edificio no tiene imagen'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        # Eliminar archivo
+        if os.path.isfile(edificio.edificio_imagen.path):
+            os.remove(edificio.edificio_imagen.path)
+        
+        edificio.edificio_imagen = None
+        edificio.save()
+        
+        return Response({'message': 'Imagen eliminada correctamente'})
 
 
 class UbicacionViewSet(viewsets.ModelViewSet):

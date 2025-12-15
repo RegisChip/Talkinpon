@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+ import { useState, useEffect } from "react";
 import "./styles/AdminP.css";
 import { useNavigate } from "react-router-dom";
 
